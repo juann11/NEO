@@ -234,6 +234,8 @@ export const Bridge = {
   // ── WhatsApp (src-tauri/src/whatsapp) ─────────────────────────────────────
   /** The island's copy, asked once at start (then the "whatsapp" event). Island only. */
   whatsappIsland: () => call<WaIslandView>("whatsapp_island"),
+  /** Las apps que han mandado notificaciones de Windows, para elegirlas en Ajustes. */
+  systemNotificationApps: () => call<{ id: string; name: string }[]>("system_notification_apps"),
   /** A conversation opened in the card: its latest messages, the receipt if Settings says so. */
   whatsappOpen: (chat: string) => call<void>("whatsapp_open", { chat }),
   whatsappClose: (chat: string) => call<void>("whatsapp_close", { chat }),

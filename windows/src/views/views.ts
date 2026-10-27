@@ -23,6 +23,7 @@ import { buildRecap } from "./recap";
 import { buildWardrobe } from "./wardrobe";
 import { buildUpdate } from "./update";
 import { buildWhatsNew } from "./whatsnew";
+import { buildNotification } from "./notification";
 import { buildSpotifyCard, buildSpotifyPill, type SpotifyPillHost } from "./spotify";
 import { SPOTIFY_ID } from "../core/spotify";
 import { buildWhatsAppCard } from "./whatsapp";
@@ -846,6 +847,7 @@ export function buildViews(
   map.set("wardrobe", buildWardrobe(actions));
   map.set("update", buildUpdate());
   map.set("whatsNew", buildWhatsNew());
+  map.set("notification", buildNotification(() => actions.collapse()));
   // Not in the Windows v1: sending a file by email, window attach + web result.
   map.set("mail", buildPlaceholder(tl("Sending by email isn't in this version."), ""));
   map.set("searching", buildPlaceholder(tl("Claude is searching…"), ""));

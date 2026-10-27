@@ -1011,10 +1011,49 @@ function generalSection(): HTMLElement {
       h("label", { text: t("Launch at startup") }),
       toggle(settings.autostart, (v) => { settings.autostart = v; void save(); }),
     ),
+    ...notificationRows(),
     ...recapRows(),
     ...updateRows(toggle, version),
     languageRow(),
   );
+}
+
+/**
+ * Settings → General → Windows notifications: the switch, then one switch per app that has
+ * sent a notification (all on until the user turns one off).
+ */
+function notificationRows(): HTMLElement[] {
+  const apps = h("div", { class: "stack" });
+  const fill = () => {
+    apps.style.display = settings.systemNotifications ? "" : "none";
+    void Bridge.systemNotificationApps().then((list) => {
+      apps.replaceChildren(h("div", { class: "hint", text: t("Apps that open the island") }));
+      if (!list?.length) {
+        apps.append(h("div", { class: "hint", text: t("No app has shown a notification yet.") }));
+        return;
+      }
+      for (const app of list) {
+        const muted = () => settings.mutedNotificationApps.some((m) => m.toLowerCase() === app.id.toLowerCase());
+        apps.append(h("div", { class: "row" },
+          h("label", { text: app.name, title: app.id }),
+          toggle(!muted(), (on) => {
+            const rest = settings.mutedNotificationApps.filter((m) => m.toLowerCase() !== app.id.toLowerCase());
+            settings.mutedNotificationApps = on ? rest : [...rest, app.id];
+            void save();
+          }),
+        ));
+      }
+    });
+  };
+  fill();
+  return [
+    h("div", { class: "row" },
+      h("label", { text: t("Windows notifications") }),
+      toggle(settings.systemNotifications, (v) => { settings.systemNotifications = v; void save(); fill(); }),
+    ),
+    h("div", { class: "hint", text: t("When an app shows a Windows notification, the island opens with it. NEO reads them on this computer only and sends them nowhere.") }),
+    apps,
+  ];
 }
 
 /**

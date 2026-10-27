@@ -5454,6 +5454,58 @@
       "id": "Matikan pil lain untuk memberi tempat bagi WhatsApp (maksimal {max}).",
       "de": "Schalte eine andere Pill aus, um Platz für WhatsApp zu schaffen (höchstens {max}).",
       "tr": "WhatsApp’a yer açmak için başka bir hapı kapat (en fazla {max})."
+    },
+    "Windows notifications": {
+      "zh-Hans": "Windows 通知",
+      "hi": "Windows सूचनाएँ",
+      "es": "Notificaciones de Windows",
+      "ar": "إشعارات Windows",
+      "fr": "Notifications Windows",
+      "bn": "Windows বিজ্ঞপ্তি",
+      "pt-BR": "Notificações do Windows",
+      "ru": "Уведомления Windows",
+      "id": "Notifikasi Windows",
+      "de": "Windows-Benachrichtigungen",
+      "tr": "Windows bildirimleri"
+    },
+    "When an app shows a Windows notification, the island opens with it. NEO reads them on this computer only and sends them nowhere.": {
+      "zh-Hans": "当应用显示 Windows 通知时，岛会打开并显示它。NEO 只在这台电脑上读取通知，不会发送到任何地方。",
+      "hi": "जब कोई ऐप Windows सूचना दिखाता है, तो आइलैंड उसके साथ खुल जाता है। NEO उन्हें सिर्फ़ इसी कंप्यूटर पर पढ़ता है और कहीं नहीं भेजता।",
+      "es": "Cuando una app muestra una notificación de Windows, la isla se abre con ella. NEO las lee solo en este equipo y no las envía a ningún sitio.",
+      "ar": "عندما يعرض تطبيق إشعارًا من Windows، يفتح الشريط ويعرضه. يقرأ NEO الإشعارات على هذا الكمبيوتر فقط ولا يرسلها إلى أي مكان.",
+      "fr": "Quand une app affiche une notification Windows, l’île s’ouvre avec elle. NEO les lit sur cet ordinateur seulement et ne les envoie nulle part.",
+      "bn": "কোনো অ্যাপ Windows বিজ্ঞপ্তি দেখালে আইল্যান্ড সেটি নিয়ে খুলে যায়। NEO শুধু এই কম্পিউটারেই সেগুলো পড়ে, কোথাও পাঠায় না।",
+      "pt-BR": "Quando um app mostra uma notificação do Windows, a ilha se abre com ela. O NEO as lê só neste computador e não as envia para lugar nenhum.",
+      "ru": "Когда приложение показывает уведомление Windows, остров открывается с ним. NEO читает их только на этом компьютере и никуда не отправляет.",
+      "id": "Saat aplikasi menampilkan notifikasi Windows, pulau terbuka bersamanya. NEO hanya membacanya di komputer ini dan tidak mengirimnya ke mana pun.",
+      "de": "Wenn eine App eine Windows-Benachrichtigung zeigt, öffnet sich die Insel damit. NEO liest sie nur auf diesem Computer und sendet sie nirgendwohin.",
+      "tr": "Bir uygulama Windows bildirimi gösterdiğinde ada onunla açılır. NEO bildirimleri yalnızca bu bilgisayarda okur ve hiçbir yere göndermez."
+    },
+    "Apps that open the island": {
+      "zh-Hans": "会打开岛的应用",
+      "hi": "ऐप जो आइलैंड खोलते हैं",
+      "es": "Apps que abren la isla",
+      "ar": "التطبيقات التي تفتح الشريط",
+      "fr": "Apps qui ouvrent l’île",
+      "bn": "যে অ্যাপগুলো আইল্যান্ড খোলে",
+      "pt-BR": "Apps que abrem a ilha",
+      "ru": "Приложения, открывающие остров",
+      "id": "Aplikasi yang membuka pulau",
+      "de": "Apps, die die Insel öffnen",
+      "tr": "Adayı açan uygulamalar"
+    },
+    "No app has shown a notification yet.": {
+      "zh-Hans": "还没有应用显示过通知。",
+      "hi": "अभी तक किसी ऐप ने सूचना नहीं दिखाई है।",
+      "es": "Ninguna app ha mostrado una notificación todavía.",
+      "ar": "لم يعرض أي تطبيق إشعارًا بعد.",
+      "fr": "Aucune app n’a encore affiché de notification.",
+      "bn": "এখনো কোনো অ্যাপ বিজ্ঞপ্তি দেখায়নি।",
+      "pt-BR": "Nenhum app mostrou uma notificação ainda.",
+      "ru": "Ни одно приложение ещё не показывало уведомлений.",
+      "id": "Belum ada aplikasi yang menampilkan notifikasi.",
+      "de": "Noch keine App hat eine Benachrichtigung gezeigt.",
+      "tr": "Henüz hiçbir uygulama bildirim göstermedi."
     }
   }
 }

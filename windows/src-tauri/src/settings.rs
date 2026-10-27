@@ -71,6 +71,10 @@ pub struct Settings {
     pub desktop_neo: DesktopNeoPref,
     /// The date and time in the middle of the compact island. Off by default.
     pub show_clock: bool,
+    /// Windows' notifications open the island (system_notifications.rs). Off by default.
+    pub system_notifications: bool,
+    /// Apps whose notifications NEO keeps quiet about, by their Windows app id.
+    pub muted_notification_apps: Vec<String>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -127,6 +131,8 @@ impl Default for Settings {
             language: String::new(),
             desktop_neo: DesktopNeoPref::default(),
             show_clock: false,
+            system_notifications: false,
+            muted_notification_apps: Vec::new(),
         }
     }
 }
@@ -404,7 +410,9 @@ mod tests {
   "pillColors": { "integration_claude": "#2DD4BF" },
   "language": "pt-BR",
   "desktopNeo": { "onDesktop": true, "spot": { "x": 1500.5, "y": -300.0, "space": "screen" } },
-  "showClock": true
+  "showClock": true,
+  "systemNotifications": true,
+  "mutedNotificationApps": ["Microsoft.SkyDrive.Desktop"]
 }"##;
 
     fn custom() -> Value {
@@ -809,6 +817,8 @@ mod tests {
                 "language",
                 "desktopNeo",
                 "showClock",
+                "systemNotifications",
+                "mutedNotificationApps",
             ]
         );
         let _ = std::fs::remove_dir_all(&dir);

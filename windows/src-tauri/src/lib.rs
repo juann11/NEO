@@ -32,6 +32,7 @@ mod shortcuts;
 mod sounds;
 mod speech;
 mod spotify;
+mod system_notifications;
 mod tray;
 mod update;
 mod voice;
@@ -872,6 +873,7 @@ pub fn run() {
             spotify::spotify_open,
             spotify::spotify_installed,
             whatsapp::whatsapp_island,
+            system_notifications::system_notification_apps,
             whatsapp::whatsapp_open,
             whatsapp::whatsapp_close,
             whatsapp::whatsapp_send,
@@ -967,6 +969,8 @@ pub fn run() {
             spotify::sync(&handle, &loaded.active_integrations);
             // WhatsApp (experimental): nothing runs unless it is turned on and its pill is active.
             whatsapp::start(&handle, &loaded.active_integrations);
+            // Notificaciones de Windows: el hilo no lee nada hasta que se enciende el interruptor.
+            system_notifications::start(handle.clone());
             shortcuts::apply(&handle, &loaded.shortcuts);
             // New versions: nothing goes to GitHub until the user agrees (update.rs).
             update::start(handle.clone());
