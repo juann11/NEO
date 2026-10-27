@@ -105,7 +105,8 @@ fn save_settings(app: AppHandle, shared: State<Shared>, settings: Settings) {
     if let Err(err) = settings::save(&settings) {
         log::line(format!("could not save settings: {err}"));
     }
-    if autostart_changed {
+    // En desarrollo no se toca el inicio de Windows: apuntaría al neo.exe de target\debug, que sin Vite no abre.
+    if autostart_changed && !cfg!(debug_assertions) {
         let manager = app.autolaunch();
         let result = if settings.autostart { manager.enable() } else { manager.disable() };
         if let Err(err) = result {
@@ -969,7 +970,7 @@ pub fn run() {
             shortcuts::apply(&handle, &loaded.shortcuts);
             // New versions: nothing goes to GitHub until the user agrees (update.rs).
             update::start(handle.clone());
-            if loaded.autostart {
+            if loaded.autostart && !cfg!(debug_assertions) {
                 // Login items written before 0.5 start NEO without --autostart:
                 // writing it again adds it, so the window stays hidden at login.
                 let _ = handle.autolaunch().enable();
