@@ -1,0 +1,10 @@
+# Solo local (nunca se publica)
+.claude/
+_prive/
+.env
+.env.*
+!.env.example
+
+# Sistema
+.DS_Store
+Thumbs.db

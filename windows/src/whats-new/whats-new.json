@@ -1,0 +1,103 @@
+{
+ "about": "Novedades que NEO muestra una vez en la isla tras actualizarse (src/whats-new/). Cada versión añade aquí su entrada en los 12 idiomas: de 1 a 4 elementos, con un icono de ICON_NAMES, un título corto y una línea.",
+ "releases": [
+  {
+   "version": "0.1.0",
+   "items": [
+    {
+     "icon": "paint",
+     "title": {
+      "en": "Meet NEO",
+      "zh-Hans": "认识 NEO",
+      "hi": "मिलिए NEO से",
+      "es": "Te presentamos a NEO",
+      "ar": "تعرّف على NEO",
+      "fr": "Voici NEO",
+      "bn": "NEO-র সাথে পরিচয়",
+      "pt-BR": "Conheça o NEO",
+      "ru": "Знакомьтесь, NEO",
+      "id": "Kenalan dengan NEO",
+      "de": "Das ist NEO",
+      "tr": "NEO ile tanış"
+     },
+     "detail": {
+      "en": "A small robot with a visor whose eyes light up in the colour of what your agents are doing.",
+      "zh-Hans": "一个戴着面罩的小机器人，眼睛会按照智能体的状态亮起不同颜色。",
+      "hi": "वाइज़र वाला एक छोटा रोबोट, जिसकी आँखें आपके एजेंटों के काम के रंग में चमकती हैं।",
+      "es": "Un robot pequeño con visor cuyos ojos se encienden del color de lo que hacen tus agentes.",
+      "ar": "روبوت صغير بقناع تضيء عيناه بلون ما يفعله وكلاؤك.",
+      "fr": "Un petit robot à visière dont les yeux s’allument de la couleur de ce que font tes agents.",
+      "bn": "ভাইজর পরা ছোট্ট রোবট, যার চোখ আপনার এজেন্টদের কাজের রঙে জ্বলে।",
+      "pt-BR": "Um robozinho com viseira cujos olhos acendem na cor do que seus agentes estão fazendo.",
+      "ru": "Маленький робот с визором: его глаза светятся цветом того, что делают ваши агенты.",
+      "id": "Robot kecil bervisor yang matanya menyala sesuai warna kegiatan agenmu.",
+      "de": "Ein kleiner Roboter mit Visier, dessen Augen in der Farbe dessen leuchten, was deine Agenten tun.",
+      "tr": "Gözleri ajanlarının yaptığı işin renginde yanan, vizörlü küçük bir robot."
+     }
+    },
+    {
+     "icon": "bell",
+     "title": {
+      "en": "Sounds of its own",
+      "zh-Hans": "全新音效",
+      "hi": "अपनी आवाज़ें",
+      "es": "Sonidos propios",
+      "ar": "أصوات خاصة به",
+      "fr": "Ses propres sons",
+      "bn": "নিজস্ব শব্দ",
+      "pt-BR": "Sons próprios",
+      "ru": "Собственные звуки",
+      "id": "Suara sendiri",
+      "de": "Eigene Klänge",
+      "tr": "Kendi sesleri"
+     },
+     "detail": {
+      "en": "Every beep and chirp is new, made for NEO.",
+      "zh-Hans": "每一声提示音都是为 NEO 全新制作的。",
+      "hi": "हर बीप और चहचहाहट नई है, NEO के लिए बनाई गई।",
+      "es": "Cada pitido y cada blip son nuevos, hechos para NEO.",
+      "ar": "كل صفارة ونغمة جديدة، صُنعت من أجل NEO.",
+      "fr": "Chaque bip est nouveau, fait pour NEO.",
+      "bn": "প্রতিটি বিপ আর টুংটাং নতুন, NEO-র জন্য বানানো।",
+      "pt-BR": "Cada bipe é novo, feito para o NEO.",
+      "ru": "Каждый сигнал новый и создан для NEO.",
+      "id": "Setiap bunyi bip baru, dibuat untuk NEO.",
+      "de": "Jeder Piepton ist neu und für NEO gemacht.",
+      "tr": "Her bip sesi yeni ve NEO için yapıldı."
+     }
+    },
+    {
+     "icon": "bug",
+     "title": {
+      "en": "The island on scaled screens",
+      "zh-Hans": "缩放屏幕上的岛",
+      "hi": "स्केल की गई स्क्रीन पर आइलैंड",
+      "es": "La isla en pantallas escaladas",
+      "ar": "الشريط على الشاشات المكبّرة",
+      "fr": "L’île sur les écrans mis à l’échelle",
+      "bn": "স্কেল করা স্ক্রিনে আইল্যান্ড",
+      "pt-BR": "A ilha em telas com escala",
+      "ru": "Остров на масштабированных экранах",
+      "id": "Pulau di layar berskala",
+      "de": "Die Insel auf skalierten Bildschirmen",
+      "tr": "Ölçeklenmiş ekranlarda ada"
+     },
+     "detail": {
+      "en": "It peeks out again when you hover the top of the screen, and the dictation pill stays in its place.",
+      "zh-Hans": "鼠标移到屏幕顶部时它会重新探出头来，听写胶囊也会待在原位。",
+      "hi": "स्क्रीन के ऊपर माउस ले जाने पर यह फिर झाँकता है, और डिक्टेशन पिल अपनी जगह रहती है।",
+      "es": "Vuelve a asomarse al pasar el ratón por arriba, y la pill de dictado se queda en su sitio.",
+      "ar": "يطلّ من جديد عند تمرير المؤشر أعلى الشاشة، ويبقى شريط الإملاء في مكانه.",
+      "fr": "Elle réapparaît quand tu survoles le haut de l’écran, et la pastille de dictée reste à sa place.",
+      "bn": "স্ক্রিনের উপরে মাউস নিলে আবার উঁকি দেয়, আর ডিক্টেশন পিল নিজের জায়গায় থাকে।",
+      "pt-BR": "Ela volta a aparecer ao passar o mouse no topo da tela, e a pílula de ditado fica no lugar.",
+      "ru": "Он снова выглядывает, когда вы наводите курсор на верх экрана, а капсула диктовки остаётся на месте.",
+      "id": "Muncul lagi saat kursor di atas layar, dan pil dikte tetap di tempatnya.",
+      "de": "Sie zeigt sich wieder, wenn du über den oberen Bildschirmrand fährst, und die Diktierpille bleibt an ihrem Platz.",
+      "tr": "Ekranın üstüne gelince yeniden görünür, dikte hapı da yerinde kalır."
+     }
+    }
+   ]
+  }
+ ]
+}

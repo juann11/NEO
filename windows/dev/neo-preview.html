@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NEO — vista del personaje</title>
+    <style>
+      body { margin: 0; font: 12px system-ui; color: #cbd5e1; background: #0b0b0c; }
+      .fila { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px; }
+      .fila.clara { background: #e5e7eb; color: #1f2937; }
+      figure { margin: 0; text-align: center; }
+      canvas { width: 120px; height: 120px; display: block; }
+    </style>
+  </head>
+  <body>
+    <div class="fila" id="oscura"></div>
+    <div class="fila clara" id="clara"></div>
+    <div class="fila" id="sonidos"></div>
+    <script type="module" src="./neo-preview.ts"></script>
+  </body>
+</html>
