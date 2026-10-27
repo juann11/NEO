@@ -21,8 +21,10 @@ export class IslandStateMachine {
     this.homeDelay = seconds;
     if (this.state === "home" && this.homeCollapse != null) this.scheduleHomeCollapse();
   }
-  /** petit → hidden delay, seconds. */
+  /** petit → hidden delay, seconds, when an agent's work showed the island. */
   petitToHiddenDelay = 60;
+  /** petit → hidden once the mouse has left, seconds: short, the bar sits over the browser's tabs. */
+  petitLeaveDelay = 3;
   /** neo → petit once the greeting animation ends (no hover). */
   greetAutoCollapseDelay = 0.6;
   /** neo → petit while the mouse hovers the greeting. */
@@ -48,7 +50,7 @@ export class IslandStateMachine {
    */
   homeCollapseDueAt: number | null = null;
 
-  private homeDelay = 15;
+  private homeDelay = 5;
   private byHover = false;
   private petitHide: number | null = null;
   private homeCollapse: number | null = null;
@@ -90,7 +92,7 @@ export class IslandStateMachine {
       case "hidden":
         break;
       case "petit":
-        this.schedulePetitHide();
+        this.schedulePetitHide(this.petitLeaveDelay);
         break;
       case "home":
         this.scheduleHomeCollapse();
@@ -156,7 +158,7 @@ export class IslandStateMachine {
 
   // ── Timers ──────────────────────────────────────────────────────────────────
 
-  private schedulePetitHide() {
+  private schedulePetitHide(seconds = this.petitToHiddenDelay) {
     this.clear("petitHide");
     // A card folded away while it waits for an answer keeps the compact island
     // on screen, so it can be reopened (isHeldOpen on macOS).
@@ -164,7 +166,7 @@ export class IslandStateMachine {
     this.petitHide = window.setTimeout(() => {
       this.petitHide = null;
       if (this.state === "petit" && !this.pinned) this.transition("hidden");
-    }, this.petitToHiddenDelay * 1000);
+    }, seconds * 1000);
   }
 
   private scheduleHomeCollapse() {

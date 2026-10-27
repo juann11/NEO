@@ -58,19 +58,19 @@ test("the mouse wakes a hidden island, which stays while it is hovered", () => {
   assert.equal(fsm.state, "petit");
 });
 
-test("the compact island hides 60 s after the mouse leaves", () => {
+test("the compact island hides 3 s after the mouse leaves, so it frees the browser tabs", () => {
   fsm.mouseEntered();
   fsm.mouseLeft();
-  seconds(59);
+  seconds(2.9);
   assert.equal(fsm.state, "petit");
-  seconds(1);
+  seconds(0.1);
   assert.equal(fsm.state, "hidden");
 });
 
-test("coming back before the 60 s are up cancels the hide", () => {
+test("coming back before the 3 s are up cancels the hide", () => {
   fsm.mouseEntered();
   fsm.mouseLeft();
-  seconds(59);
+  seconds(2.9);
   fsm.mouseEntered();
   seconds(600);
   assert.equal(fsm.state, "petit");
@@ -87,19 +87,19 @@ test("a click opens the compact island, and only the compact island", () => {
   assert.deepEqual(transitions, ["hidden>petit", "petit>home"]);
 });
 
-test("the open island collapses 15 s after the mouse leaves", () => {
+test("the open island collapses 5 s after the mouse leaves", () => {
   fsm.forceHome();
   fsm.mouseLeft();
-  seconds(14);
+  seconds(4.9);
   assert.equal(fsm.state, "home");
-  seconds(1);
+  seconds(0.1);
   assert.equal(fsm.state, "petit");
 });
 
 test("coming back to the open island cancels the collapse", () => {
   fsm.forceHome();
   fsm.mouseLeft();
-  seconds(14);
+  seconds(4);
   fsm.mouseEntered();
   seconds(600);
   assert.equal(fsm.state, "home");
@@ -125,6 +125,33 @@ test("reveal shows the compact island from hidden and hides it again after 60 s"
   fsm.reveal();
   assert.equal(fsm.state, "petit");
   seconds(60);
+  assert.equal(fsm.state, "hidden");
+});
+
+// Como hace la isla (island.ts): cada paso a compacta con el ratón fuera llama a mouseLeft().
+const likeTheIsland = () => {
+  fsm.onTransition = (from, to) => {
+    transitions.push(`${from}>${to}`);
+    if (to === "petit") fsm.mouseLeft();
+  };
+};
+
+test("after a clicked island folds, the compact bar is gone 3 s later", () => {
+  likeTheIsland();
+  fsm.forceHome();
+  fsm.mouseLeft();
+  seconds(5);
+  assert.equal(fsm.state, "petit");
+  seconds(3);
+  assert.equal(fsm.state, "hidden");
+});
+
+test("an agent's reveal keeps the compact island 60 s even with the mouse outside", () => {
+  likeTheIsland();
+  fsm.reveal();
+  seconds(59);
+  assert.equal(fsm.state, "petit");
+  seconds(1);
   assert.equal(fsm.state, "hidden");
 });
 
@@ -173,7 +200,7 @@ function opened(delay) {
   assert.equal(fsm.state, "home");
 }
 
-test("a configured 2-second delay replaces the default 15 seconds", () => {
+test("a configured 2-second delay replaces the default 5 seconds", () => {
   opened(2);
   fsm.mouseLeft();
   seconds(1.9);
@@ -305,7 +332,7 @@ test("a folded card keeps the compact island on screen until it is answered", ()
 
 test("an unusable delay is ignored", () => {
   for (const bad of [NaN, -1, Infinity]) fsm.homeToPetitDelay = bad;
-  assert.equal(fsm.homeToPetitDelay, 15);
+  assert.equal(fsm.homeToPetitDelay, 5);
 });
 
 // ── Open on hover ────────────────────────────────────

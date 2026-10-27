@@ -99,7 +99,7 @@ impl Default for Settings {
         Self {
             sound_enabled: true,
             sound_volume: 0.12,
-            auto_close_interval: 15.0,
+            auto_close_interval: 5.0,
             open_on_hover: false,
             absence_interval: 180.0,
             active_integrations: vec![
