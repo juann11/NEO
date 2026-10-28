@@ -122,8 +122,8 @@ export function buildHeader(actions: ViewActions): ViewHost {
   const tabChat = h("button", { class: "tab", title: tl("Ask"), onclick: () => go("prompt") }, svg(ICONS.bubble, 13));
   const tabDrop = h("button", { class: "tab", title: tl("Drop"), onclick: () => go("upload") }, svg(ICONS.plus, 13));
 
-  const windowBtn = h("button", { title: tl("Open NEO"), onclick: () => actions.openMainWindow() }, svg(ICONS.arrowUpRight, 14));
-  const gearBtn = h("button", { title: tl("Settings"), onclick: () => go("settings") }, svg(ICONS.gear, 14));
+  // El engranaje abre la ventana de NEO, donde están todos los ajustes.
+  const gearBtn = h("button", { title: tl("Settings"), onclick: () => actions.openMainWindow() }, svg(ICONS.gear, 14));
   const soundBtn = h("button", { title: tl("Mute"), onclick: () => actions.toggleSound() }, svg(ICONS.speakerOn, 14));
   // Plan usage pills (off by default): before the gear, Claude first, as on the Mac.
   const claudePill = buildPlanPill(false);
@@ -140,7 +140,7 @@ export function buildHeader(actions: ViewActions): ViewHost {
     "div",
     { id: "header" },
     h("div", { class: "tabs" }, tabHome, tabChat, tabDrop),
-    h("div", { class: "header-actions" }, planPills, windowBtn, gearBtn, soundBtn),
+    h("div", { class: "header-actions" }, planPills, gearBtn, soundBtn),
   );
   const headerActions = el.lastElementChild as HTMLElement;
 
