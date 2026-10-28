@@ -95,6 +95,8 @@ export const Bridge = {
   quit: () => call<void>("quit_app"),
 
   openSettingsWindow: () => call<void>("open_settings_window"),
+  /** La ventana principal, en su primera página (el botón ↗ de la isla). */
+  openMainWindow: () => call<void>("open_main_window"),
 
   /** Writes to %LOCALAPPDATA%\NEO\neo.log, next to the Rust lines. */
   log: (message: string) => call<void>("log_line", { message }),

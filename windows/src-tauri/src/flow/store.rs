@@ -120,7 +120,7 @@ impl Default for Prefs {
             cleanup: false,
             default_style: Style::Natural,
             summary_engine: SummaryEngine::Claude,
-            open_at_launch: true,
+            open_at_launch: false,
             voice: false,
             voice_output: "system".into(),
             voice_gender: "female".into(),
@@ -387,6 +387,6 @@ mod tests {
         assert!(p.enabled);
         assert_eq!(p.key, FlowKey::RightAlt);
         assert_eq!(p.keep_days, 30);
-        assert!(p.open_at_launch);
+        assert!(!p.open_at_launch, "la ventana no se abre sola al arrancar");
     }
 }

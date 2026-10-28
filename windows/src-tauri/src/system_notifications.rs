@@ -203,29 +203,47 @@ pub fn start(app: AppHandle) {
         .name("neo-notifications".into())
         .spawn(move || {
             let mut last: Option<i64> = None;
-            let mut seen = None;
+            let mut stamp_seen = None;
             let mut warned = false;
+            // Avisos de Windows: los que NEO apagó (en disco), las apps vistas y las que el usuario ya tenía apagadas.
+            let mut hidden = load_hidden();
+            let mut apps_seen: Vec<String> = Vec::new();
+            let mut left_alone: Vec<String> = Vec::new();
             loop {
                 std::thread::sleep(Duration::from_secs(2));
-                let Some(muted) = wanted(&app) else {
+                let wanted_now = wanted(&app);
+                let enabled = wanted_now.is_some();
+                let muted = wanted_now.unwrap_or_default();
+                apply_banners(enabled, &apps_seen, &muted, &mut hidden, &mut left_alone);
+                if !enabled {
                     last = None;
-                    continue;
-                };
-                let now = stamp(&db_path);
-                if last.is_some() && now == seen {
+                    apps_seen.clear();
                     continue;
                 }
-                seen = now;
-                let read = open_read_only(&db_path).and_then(|db| match last {
-                    None => latest_id(&db).map(|id| (id, Vec::new())),
-                    Some(after) => new_toasts(&db, after, &muted).map(|t| (t.last().map_or(after, |x| x.id), t)),
+                let now = stamp(&db_path);
+                if last.is_some() && now == stamp_seen {
+                    continue;
+                }
+                stamp_seen = now;
+                let read: rusqlite::Result<(i64, Vec<Toast>, Vec<String>)> = open_read_only(&db_path).and_then(|db| match last {
+                    // Al encenderse: ni repasa los viejos ni deja que sus apps sigan saliendo en Windows.
+                    None => Ok((latest_id(&db)?, Vec::new(), apps(&db)?.into_iter().map(|a| a.id).collect())),
+                    Some(after) => new_toasts(&db, after, &muted).map(|t| {
+                        let ids = t.iter().map(|x| x.app_id.clone()).collect();
+                        (t.last().map_or(after, |x| x.id), t, ids)
+                    }),
                 });
                 match read {
-                    Ok((id, toasts)) => {
+                    Ok((id, toasts, ids)) => {
                         last = Some(last.map_or(id, |l| l.max(id)));
                         warned = false;
                         if let Some(newest) = toasts.last() {
                             let _ = app.emit_to(crate::island::WINDOW_LABEL, EVENT, newest);
+                        }
+                        for app_id in ids {
+                            if !apps_seen.iter().any(|a: &String| a.eq_ignore_ascii_case(&app_id)) {
+                                apps_seen.push(app_id);
+                            }
                         }
                     }
                     Err(err) if !warned => {
@@ -237,6 +255,99 @@ pub fn start(app: AppHandle) {
             }
         })
         .ok();
+}
+
+/// Qué avisos emergentes de Windows apagar y cuáles devolver. Con el interruptor encendido se
+/// apagan los de las apps que NEO enseña; se devuelven los que NEO apagó y ya no enseña
+/// (interruptor apagado o app silenciada). `hidden` son los que NEO apagó.
+pub fn banner_plan(enabled: bool, seen: &[String], muted: &[String], hidden: &[String]) -> (Vec<String>, Vec<String>) {
+    let has = |list: &[String], id: &str| list.iter().any(|x| x.eq_ignore_ascii_case(id));
+    let restore = hidden.iter().filter(|id| !enabled || has(muted, id)).cloned().collect();
+    let mut hide: Vec<String> = Vec::new();
+    if enabled {
+        for id in seen {
+            if !silenced(id, muted) && !has(hidden, id) && !has(&hide, id) {
+                hide.push(id.clone());
+            }
+        }
+    }
+    (hide, restore)
+}
+
+/// Por app, Windows guarda aquí si enseña su aviso emergente (`ShowBanner`, 0 = no).
+/// shortcut: valor no documentado por Microsoft (es el interruptor "Mostrar banners" de Configuración); revisar si Windows lo cambia.
+#[cfg(windows)]
+const BANNER_KEY: &str = r"Software\Microsoft\Windows\CurrentVersion\Notifications\Settings";
+
+#[cfg(windows)]
+fn banner_on(app_id: &str) -> bool {
+    use winreg::{RegKey, enums::HKEY_CURRENT_USER};
+    RegKey::predef(HKEY_CURRENT_USER)
+        .open_subkey(format!(r"{BANNER_KEY}\{app_id}"))
+        .and_then(|k| k.get_value::<u32, _>("ShowBanner"))
+        .map_or(true, |v| v != 0)
+}
+
+/// Apaga el aviso (`ShowBanner` = 0) o lo devuelve como estaba (sin el valor: lo que Windows haga por defecto).
+#[cfg(windows)]
+fn set_banner(app_id: &str, on: bool) -> std::io::Result<()> {
+    use std::io::ErrorKind;
+    use winreg::{RegKey, enums::{HKEY_CURRENT_USER, KEY_SET_VALUE}};
+    let hkcu = RegKey::predef(HKEY_CURRENT_USER);
+    let path = format!(r"{BANNER_KEY}\{app_id}");
+    if !on {
+        let (key, _) = hkcu.create_subkey(&path)?;
+        return key.set_value("ShowBanner", &0u32);
+    }
+    match hkcu.open_subkey_with_flags(&path, KEY_SET_VALUE).and_then(|k| k.delete_value("ShowBanner")) {
+        Err(e) if e.kind() != ErrorKind::NotFound => Err(e),
+        _ => Ok(()),
+    }
+}
+
+#[cfg(not(windows))]
+fn banner_on(_app_id: &str) -> bool {
+    false
+}
+
+#[cfg(not(windows))]
+fn set_banner(_app_id: &str, _on: bool) -> std::io::Result<()> {
+    Ok(())
+}
+
+/// Las apps a las que NEO apagó el aviso, guardadas para devolvérselo aunque NEO se reinicie.
+fn hidden_file() -> PathBuf {
+    crate::settings::config_dir().join("hidden-banners.json")
+}
+
+fn load_hidden() -> Vec<String> {
+    std::fs::read(hidden_file()).ok().and_then(|b| serde_json::from_slice(&b).ok()).unwrap_or_default()
+}
+
+/// Aplica `banner_plan`: apaga los avisos que tocan (solo si Windows los enseñaba) y devuelve los demás.
+fn apply_banners(enabled: bool, seen: &[String], muted: &[String], hidden: &mut Vec<String>, left_alone: &mut Vec<String>) {
+    let (hide, restore) = banner_plan(enabled, seen, muted, hidden);
+    let before = hidden.len();
+    let mut changed = false;
+    for id in restore {
+        if set_banner(&id, true).is_ok() {
+            hidden.retain(|h| !h.eq_ignore_ascii_case(&id));
+            changed = true;
+        }
+    }
+    let hide: Vec<String> = hide.into_iter().filter(|id| !left_alone.iter().any(|l| l.eq_ignore_ascii_case(id))).collect();
+    for id in hide {
+        // Un aviso que el usuario ya tenía apagado es suyo: NEO no lo apunta ni lo devuelve luego.
+        if !banner_on(&id) {
+            left_alone.push(id);
+        } else if set_banner(&id, false).is_ok() {
+            hidden.push(id);
+        }
+    }
+    if changed || hidden.len() != before {
+        let _ = std::fs::create_dir_all(crate::settings::config_dir());
+        let _ = std::fs::write(hidden_file(), serde_json::to_vec(hidden).unwrap_or_default());
+    }
 }
 
 /// La isla escucha este evento con el `Toast`.
@@ -333,6 +444,32 @@ mod tests {
         assert!(last > 0, "Windows guarda los toasts aquí");
         assert!(new_toasts(&db, last, &[]).unwrap().is_empty());
         println!("apps con toasts: {}", apps(&db).unwrap().len());
+    }
+
+    fn ids(list: &[&str]) -> Vec<String> {
+        list.iter().map(|s| s.to_string()).collect()
+    }
+
+    #[test]
+    fn banners_of_the_apps_neo_shows_go_off_once() {
+        let seen = ids(&["WhatsApp!App", "Teams", "dev.neo.app", "OneDrive"]);
+        let (hide, restore) = banner_plan(true, &seen, &ids(&["onedrive"]), &ids(&["teams"]));
+        assert_eq!(hide, ids(&["WhatsApp!App"]), "ni la silenciada, ni NEO, ni la que ya está apagada");
+        assert!(restore.is_empty());
+    }
+
+    #[test]
+    fn turning_the_switch_off_gives_every_banner_back() {
+        let (hide, restore) = banner_plan(false, &ids(&["WhatsApp!App"]), &[], &ids(&["WhatsApp!App", "Teams"]));
+        assert!(hide.is_empty());
+        assert_eq!(restore, ids(&["WhatsApp!App", "Teams"]));
+    }
+
+    #[test]
+    fn muting_an_app_in_neo_gives_its_banner_back() {
+        let (hide, restore) = banner_plan(true, &ids(&["WhatsApp!App", "Teams"]), &ids(&["TEAMS"]), &ids(&["WhatsApp!App", "Teams"]));
+        assert!(hide.is_empty());
+        assert_eq!(restore, ids(&["Teams"]));
     }
 
     #[test]

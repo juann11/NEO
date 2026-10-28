@@ -250,6 +250,7 @@ export class Island {
         State.notify();
       },
       openSettingsWindow: () => void Bridge.openSettingsWindow(),
+      openMainWindow: () => void Bridge.openMainWindow(),
       blip: () => Sound.play("blip"),
       chooseOutfit: (selection) => {
         if (parseOutfit(State.settings.neoOutfit) === selection) return;

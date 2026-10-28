@@ -1051,7 +1051,7 @@ function notificationRows(): HTMLElement[] {
       h("label", { text: t("Windows notifications") }),
       toggle(settings.systemNotifications, (v) => { settings.systemNotifications = v; void save(); fill(); }),
     ),
-    h("div", { class: "hint", text: t("When an app shows a Windows notification, the island opens with it. NEO reads them on this computer only and sends them nowhere.") }),
+    h("div", { class: "hint", text: t("When an app shows a Windows notification, the island opens with it, and Windows stops showing its own pop-up for that app. NEO reads them on this computer only and sends them nowhere.") }),
     apps,
   ];
 }

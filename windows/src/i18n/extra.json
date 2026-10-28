@@ -5468,19 +5468,6 @@
       "de": "Windows-Benachrichtigungen",
       "tr": "Windows bildirimleri"
     },
-    "When an app shows a Windows notification, the island opens with it. NEO reads them on this computer only and sends them nowhere.": {
-      "zh-Hans": "当应用显示 Windows 通知时，岛会打开并显示它。NEO 只在这台电脑上读取通知，不会发送到任何地方。",
-      "hi": "जब कोई ऐप Windows सूचना दिखाता है, तो आइलैंड उसके साथ खुल जाता है। NEO उन्हें सिर्फ़ इसी कंप्यूटर पर पढ़ता है और कहीं नहीं भेजता।",
-      "es": "Cuando una app muestra una notificación de Windows, la isla se abre con ella. NEO las lee solo en este equipo y no las envía a ningún sitio.",
-      "ar": "عندما يعرض تطبيق إشعارًا من Windows، يفتح الشريط ويعرضه. يقرأ NEO الإشعارات على هذا الكمبيوتر فقط ولا يرسلها إلى أي مكان.",
-      "fr": "Quand une app affiche une notification Windows, l’île s’ouvre avec elle. NEO les lit sur cet ordinateur seulement et ne les envoie nulle part.",
-      "bn": "কোনো অ্যাপ Windows বিজ্ঞপ্তি দেখালে আইল্যান্ড সেটি নিয়ে খুলে যায়। NEO শুধু এই কম্পিউটারেই সেগুলো পড়ে, কোথাও পাঠায় না।",
-      "pt-BR": "Quando um app mostra uma notificação do Windows, a ilha se abre com ela. O NEO as lê só neste computador e não as envia para lugar nenhum.",
-      "ru": "Когда приложение показывает уведомление Windows, остров открывается с ним. NEO читает их только на этом компьютере и никуда не отправляет.",
-      "id": "Saat aplikasi menampilkan notifikasi Windows, pulau terbuka bersamanya. NEO hanya membacanya di komputer ini dan tidak mengirimnya ke mana pun.",
-      "de": "Wenn eine App eine Windows-Benachrichtigung zeigt, öffnet sich die Insel damit. NEO liest sie nur auf diesem Computer und sendet sie nirgendwohin.",
-      "tr": "Bir uygulama Windows bildirimi gösterdiğinde ada onunla açılır. NEO bildirimleri yalnızca bu bilgisayarda okur ve hiçbir yere göndermez."
-    },
     "Apps that open the island": {
       "zh-Hans": "会打开岛的应用",
       "hi": "ऐप जो आइलैंड खोलते हैं",
@@ -5506,6 +5493,19 @@
       "id": "Belum ada aplikasi yang menampilkan notifikasi.",
       "de": "Noch keine App hat eine Benachrichtigung gezeigt.",
       "tr": "Henüz hiçbir uygulama bildirim göstermedi."
+    },
+    "When an app shows a Windows notification, the island opens with it, and Windows stops showing its own pop-up for that app. NEO reads them on this computer only and sends them nowhere.": {
+      "zh-Hans": "当应用显示 Windows 通知时，岛会打开并显示它，Windows 也不再为该应用弹出自己的通知。NEO 只在这台电脑上读取通知，不会发送到任何地方。",
+      "hi": "जब कोई ऐप Windows सूचना दिखाता है, तो आइलैंड उसके साथ खुल जाता है और Windows उस ऐप का अपना पॉप-अप दिखाना बंद कर देता है। NEO उन्हें सिर्फ़ इसी कंप्यूटर पर पढ़ता है और कहीं नहीं भेजता।",
+      "es": "Cuando una app muestra una notificación de Windows, la isla se abre con ella y Windows deja de mostrar su propio aviso para esa app. NEO las lee solo en este equipo y no las envía a ningún sitio.",
+      "ar": "عندما يعرض تطبيق إشعارًا من Windows، يفتح الشريط ويعرضه، ويتوقف Windows عن عرض نافذته المنبثقة لهذا التطبيق. يقرأ NEO الإشعارات على هذا الكمبيوتر فقط ولا يرسلها إلى أي مكان.",
+      "fr": "Quand une app affiche une notification Windows, l’île s’ouvre avec elle et Windows n’affiche plus sa propre bannière pour cette app. NEO les lit sur cet ordinateur seulement et ne les envoie nulle part.",
+      "bn": "কোনো অ্যাপ Windows বিজ্ঞপ্তি দেখালে আইল্যান্ড সেটি নিয়ে খুলে যায়, আর Windows সেই অ্যাপের নিজের পপ-আপ দেখানো বন্ধ করে। NEO শুধু এই কম্পিউটারেই সেগুলো পড়ে, কোথাও পাঠায় না।",
+      "pt-BR": "Quando um app mostra uma notificação do Windows, a ilha se abre com ela e o Windows deixa de mostrar o próprio aviso desse app. O NEO as lê só neste computador e não as envia para lugar nenhum.",
+      "ru": "Когда приложение показывает уведомление Windows, остров открывается с ним, а Windows перестаёт показывать для этого приложения своё всплывающее окно. NEO читает их только на этом компьютере и никуда не отправляет.",
+      "id": "Saat aplikasi menampilkan notifikasi Windows, pulau terbuka bersamanya dan Windows berhenti menampilkan pop-up sendiri untuk aplikasi itu. NEO hanya membacanya di komputer ini dan tidak mengirimnya ke mana pun.",
+      "de": "Wenn eine App eine Windows-Benachrichtigung zeigt, öffnet sich die Insel damit, und Windows zeigt für diese App kein eigenes Pop-up mehr. NEO liest sie nur auf diesem Computer und sendet sie nirgendwohin.",
+      "tr": "Bir uygulama Windows bildirimi gösterdiğinde ada onunla açılır ve Windows o uygulama için kendi açılır penceresini göstermeyi bırakır. NEO bildirimleri yalnızca bu bilgisayarda okur ve hiçbir yere göndermez."
     }
   }
 }

@@ -764,6 +764,12 @@ fn open_settings_window(app: AppHandle, page: Option<String>) {
     show_hub(&app, Some(page.as_deref().unwrap_or("general")));
 }
 
+/// El botón ↗ de la isla: la ventana principal en su primera página.
+#[tauri::command]
+fn open_main_window(app: AppHandle) {
+    show_hub(&app, None);
+}
+
 pub fn run() {
     platform::prepare_environment();
     let loaded = settings::load();
@@ -843,6 +849,7 @@ pub fn run() {
             github_refresh,
             open_n8n,
             open_settings_window,
+            open_main_window,
             set_paused,
             shortcuts_status,
             shortcuts_suspend,
