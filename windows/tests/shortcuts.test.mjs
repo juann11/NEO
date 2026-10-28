@@ -14,6 +14,9 @@ import {
 import { registerShortcutHandlers, runGlobalShortcut, runIslandKey } from "../src/island/shortcuts.ts";
 import { DEFAULT_SETTINGS, State } from "../src/core/state.ts";
 
+// Estos tests necesitan otras pestañas además de la principal: los servicios que antes venían de fábrica.
+const WITH_SERVICES = { ...DEFAULT_SETTINGS, activeIntegrations: ["integration_resend", "integration_n8n", "integration_vercel", "integration_github"] };
+
 const MAC_IDS = [
   "toggleIsland", "openChat", "goToAlert", "jumpToTerminal", "attachFrontWindow",
   "nextPill", "prevPill", "muteToggle", "desktopToggle", "wardrobeToggle",
@@ -304,7 +307,7 @@ beforeEach(() => {
   State.pendingApproval = null;
   State.stateOverride = null;
   State.chatHistory = [];
-  State.settings = { ...DEFAULT_SETTINGS };
+  State.settings = { ...WITH_SERVICES };
   State.neoOnDesktop = false;
   State.cardSelection = null;
   State.cardItemCount = 0;

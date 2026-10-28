@@ -106,12 +106,8 @@ impl Default for Settings {
             auto_close_interval: 5.0,
             open_on_hover: false,
             absence_interval: 180.0,
-            active_integrations: vec![
-                "integration_resend".into(),
-                "integration_n8n".into(),
-                "integration_vercel".into(),
-                "integration_github".into(),
-            ],
+            // Ningún servicio de fábrica: cada uno se añade en Integraciones.
+            active_integrations: Vec::new(),
             main_pill: "integration_claude".into(),
             screen: "primary".into(),
             autostart: false,

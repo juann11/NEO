@@ -13,6 +13,9 @@ import {
 import { registerIntegrationHandlers } from "../src/island/integrations.ts";
 import { DEFAULT_SETTINGS, State } from "../src/core/state.ts";
 
+// Estos tests necesitan otras pestañas además de la principal: los servicios que antes venían de fábrica.
+const WITH_SERVICES = { ...DEFAULT_SETTINGS, activeIntegrations: ["integration_resend", "integration_n8n", "integration_vercel", "integration_github"] };
+
 const GITHUB = "integration_github";
 
 // ── Fixtures ──────────────────────────────────────
@@ -177,7 +180,7 @@ beforeEach(() => {
   State.focusId = null;
   State.mode = "hidden";
   State.paused = false;
-  State.settings = { ...DEFAULT_SETTINGS };
+  State.settings = { ...WITH_SERVICES };
   State.loadIntegrationTasks();
 });
 

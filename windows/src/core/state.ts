@@ -168,9 +168,8 @@ export const DEFAULT_SETTINGS: Settings = {
   systemNotifications: false,
   mutedNotificationApps: [],
   absenceInterval: 180,
-  activeIntegrations: [
-    "integration_resend", "integration_n8n", "integration_vercel", "integration_github",
-  ],
+  // Ningún servicio de fábrica: cada uno se añade en Integraciones.
+  activeIntegrations: [],
   mainPill: DEFAULT_MAIN_PILL,
   screen: "primary",
   autostart: false,

@@ -881,6 +881,7 @@ pub fn run() {
             spotify::spotify_installed,
             whatsapp::whatsapp_island,
             system_notifications::system_notification_apps,
+            system_notifications::open_notification_app,
             whatsapp::whatsapp_open,
             whatsapp::whatsapp_close,
             whatsapp::whatsapp_send,

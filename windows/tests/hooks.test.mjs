@@ -7,6 +7,9 @@ import assert from "node:assert/strict";
 import { calls, emit, sent } from "./tauri.mjs";
 import { registerHookHandlers } from "../src/island/hooks.ts";
 import { DEFAULT_SETTINGS, State } from "../src/core/state.ts";
+
+// Estos tests necesitan otras pestañas además de la principal: los servicios que antes venían de fábrica.
+const WITH_SERVICES = { ...DEFAULT_SETTINGS, activeIntegrations: ["integration_resend", "integration_n8n", "integration_vercel", "integration_github"] };
 import { Sound } from "../src/core/sound.ts";
 import { setLanguage } from "../src/i18n/i18n.ts";
 
@@ -38,7 +41,7 @@ beforeEach(() => {
   State.paused = false;
   State.isPinned = false;
   State.pendingApproval = null;
-  State.settings = { ...DEFAULT_SETTINGS };
+  State.settings = { ...WITH_SERVICES };
   State.loadIntegrationTasks();
 });
 

@@ -350,6 +350,24 @@ fn apply_banners(enabled: bool, seen: &[String], muted: &[String], hidden: &mut 
     }
 }
 
+/// Solo se abre una app que de verdad ha mandado notificaciones: lo que pide la página no se lanza tal cual.
+pub fn may_open(app_id: &str, known: &[App]) -> bool {
+    !app_id.is_empty() && known.iter().any(|a| a.id.eq_ignore_ascii_case(app_id))
+}
+
+/// El botón "Abrir" de la tarjeta: abre la app que mandó la notificación por su id de Windows.
+#[tauri::command]
+pub fn open_notification_app(app_id: String) -> Result<(), String> {
+    if !may_open(&app_id, &system_notification_apps()) {
+        return Err(format!("unknown app {app_id}"));
+    }
+    std::process::Command::new("explorer.exe")
+        .arg(format!(r"shell:AppsFolder\{app_id}"))
+        .spawn()
+        .map(|_| ())
+        .map_err(|e| e.to_string())
+}
+
 /// La isla escucha este evento con el `Toast`.
 const EVENT: &str = "system-notification";
 
@@ -470,6 +488,14 @@ mod tests {
         let (hide, restore) = banner_plan(true, &ids(&["WhatsApp!App", "Teams"]), &ids(&["TEAMS"]), &ids(&["WhatsApp!App", "Teams"]));
         assert!(hide.is_empty());
         assert_eq!(restore, ids(&["Teams"]));
+    }
+
+    #[test]
+    fn only_an_app_that_sent_a_notification_can_be_opened() {
+        let known = vec![App { id: "5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App".into(), name: "WhatsApp".into() }];
+        assert!(may_open("5319275a.whatsappdesktop_cv1g1gvanyjgm!app", &known));
+        assert!(!may_open("Microsoft.WindowsCalculator_8wekyb3d8bbwe!App", &known), "una app que no mandó nada");
+        assert!(!may_open("", &known));
     }
 
     #[test]

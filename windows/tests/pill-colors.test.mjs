@@ -8,6 +8,9 @@ import { PILL_PALETTE, normalizeHex, parsePillColors, pillColor, withPillColor }
 import { PILL_CATALOG, pillDefinition } from "../src/core/pills.ts";
 import { DEFAULT_SETTINGS, State } from "../src/core/state.ts";
 
+// Estos tests necesitan otras pestañas además de la principal: los servicios que antes venían de fábrica.
+const WITH_SERVICES = { ...DEFAULT_SETTINGS, activeIntegrations: ["integration_resend", "integration_n8n", "integration_vercel", "integration_github"] };
+
 const VS_CODE = pillDefinition("integration_claude").color;
 const TEAL = "#2DD4BF";
 
@@ -69,7 +72,7 @@ beforeEach(() => {
   State.tasks = [];
   State.focusId = null;
   State.os = "windows";
-  State.settings = { ...DEFAULT_SETTINGS };
+  State.settings = { ...WITH_SERVICES };
 });
 
 const colorOf = (id) => State.tasks.find((t) => t.id === id)?.color;

@@ -238,6 +238,8 @@ export const Bridge = {
   whatsappIsland: () => call<WaIslandView>("whatsapp_island"),
   /** Las apps que han mandado notificaciones de Windows, para elegirlas en Ajustes. */
   systemNotificationApps: () => call<{ id: string; name: string }[]>("system_notification_apps"),
+  /** Abre la app que mandó una notificación (Rust solo abre apps que de verdad mandaron alguna). */
+  openNotificationApp: (appId: string) => call<void>("open_notification_app", { appId }),
   /** A conversation opened in the card: its latest messages, the receipt if Settings says so. */
   whatsappOpen: (chat: string) => call<void>("whatsapp_open", { chat }),
   whatsappClose: (chat: string) => call<void>("whatsapp_close", { chat }),

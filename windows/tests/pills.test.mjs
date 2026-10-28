@@ -253,11 +253,9 @@ test("the main pill always loads, the declared ones join it, and focus starts on
 });
 
 test("an old settings file gets Claude Code as its main pill and keeps its integrations", () => {
-  State.settings = { ...DEFAULT_SETTINGS, mainPill: undefined };
+  State.settings = { ...DEFAULT_SETTINGS, mainPill: undefined, activeIntegrations: ["integration_resend", "integration_github"] };
   State.loadIntegrationTasks();
-  assert.deepEqual(ids(), [
-    "integration_claude", "integration_resend", "integration_n8n", "integration_vercel", "integration_github",
-  ]);
+  assert.deepEqual(ids(), ["integration_claude", "integration_resend", "integration_github"]);
   assert.equal(State.settings.mainPill, "integration_claude");
   assert.equal(State.tasks[0].name, "Claude Code");
 });
@@ -341,4 +339,11 @@ test("the Claude Code idle card keeps the agent title when the task has a projec
   assert.ok(card.textContent.includes("Claude Code"));
   assert.ok(!card.textContent.includes("my-project"));
   assert.ok(card.textContent.includes("Open Visual Studio Code"));
+});
+
+test("a fresh NEO pins no service: you add the ones you use in Integrations", () => {
+  assert.deepEqual(DEFAULT_SETTINGS.activeIntegrations, []);
+  State.settings = { ...DEFAULT_SETTINGS };
+  State.loadIntegrationTasks();
+  assert.deepEqual(ids(), ["integration_claude"]);
 });
