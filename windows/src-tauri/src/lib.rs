@@ -264,8 +264,7 @@ fn open_gitea_url(url: String) {
 }
 
 /// "Open terminal" opens the working folder in VS Code when `code` is on PATH,
-/// and falls back to the file manager otherwise.
-#[tauri::command]
+/// and falls back to the file manager otherwise. Only open_session calls it.
 fn open_in_vscode(path: Option<String>) -> bool {
     // No shell anywhere near this. The path is a project folder chosen by
     // whoever is using Claude Code, and a shell would happily read `&`, `^`, `%`
@@ -816,7 +815,6 @@ pub fn run() {
             open_gitlab_url,
             open_gitea,
             open_gitea_url,
-            open_in_vscode,
             open_session,
             open_claude_desktop,
             open_file_in_vscode,

@@ -9,6 +9,7 @@ import {
 } from "../src/core/pills.ts";
 import { DEFAULT_SETTINGS, State } from "../src/core/state.ts";
 import { installFakeDom } from "./fakedom.mjs";
+import { sent } from "./tauri.mjs";
 import { renderIntegrationCard } from "../src/views/integrations.ts";
 
 installFakeDom();
@@ -338,7 +339,19 @@ test("the Claude Code idle card keeps the agent title when the task has a projec
   const card = renderIntegrationCard(task, { openSettings() {} });
   assert.ok(card.textContent.includes("Claude Code"));
   assert.ok(!card.textContent.includes("my-project"));
-  assert.ok(card.textContent.includes("Open Visual Studio Code"));
+  assert.ok(!card.textContent.includes("Open Visual Studio Code"));
+});
+
+test("the Claude Code idle card opens the Claude app, not an editor", () => {
+  State.loadIntegrationTasks();
+  const task = State.tasks.find((t) => t.id === "integration_claude");
+  const card = renderIntegrationCard(task, { openSettings() {} });
+  const all = (node) => [node, ...node.children.flatMap(all)];
+  const open = all(card).find((n) => n.tagName === "BUTTON" && n.textContent === "Open Claude");
+  assert.ok(open, "no hay botón Open Claude");
+  const before = sent("open_claude_desktop").length;
+  open.fire("click");
+  assert.equal(sent("open_claude_desktop").length, before + 1);
 });
 
 test("a fresh NEO pins no service: you add the ones you use in Integrations", () => {

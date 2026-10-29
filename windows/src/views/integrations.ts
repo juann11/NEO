@@ -89,16 +89,8 @@ function idleCard(task: AgentTask, openSettings: () => void): HTMLElement {
   const status = idleStatus(task.id, info, State.settings.model);
 
   const actions = h("div", { class: "int-actions" });
-  if (task.id === "integration_claude") {
-    actions.append(
-      h("button", {
-        class: "link-btn",
-        style: `color:${task.color}b3`,
-        text: t("Open Visual Studio Code"),
-        onclick: () => void Bridge.openInVSCode(task.sessionCwd ?? null),
-      }),
-    );
-  } else if (task.id === "agent_claude-desktop") {
+  // Claude Code también abre la app de Claude, donde se usa: no hace falta un editor.
+  if (task.id === "integration_claude" || task.id === "agent_claude-desktop") {
     actions.append(
       h("button", {
         class: "link-btn",

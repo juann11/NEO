@@ -77,7 +77,6 @@ export const Bridge = {
   reloadSounds: () => call<void>("reload_sounds"),
 
   /** "Open terminal" → opens the folder in VS Code when `code` is on PATH. */
-  openInVSCode: (path: string | null) => call<boolean>("open_in_vscode", { path }),
 
   /**
    * "Open terminal": the window the session runs in when Rust found it
