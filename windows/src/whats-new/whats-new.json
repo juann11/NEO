@@ -2,6 +2,104 @@
  "about": "Novedades que NEO muestra una vez en la isla tras actualizarse (src/whats-new/). Cada versión añade aquí su entrada en los 12 idiomas: de 1 a 4 elementos, con un icono de ICON_NAMES, un título corto y una línea.",
  "releases": [
   {
+   "version": "0.1.1",
+   "items": [
+    {
+     "icon": "bell",
+     "title": {
+      "en": "Notifications only in NEO",
+      "zh-Hans": "通知只在 NEO 中显示",
+      "hi": "सूचनाएँ सिर्फ़ NEO में",
+      "es": "Notificaciones solo en NEO",
+      "ar": "الإشعارات في NEO فقط",
+      "fr": "Notifications seulement dans NEO",
+      "bn": "বিজ্ঞপ্তি শুধু NEO-তে",
+      "pt-BR": "Notificações só no NEO",
+      "ru": "Уведомления только в NEO",
+      "id": "Notifikasi hanya di NEO",
+      "de": "Benachrichtigungen nur in NEO",
+      "tr": "Bildirimler yalnızca NEO'da"
+     },
+     "detail": {
+      "en": "Windows stops showing its own pop-up; the island keeps the last 10 and Open takes you to the app.",
+      "zh-Hans": "Windows 不再弹出自己的通知；岛会保留最近 10 条，点“打开”即可进入对应应用。",
+      "hi": "Windows अपना पॉप-अप दिखाना बंद कर देता है; आइलैंड आख़िरी 10 रखता है और खोलें आपको ऐप तक ले जाता है।",
+      "es": "Windows deja de mostrar su propio aviso; la isla guarda las 10 últimas y Abrir te lleva a la app.",
+      "ar": "يتوقف Windows عن عرض نافذته المنبثقة؛ يحتفظ الشريط بآخر 10 ويأخذك زر فتح إلى التطبيق.",
+      "fr": "Windows n’affiche plus sa propre bannière ; l’île garde les 10 dernières et Ouvrir t’amène à l’app.",
+      "bn": "Windows নিজের পপ-আপ দেখানো বন্ধ করে; আইল্যান্ড শেষ ১০টি রাখে আর খুলুন আপনাকে অ্যাপে নিয়ে যায়।",
+      "pt-BR": "O Windows deixa de mostrar o próprio aviso; a ilha guarda as 10 últimas e Abrir leva você ao app.",
+      "ru": "Windows больше не показывает своё окно; остров хранит последние 10, а «Открыть» ведёт в приложение.",
+      "id": "Windows berhenti menampilkan pop-up sendiri; pulau menyimpan 10 terakhir dan Buka membawamu ke aplikasinya.",
+      "de": "Windows zeigt kein eigenes Pop-up mehr; die Insel behält die letzten 10, und Öffnen bringt dich zur App.",
+      "tr": "Windows kendi açılır penceresini göstermez; ada son 10 bildirimi tutar, Aç seni uygulamaya götürür."
+     }
+    },
+    {
+     "icon": "update",
+     "title": {
+      "en": "NEO updates itself",
+      "zh-Hans": "NEO 自动更新",
+      "hi": "NEO ख़ुद अपडेट होता है",
+      "es": "NEO se actualiza solo",
+      "ar": "NEO يحدّث نفسه",
+      "fr": "NEO se met à jour tout seul",
+      "bn": "NEO নিজেই আপডেট হয়",
+      "pt-BR": "O NEO se atualiza sozinho",
+      "ru": "NEO обновляется сам",
+      "id": "NEO memperbarui dirinya sendiri",
+      "de": "NEO aktualisiert sich selbst",
+      "tr": "NEO kendini güncelliyor"
+     },
+     "detail": {
+      "en": "New versions arrive in the island: one click and they install, no downloading by hand.",
+      "zh-Hans": "新版本会出现在岛上：点一下即可安装，无需手动下载。",
+      "hi": "नए संस्करण आइलैंड में आते हैं: एक क्लिक और वे इंस्टॉल हो जाते हैं, हाथ से डाउनलोड नहीं।",
+      "es": "Las versiones nuevas llegan a la isla: un clic y se instalan, sin descargar nada a mano.",
+      "ar": "تصل الإصدارات الجديدة إلى الشريط: نقرة واحدة وتُثبَّت، دون تنزيل يدوي.",
+      "fr": "Les nouvelles versions arrivent dans l’île : un clic et elles s’installent, sans rien télécharger à la main.",
+      "bn": "নতুন সংস্করণ আইল্যান্ডে আসে: এক ক্লিকে ইনস্টল হয়, হাতে ডাউনলোড করতে হয় না।",
+      "pt-BR": "As versões novas chegam na ilha: um clique e elas se instalam, sem baixar nada à mão.",
+      "ru": "Новые версии приходят на остров: один щелчок — и они установлены, без ручной загрузки.",
+      "id": "Versi baru muncul di pulau: sekali klik langsung terpasang, tanpa unduh manual.",
+      "de": "Neue Versionen kommen in der Insel an: ein Klick, und sie werden installiert, ohne Download von Hand.",
+      "tr": "Yeni sürümler adaya gelir: tek tıkla kurulur, elle indirmek yok."
+     }
+    },
+    {
+     "icon": "sparkles",
+     "title": {
+      "en": "Claude one click away",
+      "zh-Hans": "一键打开 Claude",
+      "hi": "Claude बस एक क्लिक दूर",
+      "es": "Claude a un clic",
+      "ar": "Claude بنقرة واحدة",
+      "fr": "Claude à un clic",
+      "bn": "এক ক্লিকে Claude",
+      "pt-BR": "Claude a um clique",
+      "ru": "Claude в один щелчок",
+      "id": "Claude sekali klik",
+      "de": "Claude mit einem Klick",
+      "tr": "Claude bir tık uzağında"
+     },
+     "detail": {
+      "en": "Claude Code's card and arrow open the Claude app, and the gear opens NEO's window.",
+      "zh-Hans": "Claude Code 卡片和箭头会打开 Claude 应用，齿轮会打开 NEO 窗口。",
+      "hi": "Claude Code का कार्ड और तीर Claude ऐप खोलते हैं, और गियर NEO की विंडो खोलता है।",
+      "es": "La tarjeta y la flecha de Claude Code abren la app de Claude, y el engranaje abre la ventana de NEO.",
+      "ar": "تفتح بطاقة Claude Code وسهمها تطبيق Claude، ويفتح الترس نافذة NEO.",
+      "fr": "La carte et la flèche de Claude Code ouvrent l’app Claude, et la roue dentée ouvre la fenêtre de NEO.",
+      "bn": "Claude Code-এর কার্ড আর তীর Claude অ্যাপ খোলে, আর গিয়ার NEO-র উইন্ডো খোলে।",
+      "pt-BR": "O cartão e a seta do Claude Code abrem o app Claude, e a engrenagem abre a janela do NEO.",
+      "ru": "Карточка и стрелка Claude Code открывают приложение Claude, а шестерёнка — окно NEO.",
+      "id": "Kartu dan panah Claude Code membuka aplikasi Claude, dan roda gigi membuka jendela NEO.",
+      "de": "Karte und Pfeil von Claude Code öffnen die Claude-App, und das Zahnrad öffnet das NEO-Fenster.",
+      "tr": "Claude Code kartı ve oku Claude uygulamasını, çark ise NEO penceresini açar."
+     }
+    }
+   ]
+  },
+  {
    "version": "0.1.0",
    "items": [
     {
