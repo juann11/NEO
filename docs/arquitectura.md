@@ -58,7 +58,7 @@ TypeScript y CSS sin framework, para que la isla arranque al instante.
 | `island/` | La isla: máquina de estados, hooks, avisos |
 | `views/` | Cada tarjeta de la isla |
 | `neo/` | El personaje: motor (`engine.ts`), aspecto (`neo-look.ts`), trajes y saludo |
-| `hub/` | Ventana principal |
+| `hub/` | Ventana principal; `hub/pages/home.ts` es Inicio y sus tarjetas |
 | `settings/` | Secciones de ajustes |
 | `core/` | Estado compartido y puente con Rust (`bridge.ts`) |
 | `i18n/` | Textos en 12 idiomas, indexados por su texto en inglés |

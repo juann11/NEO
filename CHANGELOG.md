@@ -2,10 +2,14 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). NEO sigue [versionado semántico](https://semver.org/lang/es/).
 
-## [0.1.2] - 2026-10-30
+## [0.1.2] - Sin publicar
+
+### Añadido
+- **Inicio:** la ventana de NEO abre en una página de tarjetas con Notificaciones, Sesiones activas, Agentes y Estado de NEO, y puedes añadir Servicios y Dictado.
+- **Personalizar:** arrastra, mueve, ensancha, quita o agrega tarjetas. NEO recuerda cómo las dejaste.
 
 ### Cambiado
-- La ventana de NEO abre en **General**, con los ajustes de la isla primero y **Voz** (dictado y compañía) después.
+- En el menú de la ventana, los ajustes de la isla van primero y **Voz** (dictado y compañía) después.
 - Nombres de apps legibles en las notificaciones: PowerShell, OneDrive, Snipping Tool.
 - El grupo **Voz** se pliega si no usas el dictado, las bandas de cada página ocupan menos y **General** se parte en Sonido, Comportamiento, Notificaciones de Windows y App.
 

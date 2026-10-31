@@ -1,5 +1,36 @@
 # Tareas: plan de mejoras de NEO
 
+## Estado actual
+
+**Cómo trabajamos:** las mejoras se juntan en commits, con la traza aquí y en `CHANGELOG.md`. No se saca versión ni instalador por cada cambio: se lanza una sola cuando Juan lo diga.
+
+**Rama en curso:** `mejoras-ventana`, sin subir a GitHub. La versión del código ya dice 0.1.2, pero esa versión no está publicada.
+
+### Hecho en esta rama
+- [x] Avisos de Windows fuera de NEO, nombres de apps legibles y tarjeta de notificación sin cortes
+- [x] Ventana: Isla primero, Voz después y plegable; bandas bajas; General en bloques
+- [x] Inicio con tarjetas: Notificaciones, Sesiones activas, Agentes, Estado de NEO, Servicios y Dictado
+- [x] Personalizar Inicio: arrastrar, mover con flechas, ensanchar, quitar, agregar y restablecer
+
+### Falta comprobar en la app instalada
+- [ ] Notificaciones reales en Inicio (hasta ahora, base de prueba y datos simulados)
+- [ ] Sesiones reales en Inicio y abrir una con un clic
+- [ ] Tarjeta de notificación de la isla con su altura nueva
+
+### Siguiente
+- [ ] Notificaciones: historial que sobreviva, buscar y filtrar por app
+- [ ] Reacciones por app: sonido, gesto y traje de NEO; horas de silencio
+- [ ] Sacar tarjetas al escritorio como ventanas sueltas
+- [ ] Accesibilidad: tareas 3 a 6 de este archivo
+- [ ] Firmar el instalador, para que Smart App Control deje actualizar
+
+### Antes de lanzar la próxima versión
+- [ ] Añadir Inicio a la entrada de novedades de `whats-new.json`, en los 12 idiomas
+- [ ] Revisar el número de versión y `CHANGELOG.md`
+- [ ] Tests, instalador y prueba en la app instalada
+
+## Plan original
+
 Comandos de verificación (en `app/`): `npm test`, `npx tsc --noEmit`, `cargo test --workspace`, `npm run tauri build`.
 Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en un contenedor MSIX y lo que instala no llega a Windows).
 

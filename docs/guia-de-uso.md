@@ -26,6 +26,14 @@ En la cabecera de la isla, el **engranaje** ⚙️ abre la ventana de NEO con to
 | 🟠 Naranja | Espera tu permiso |
 | 🔴 Rojo | Error |
 
+## Inicio
+
+Es lo primero que ves al abrir la ventana de NEO: tus notificaciones, tus sesiones y tus agentes en tarjetas. Una notificación abre su app; una sesión, la ventana donde corre.
+
+Pulsa **Personalizar** para arrastrar las tarjetas por sus puntos, moverlas con las flechas, ensancharlas o quitarlas, y agregar las que falten. **Restablecer valores predeterminados** las deja como venían.
+
+Las notificaciones salen de las que Windows ya guarda: NEO no hace ninguna copia, así que si las borras en Windows también desaparecen de Inicio.
+
 ## Atajos
 
 | Atajo | Acción |
