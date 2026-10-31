@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Icono de NEO: fuente de todos los tamaños (npx tauri icon). Formas gruesas para que se lea a 16 px. Paleta de src/neo/neo-look.ts -->
+  <defs>
+    <radialGradient id="fondo" cx="0.5" cy="0.28" r="0.85">
+      <stop offset="0" stop-color="#17324A"/>
+      <stop offset="0.55" stop-color="#0B1524"/>
+      <stop offset="1" stop-color="#020617"/>
+    </radialGradient>
+    <linearGradient id="cuerpo" x1="0.75" y1="0" x2="0.2" y2="1">
+      <stop offset="0" stop-color="#94A3B8"/>
+      <stop offset="0.45" stop-color="#64748B"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="visor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0F1B2E"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="ojo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#BBF7D0"/>
+      <stop offset="0.5" stop-color="#4ADE80"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <filter id="luz" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="30" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="24" y="24" width="976" height="976" rx="228" fill="url(#fondo)"/>
+  <rect x="32" y="32" width="960" height="960" rx="220" fill="none" stroke="#4ADE80" stroke-opacity="0.28" stroke-width="10"/>
+  <!-- Antena -->
+  <rect x="482" y="176" width="60" height="150" rx="30" fill="#64748B"/>
+  <circle cx="512" cy="158" r="68" fill="url(#ojo)" filter="url(#luz)"/>
+  <!-- Orejas -->
+  <rect x="84" y="492" width="112" height="210" rx="52" fill="#475569"/>
+  <rect x="828" y="492" width="112" height="210" rx="52" fill="#475569"/>
+  <!-- Cabeza -->
+  <rect x="146" y="296" width="732" height="600" rx="262" fill="url(#cuerpo)"/>
+  <!-- Visor -->
+  <rect x="212" y="432" width="600" height="330" rx="165" fill="url(#visor)"/>
+  <!-- Ojos -->
+  <g fill="url(#ojo)" filter="url(#luz)">
+    <rect x="322" y="482" width="126" height="230" rx="63"/>
+    <rect x="576" y="482" width="126" height="230" rx="63"/>
+  </g>
+</svg>

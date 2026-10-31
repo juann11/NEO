@@ -23,7 +23,8 @@ function archivos(dir) {
   });
 }
 
-const TODOS = [...archivos(WINDOWS), join(RAIZ, "README.md"), join(RAIZ, "CLAUDE.md"), ...archivos(join(RAIZ, ".github"))];
+const RAIZ_MD = ["README.md", "CLAUDE.md", "CONTRIBUTING.md", "SECURITY.md", "CHANGELOG.md"].map((f) => join(RAIZ, f));
+const TODOS = [...archivos(WINDOWS), ...RAIZ_MD, ...archivos(join(RAIZ, ".github")), ...archivos(join(RAIZ, "docs"))];
 
 test("ningún nombre de archivo ni carpeta viene del proyecto original", () => {
   const malos = TODOS.map((r) => relative(RAIZ, r)).filter((r) => VIEJO.test(r));

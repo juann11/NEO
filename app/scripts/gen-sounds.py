@@ -1,4 +1,4 @@
-"""Genera los 29 sonidos de NEO en windows/sounds/ (WAV 48 kHz, 16 bits, mono).
+"""Genera los 29 sonidos de NEO en app/sounds/ (WAV 48 kHz, 16 bits, mono).
 
 Todo es síntesis propia (tonos, glissandos y ruido filtrado), sin muestras de
 terceros, así que los sonidos son libres de distribuir. Solo librería estándar:

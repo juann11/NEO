@@ -9,7 +9,7 @@ const leer = (ruta) => readFileSync(new URL(ruta, RAIZ));
 
 const NOMBRES = [...leer("src/core/sound.ts").toString().match(/SOUND_NAMES = \[([\s\S]*?)\]/)[1].matchAll(/"(\w+)"/g)].map((m) => m[1]);
 
-test("vite sirve los sonidos de windows/sounds", () => {
+test("vite sirve los sonidos de app/sounds", () => {
   const config = leer("vite.config.ts").toString();
   assert.match(config, /SOUNDS_DIR = resolve\(__dirname, "sounds"\)/);
   assert.doesNotMatch(config, /resolve\(__dirname, "\.\.\//);

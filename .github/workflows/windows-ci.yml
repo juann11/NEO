@@ -7,12 +7,12 @@ name: Windows CI
 on:
   pull_request:
     paths:
-      - 'windows/**'
+      - 'app/**'
       - '.github/workflows/windows-ci.yml'
   push:
-    branches: [main, neo]
+    branches: [main]
     paths:
-      - 'windows/**'
+      - 'app/**'
       - '.github/workflows/windows-ci.yml'
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: windows
+        working-directory: app
 
     steps:
       - uses: actions/checkout@v7
@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: windows/package-lock.json
+          cache-dependency-path: app/package-lock.json
 
       - name: Cache cargo
         uses: actions/cache@v6
@@ -44,8 +44,8 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            windows/target
-          key: windows-ci-cargo-${{ hashFiles('windows/Cargo.lock') }}
+            app/target
+          key: windows-ci-cargo-${{ hashFiles('app/Cargo.lock') }}
           restore-keys: windows-ci-cargo-
 
       - name: Install dependencies

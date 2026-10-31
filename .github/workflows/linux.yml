@@ -2,7 +2,7 @@ name: Linux
 
 # Builds the Linux app (AppImage, .deb, .rpm) from the same Tauri project as
 # Windows. Triggered by tags like `linux-v0.1.0`, by hand, and by pull requests
-# that touch windows/ or this file (build and test only); the macOS and Windows
+# that touch app/ or this file (build and test only); the Windows
 # workflows are untouched.
 #
 # Two jobs on purpose. `build` runs npm, cargo and the AppImage tooling (which
@@ -19,7 +19,7 @@ on:
   # read-only anyway.
   pull_request:
     paths:
-      - 'windows/**'
+      - 'app/**'
       - '.github/workflows/linux.yml'
 
 permissions:
@@ -40,7 +40,7 @@ jobs:
       publish: ${{ steps.gate.outputs.publish }}
     defaults:
       run:
-        working-directory: windows
+        working-directory: app
 
     steps:
       - uses: actions/checkout@v7
@@ -64,7 +64,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: windows/package-lock.json
+          cache-dependency-path: app/package-lock.json
 
       - name: Cache cargo
         uses: actions/cache@v6
@@ -72,8 +72,8 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            windows/target
-          key: linux-cargo-${{ hashFiles('windows/Cargo.lock') }}
+            app/target
+          key: linux-cargo-${{ hashFiles('app/Cargo.lock') }}
           restore-keys: linux-cargo-
 
       - name: Install dependencies
@@ -127,8 +127,8 @@ jobs:
         with:
           name: NEO-Linux
           path: |
-            windows/release/NEO-Linux-*
-            windows/release/SHA256SUMS
+            app/release/NEO-Linux-*
+            app/release/SHA256SUMS
           retention-days: 3
 
   publish:
@@ -165,8 +165,7 @@ jobs:
 
           The island sits on the top edge on compositors with layer-shell (COSMIC,
           KDE Plasma, Hyprland, Sway…). On GNOME it opens as a regular window."
-          # --latest=false: the macOS \`v*\` releases own the Latest slot, which
-          # the site's Download for Mac button points at.
+          # --latest=false: la versión de Windows ocupa el puesto de "Latest".
           gh release create "$GITHUB_REF_NAME" \
             "release/NEO-Linux-$v-x86_64.AppImage" \
             "release/NEO-Linux-$v-amd64.deb" \

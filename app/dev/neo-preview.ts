@@ -42,7 +42,7 @@ for (const id of ["oscura", "clara"]) {
   }
 }
 
-// Un botón por sonido (los sirve vite.config.ts desde windows/sounds).
+// Un botón por sonido (los sirve vite.config.ts desde app/sounds).
 const sonidos = document.getElementById("sonidos")!;
 for (const nombre of SOUND_NAMES) {
   const b = document.createElement("button");

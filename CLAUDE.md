@@ -3,11 +3,12 @@
 NEO es una app de escritorio (Windows y Linux) hecha con Tauri 2: un robot que vive arriba de la pantalla, muestra las sesiones de agentes de IA (Claude Code, Codex, Cursor, Gemini CLI…) y algunas integraciones, y deja aprobar, responder, chatear y soltar archivos desde la isla.
 
 ## Dónde está cada cosa
-- `windows/src-tauri/` — Rust (ventanas, hooks de los agentes, pipe con `neo-hook`, integraciones). `windows/hook/` — el relay `neo-hook` que ejecutan los agentes.
-- `windows/src/` — TypeScript de la isla, ajustes y ventana principal. El personaje se dibuja en código: `src/neo/engine.ts` (motor) y `src/neo/neo-look.ts` (aspecto de NEO).
-- `windows/src/i18n/` — textos en 12 idiomas, indexados por su texto en inglés (`strings.json` y `extra.json`, se editan a mano).
-- `windows/sounds/` — los 29 WAV, generados por `windows/scripts/gen-sounds.py`.
-- `windows/dev/neo-preview.html` — vista del personaje y los sonidos sin abrir la app.
+- `app/src-tauri/` — Rust (ventanas, hooks de los agentes, pipe con `neo-hook`, integraciones). `app/hook/` — el relay `neo-hook` que ejecutan los agentes.
+- `app/src/` — TypeScript de la isla, ajustes y ventana principal. El personaje se dibuja en código: `src/neo/engine.ts` (motor) y `src/neo/neo-look.ts` (aspecto de NEO).
+- `app/src/i18n/` — textos en 12 idiomas, indexados por su texto en inglés (`strings.json` y `extra.json`, se editan a mano).
+- `app/sounds/` — los 29 WAV, generados por `app/scripts/gen-sounds.py`.
+- `app/dev/neo-preview.html` — vista del personaje y los sonidos sin abrir la app.
+- `docs/` — arquitectura, guía de uso y Linux. `tasks/` — plan de mejoras. Cambios visibles: `CHANGELOG.md`.
 
 ## Compilar y probar
 ```

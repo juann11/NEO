@@ -1,6 +1,6 @@
 # Tareas: plan de mejoras de NEO
 
-Comandos de verificación (en `windows/`): `npm test`, `npx tsc --noEmit`, `cargo test --workspace`, `npm run tauri build`.
+Comandos de verificación (en `app/`): `npm test`, `npx tsc --noEmit`, `cargo test --workspace`, `npm run tauri build`.
 Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en un contenedor MSIX y lo que instala no llega a Windows).
 
 ## Fase 1: Distribución
@@ -15,7 +15,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] `npm test` y `cargo test --workspace` pasan
 - [ ] Revisar la ejecución del workflow en GitHub Actions
 **Dependencias:** Ninguna
-**Archivos:** `windows/src-tauri/tauri.conf.json`, `windows/package.json`, `windows/Cargo.toml`, `windows/src/whats-new/whats-new.json`
+**Archivos:** `app/src-tauri/tauri.conf.json`, `app/package.json`, `app/Cargo.toml`, `app/src/whats-new/whats-new.json`
 **Tamaño:** S
 
 ## Tarea 2: Comprobar la actualización automática de punta a punta
@@ -28,7 +28,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] Log de NEO (`%LOCALAPPDATA%\NEO\neo.log`) muestra la descarga y la instalación
 - [ ] Prueba manual tuya: la isla enseña "What's new" de 0.1.2
 **Dependencias:** Tarea 1
-**Archivos:** los de la Tarea 1 (versión 0.1.2); si falla, `windows/src-tauri/src/update.rs`
+**Archivos:** los de la Tarea 1 (versión 0.1.2); si falla, `app/src-tauri/src/update.rs`
 **Tamaño:** S
 
 ### Punto de control: Distribución
@@ -47,7 +47,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] Test nuevo que lee `style.css` y `hub/hub.css` y comprueba las reglas `:focus-visible`
 - [ ] Manual: Tab por la ventana de ajustes
 **Dependencias:** Ninguna
-**Archivos:** `windows/src/style.css`, `windows/src/hub/hub.css`, `windows/tests/a11y-css.test.mjs`
+**Archivos:** `app/src/style.css`, `app/src/hub/hub.css`, `app/tests/a11y-css.test.mjs`
 **Tamaño:** S
 
 ## Tarea 4: Respetar "reducir movimiento" de Windows
@@ -60,7 +60,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] Test del motor con la preferencia simulada
 - [ ] Manual: Configuración de Windows → Accesibilidad → Efectos visuales → Efectos de animación apagado
 **Dependencias:** Ninguna
-**Archivos:** `windows/src/neo/engine.ts`, `windows/src/style.css`, `windows/tests/neo-motion.test.mjs`
+**Archivos:** `app/src/neo/engine.ts`, `app/src/style.css`, `app/tests/neo-motion.test.mjs`
 **Tamaño:** M
 
 ## Tarea 5: Letra mínima legible
@@ -72,7 +72,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] Test que lee los CSS y comprueba los mínimos
 - [ ] Manual: `dev/neo-preview.html` y la isla real con notificación, permiso y GitHub
 **Dependencias:** Ninguna
-**Archivos:** `windows/src/style.css`, `windows/src/hub/hub.css`, `windows/tests/a11y-css.test.mjs`
+**Archivos:** `app/src/style.css`, `app/src/hub/hub.css`, `app/tests/a11y-css.test.mjs`
 **Tamaño:** M
 
 ## Tarea 6: Botones de icono más fáciles de pulsar y con nombre accesible
@@ -84,7 +84,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] Test de `buildHeader`: cada botón tiene `aria-label`
 - [ ] Manual: la cabecera no se descoloca
 **Dependencias:** Tarea 3
-**Archivos:** `windows/src/views/dom.ts`, `windows/src/style.css`, `windows/tests/island-header.test.mjs`
+**Archivos:** `app/src/views/dom.ts`, `app/src/style.css`, `app/tests/island-header.test.mjs`
 **Tamaño:** S
 
 ### Punto de control: Diseño
@@ -104,7 +104,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] Tests de la regla de decisión (TS) y de la consulta de pantalla completa (Rust, función pura)
 - [ ] Manual: con Valorant abierto, mandar una notificación de prueba
 **Dependencias:** Ninguna
-**Archivos:** `windows/src-tauri/src/system_notifications.rs` (o `platform/windows.rs`), `windows/src/island/system-notifications.ts`, `windows/src/settings/main.ts`, `windows/src/i18n/extra.json`, tests
+**Archivos:** `app/src-tauri/src/system_notifications.rs` (o `platform/windows.rs`), `app/src/island/system-notifications.ts`, `app/src/settings/main.ts`, `app/src/i18n/extra.json`, tests
 **Tamaño:** M
 
 ## Tarea 8: Pestaña de Docker
@@ -117,7 +117,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] Tests del parser de `docker ps --format json` con salidas de ejemplo
 - [ ] Manual: parar un contenedor y ver el aviso
 **Dependencias:** Ninguna
-**Archivos:** `windows/src-tauri/src/integrations.rs` (o `docker.rs` nuevo), `windows/src/core/pills.ts`, `windows/src/views/integrations.ts`, `windows/src/i18n/extra.json`, tests
+**Archivos:** `app/src-tauri/src/integrations.rs` (o `docker.rs` nuevo), `app/src/core/pills.ts`, `app/src/views/integrations.ts`, `app/src/i18n/extra.json`, tests
 **Tamaño:** M
 
 ## Tarea 9: Pestaña de Supabase
@@ -130,7 +130,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 - [ ] Tests del parser con respuestas de ejemplo de la API
 - [ ] Manual con tu token
 **Dependencias:** Respuesta a la pregunta abierta sobre Supabase
-**Archivos:** `windows/src-tauri/src/integrations.rs`, `windows/src/core/pills.ts`, `windows/src/views/integrations.ts`, `windows/src/i18n/extra.json`, tests
+**Archivos:** `app/src-tauri/src/integrations.rs`, `app/src/core/pills.ts`, `app/src/views/integrations.ts`, `app/src/i18n/extra.json`, tests
 **Tamaño:** M
 
 ### Punto de control: Funciones
@@ -147,7 +147,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 **Verificación:**
 - [ ] Tests del cálculo con el historial de ejemplo (`sampleHistory`)
 **Dependencias:** Ninguna
-**Archivos:** `windows/src/recap/summary.ts`, vista nueva en `windows/src/views/`, `windows/src/i18n/extra.json`, tests
+**Archivos:** `app/src/recap/summary.ts`, vista nueva en `app/src/views/`, `app/src/i18n/extra.json`, tests
 **Tamaño:** M
 
 ## Tarea 11: Avisar de permisos pendientes por WhatsApp
@@ -158,7 +158,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 **Verificación:**
 - [ ] Tests de la regla "no estás delante" y del texto del mensaje
 **Dependencias:** Respuesta a la pregunta WhatsApp/Telegram
-**Archivos:** `windows/src-tauri/src/whatsapp/mod.rs`, `windows/src/island/hooks.ts`, ajustes, i18n, tests
+**Archivos:** `app/src-tauri/src/whatsapp/mod.rs`, `app/src/island/hooks.ts`, ajustes, i18n, tests
 **Tamaño:** M
 
 ## Tarea 12: Aprobar o denegar permisos desde WhatsApp
@@ -169,7 +169,7 @@ Recordatorio: el instalador lo ejecutas tú desde el Explorador (Claude corre en
 **Verificación:**
 - [ ] Tests de seguridad: número equivocado, permiso caducado, respuesta ambigua
 **Dependencias:** Tarea 11
-**Archivos:** `windows/src-tauri/src/whatsapp/mod.rs`, `windows/src-tauri/src/pipe.rs`, tests
+**Archivos:** `app/src-tauri/src/whatsapp/mod.rs`, `app/src-tauri/src/pipe.rs`, tests
 **Tamaño:** M
 
 ### Punto de control: Completo
