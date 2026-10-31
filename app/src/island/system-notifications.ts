@@ -14,6 +14,8 @@ export interface SystemToast {
   app: string;
   title: string;
   body: string;
+  /** Segundos Unix; 0 si Windows no lo dice. */
+  arrival: number;
 }
 
 export interface SystemNotificationsHost {

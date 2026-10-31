@@ -24,6 +24,8 @@ pub struct Toast {
     pub app: String,
     pub title: String,
     pub body: String,
+    /// Cuándo llegó, en segundos Unix (0 si Windows no lo dice).
+    pub arrival: i64,
 }
 
 /// Una app que ha mandado notificaciones, para la lista de Ajustes.
@@ -135,20 +137,39 @@ pub fn latest_id(db: &Connection) -> rusqlite::Result<i64> {
 
 /// Los toasts con id mayor que `after`, sin los de NEO ni los de las apps silenciadas.
 pub fn new_toasts(db: &Connection, after: i64, muted: &[String]) -> rusqlite::Result<Vec<Toast>> {
-    let mut stmt = db.prepare(
-        "SELECT n.Id, h.PrimaryId, n.Payload FROM Notification n JOIN NotificationHandler h ON h.RecordId = n.HandlerId
-         WHERE n.Type = 'toast' AND n.Id > ?1 ORDER BY n.Id",
-    )?;
-    let rows = stmt.query_map(params![after], |r| Ok((r.get::<_, i64>(0)?, r.get::<_, String>(1)?, r.get::<_, Vec<u8>>(2)?)))?;
+    read_toasts(db, "n.Id > ?1 ORDER BY n.Id", after, usize::MAX, muted)
+}
+
+/// Las últimas notificaciones, la más nueva primero: las de la tarjeta de Inicio.
+pub fn recent_toasts(db: &Connection, limit: usize, muted: &[String]) -> rusqlite::Result<Vec<Toast>> {
+    read_toasts(db, "n.Id > ?1 ORDER BY n.Id DESC", 0, limit, muted)
+}
+
+/// ArrivalTime es un FILETIME de Windows: décimas de microsegundo desde 1601.
+fn unix_seconds(filetime: Option<i64>) -> i64 {
+    filetime.filter(|t| *t > 0).map_or(0, |t| t / 10_000_000 - 11_644_473_600)
+}
+
+fn read_toasts(db: &Connection, filter: &str, after: i64, limit: usize, muted: &[String]) -> rusqlite::Result<Vec<Toast>> {
+    let mut stmt = db.prepare(&format!(
+        "SELECT n.Id, h.PrimaryId, n.Payload, n.ArrivalTime FROM Notification n JOIN NotificationHandler h ON h.RecordId = n.HandlerId
+         WHERE n.Type = 'toast' AND {filter}"
+    ))?;
+    let rows = stmt.query_map(params![after], |r| {
+        Ok((r.get::<_, i64>(0)?, r.get::<_, String>(1)?, r.get::<_, Vec<u8>>(2)?, r.get::<_, Option<i64>>(3)?))
+    })?;
     let mut out = Vec::new();
     for row in rows {
-        let (id, app_id, payload) = row?;
+        if out.len() == limit {
+            break;
+        }
+        let (id, app_id, payload, arrival) = row?;
         if silenced(&app_id, muted) {
             continue;
         }
         let mut lines = texts(&String::from_utf8_lossy(&payload)).into_iter();
         let Some(title) = lines.next() else { continue };
-        out.push(Toast { id, app: app_name(&app_id), app_id, title, body: lines.collect::<Vec<_>>().join("\n") });
+        out.push(Toast { id, app: app_name(&app_id), app_id, title, body: lines.collect::<Vec<_>>().join("\n"), arrival: unix_seconds(arrival) });
     }
     Ok(out)
 }
@@ -386,6 +407,13 @@ pub fn open_notification_app(app_id: String) -> Result<(), String> {
 /// La isla escucha este evento con el `Toast`.
 const EVENT: &str = "system-notification";
 
+/// Lo que enseña Inicio. Con la función apagada no enseña nada; sale de la base de Windows, NEO no guarda copia.
+#[tauri::command]
+pub fn recent_system_notifications(app: AppHandle, limit: usize) -> Vec<Toast> {
+    let Some(muted) = wanted(&app) else { return Vec::new() };
+    database().and_then(|p| open_read_only(&p).ok()).and_then(|db| recent_toasts(&db, limit.min(50), &muted).ok()).unwrap_or_default()
+}
+
 /// Las apps que han mandado notificaciones, para elegir en Ajustes cuáles avisan.
 #[tauri::command]
 pub fn system_notification_apps() -> Vec<App> {
@@ -458,6 +486,7 @@ mod tests {
             app: "WhatsApp".into(),
             title: "Ana".into(),
             body: "¿Vienes hoy?".into(),
+            arrival: 0,
         });
         assert_eq!(new_toasts(&db, 801, &[]).unwrap().iter().map(|t| t.id).collect::<Vec<_>>(), vec![804]);
         assert!(new_toasts(&db, 804, &[]).unwrap().is_empty());
@@ -505,6 +534,25 @@ mod tests {
         let (hide, restore) = banner_plan(true, &ids(&["WhatsApp!App", "Teams"]), &ids(&["TEAMS"]), &ids(&["WhatsApp!App", "Teams"]));
         assert!(hide.is_empty());
         assert_eq!(restore, ids(&["Teams"]));
+    }
+
+    #[test]
+    fn the_latest_toasts_come_newest_first_without_the_silenced_apps() {
+        let db = base();
+        let all = new_toasts(&db, 0, &[]).unwrap();
+        assert!(all.len() >= 2);
+        let recent = recent_toasts(&db, 1, &[]).unwrap();
+        assert_eq!(recent.len(), 1);
+        assert_eq!(recent[0].id, all.last().unwrap().id);
+        let muted = vec![all.last().unwrap().app_id.clone()];
+        assert!(recent_toasts(&db, 50, &muted).unwrap().iter().all(|t| t.app_id != muted[0]));
+    }
+
+    #[test]
+    fn windows_arrival_time_becomes_unix_seconds() {
+        assert_eq!(unix_seconds(Some(134378979818661421)), 1793424381);
+        assert_eq!(unix_seconds(Some(0)), 0);
+        assert_eq!(unix_seconds(None), 0);
     }
 
     #[test]

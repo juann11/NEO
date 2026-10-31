@@ -23,7 +23,7 @@ test("the island's gear opens NEO's window", () => {
 
 test("NEO's window opens on the island's settings, with voice as a second group", () => {
   const shell = readFileSync(new URL("../src/hub/shell.ts", import.meta.url), "utf8");
-  assert.match(shell, /let current: PageId = "general"/);
+  assert.match(shell, /let current: PageId = "home"/);
   assert.ok(shell.indexOf('text: t("Notch")') < shell.indexOf('text: t("Voice")'));
   assert.match(shell, /id: "dictation"/, "las funciones de voz siguen ahí");
 });

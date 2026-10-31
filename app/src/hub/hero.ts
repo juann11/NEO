@@ -60,6 +60,10 @@ document.addEventListener("visibilitychange", wake);
 
 /** The window was shown or hidden (the `hub-visible` event): hidden, the loop
  *  stops at once; shown, it starts again. */
+export function isWindowShown(): boolean {
+  return windowShown;
+}
+
 export function setWindowShown(shown: boolean) {
   windowShown = shown;
   if (!shown && frame !== null) {
@@ -380,6 +384,7 @@ const m = (color: string, size: number, start: number, extra: Partial<NeoSpec> =
 });
 
 export const THEMES: Record<string, Theme> = {
+  home: { color: "#22C55E", cast: [m("#475569", 60, 0.2), m("#4ADE80", 50, 0.6), m("#3B9EFF", 44, 0.95, { outfit: "beanie" })] },
   dictation: { color: "#FB923C", cast: [m("#475569", 66, 0.2), m("#FB923C", 52, 0.65), m("#F472B6", 44, 0.95, { outfit: "bow" })] },
   notes: { color: "#3B9EFF", cast: [m("#3B9EFF", 58, 0.1, { outfit: "roundGlasses" }), m("#34D399", 50, 0.5), m("#A78BFA", 46, 0.9)] },
   insights: { color: "#34D399", cast: [m("#F7B32B", 62, 0.3, { outfit: "crown" }), m("#34D399", 48, 0.75), m("#475569", 40, 1)] },

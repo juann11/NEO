@@ -6,6 +6,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { emitTo, listen } from "@tauri-apps/api/event";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
 import type { Settings } from "./state";
+import type { SystemToast } from "../island/system-notifications";
 import type { RecapHistory, RecapPrefs } from "../recap/summary";
 import type { SpotifyState } from "./spotify";
 import type { UpdateStatus } from "./update";
@@ -237,6 +238,8 @@ export const Bridge = {
   whatsappIsland: () => call<WaIslandView>("whatsapp_island"),
   /** Las apps que han mandado notificaciones de Windows, para elegirlas en Ajustes. */
   systemNotificationApps: () => call<{ id: string; name: string }[]>("system_notification_apps"),
+  /** Las últimas notificaciones, para Inicio. */
+  recentSystemNotifications: (limit: number) => call<SystemToast[]>("recent_system_notifications", { limit }),
   /** Abre la app que mandó una notificación (Rust solo abre apps que de verdad mandaron alguna). */
   openNotificationApp: (appId: string) => call<void>("open_notification_app", { appId }),
   /** A conversation opened in the card: its latest messages, the receipt if Settings says so. */

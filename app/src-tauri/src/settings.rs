@@ -75,6 +75,14 @@ pub struct Settings {
     pub system_notifications: bool,
     /// Apps whose notifications NEO keeps quiet about, by their Windows app id.
     pub muted_notification_apps: Vec<String>,
+    /// Las tarjetas de Inicio, en orden (src/core/home-cards.ts).
+    pub home_cards: Vec<HomeCard>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct HomeCard {
+    pub id: String,
+    pub wide: bool,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -129,6 +137,9 @@ impl Default for Settings {
             show_clock: false,
             system_notifications: false,
             muted_notification_apps: Vec::new(),
+            home_cards: [("notifications", true), ("sessions", false), ("agents", false), ("status", true)]
+                .map(|(id, wide)| HomeCard { id: id.into(), wide })
+                .to_vec(),
         }
     }
 }
@@ -408,7 +419,8 @@ mod tests {
   "desktopNeo": { "onDesktop": true, "spot": { "x": 1500.5, "y": -300.0, "space": "screen" } },
   "showClock": true,
   "systemNotifications": true,
-  "mutedNotificationApps": ["Microsoft.SkyDrive.Desktop"]
+  "mutedNotificationApps": ["Microsoft.SkyDrive.Desktop"],
+  "homeCards": [{ "id": "agents", "wide": true }]
 }"##;
 
     fn custom() -> Value {
@@ -815,6 +827,7 @@ mod tests {
                 "showClock",
                 "systemNotifications",
                 "mutedNotificationApps",
+                "homeCards",
             ]
         );
         let _ = std::fs::remove_dir_all(&dir);

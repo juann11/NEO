@@ -1368,6 +1368,11 @@ async function main() {
   applyDirection();
   hub = await startHub(windowRoot, {
     version,
+    settings: () => settings,
+    changeSettings: (change) => {
+      change(settings);
+      void save();
+    },
     flowPages: FLOW_PAGE_RENDERERS,
     renderNotch: async (page, container) => {
       notchPage = page;

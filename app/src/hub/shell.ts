@@ -1,4 +1,4 @@
-// The NEO window: a sidebar with the island (every setting of the island) and
+// The NEO window: a sidebar with Home, the island (every setting of the island) and
 // voice (dictation, the Notetaker, the statistics, the dictionary, the
 // snippets, the styles and their settings), and the page on the right, under
 // its coloured band.
@@ -8,12 +8,13 @@ import { h, clear } from "../views/dom";
 import { t } from "../i18n/i18n";
 import { onEvent } from "../core/bridge";
 import { FlowBridge, type FlowPrefs, type FlowStatus, type ModelsStatus } from "../core/flow";
+import type { Settings } from "../core/state";
 import { hero, liveNeo, setWindowShown } from "./hero";
 import { icon, keyLabel } from "./ui";
 
 export type PageId =
   | "dictation" | "notes" | "insights" | "dictionary" | "snippets" | "styles" | "flowsettings"
-  | "general" | "pills" | "agents" | "chat" | "voice" | "integrations" | "shortcuts";
+  | "home" | "general" | "pills" | "agents" | "chat" | "voice" | "integrations" | "shortcuts";
 
 interface PageDef {
   id: PageId;
@@ -43,11 +44,18 @@ export const NOTCH_PAGES: PageDef[] = [
   { id: "shortcuts", icon: "keyboard", title: () => t("Shortcuts"), subtitle: () => t("The keys that open the island and its actions.") },
 ];
 
-const ALL = [...FLOW_PAGES, ...NOTCH_PAGES];
+const HOME_PAGE: PageDef = { id: "home", icon: "home", title: () => t("Home") };
+
+const ALL = [HOME_PAGE, ...FLOW_PAGES, ...NOTCH_PAGES];
 
 /** What a page gets to draw itself and reach the rest of the window. */
 export interface HubContext {
   status: FlowStatus;
+  version: string;
+  /** The window's settings, the same ones its settings pages edit. */
+  settings(): Settings;
+  /** Changes them and saves. */
+  changeSettings(change: (s: Settings) => void): void;
   navigate(page: PageId): void;
   /** Reads the status again (prefs, models) and redraws the sidebar's line. */
   refresh(): Promise<FlowStatus>;
@@ -63,6 +71,8 @@ export type FlowPageRenderer = (container: HTMLElement, ctx: HubContext) => void
 
 export interface HubOptions {
   version: string;
+  settings(): Settings;
+  changeSettings(change: (s: Settings) => void): void;
   flowPages: Partial<Record<PageId, FlowPageRenderer>>;
   /** Draws the island's settings for one of the Notch pages into `container`. */
   renderNotch(page: PageId, container: HTMLElement): Promise<void>;
@@ -88,7 +98,7 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
   await onEvent<boolean>("hub-visible", setWindowShown);
   const shown = await FlowBridge.hubShown();
   if (shown !== null) setWindowShown(shown);
-  let current: PageId = "general";
+  let current: PageId = "home";
   let status: FlowStatus = (await FlowBridge.status()) ?? DEFAULT_STATUS;
   const items = new Map<PageId, HTMLElement>();
   const statusLine = h("div", { class: "hub-status" });
@@ -99,6 +109,9 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
     get status() {
       return status;
     },
+    version: opts.version,
+    settings: opts.settings,
+    changeSettings: opts.changeSettings,
     navigate: (page) => void show(page),
     refresh: async () => {
       status = (await FlowBridge.status()) ?? status;
@@ -170,7 +183,7 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
     items.set(p.id, b);
     return b;
   });
-  side.append(h("div", { class: "hub-group", text: t("Notch") }), ...pageButtons(NOTCH_PAGES));
+  side.append(...pageButtons([HOME_PAGE]), h("div", { class: "hub-group", text: t("Notch") }), ...pageButtons(NOTCH_PAGES));
   // Voice stays folded for whoever doesn't dictate; its pages are one click away.
   const voicePages = h("div", { class: "hub-fold" }, ...pageButtons(FLOW_PAGES));
   const voiceHead = h("button", { class: "hub-group hub-fold-head", onclick: () => foldVoice(voicePages.hidden) },
