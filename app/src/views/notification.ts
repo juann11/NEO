@@ -8,7 +8,7 @@ import { washRGBA } from "../core/layout";
 import { Bridge } from "../core/bridge";
 import { SystemNotifications } from "../island/system-notifications";
 import type { ViewHost } from "./views";
-import { t, tl } from "../i18n/i18n";
+import { tl } from "../i18n/i18n";
 
 export function buildNotification(onClose: () => void): ViewHost {
   const app = h("div", { class: "sub one-line" });
@@ -23,8 +23,8 @@ export function buildNotification(onClose: () => void): ViewHost {
       const toast = SystemNotifications.current;
       if (toast) void Bridge.openNotificationApp(toast.appId);
     },
-  }, h("span", { text: t("Open") }));
-  const ok = h("button", { class: "btn secondary", onclick: onClose }, h("span", { text: t("OK") }));
+  }, h("span", { text: tl("Open") }));
+  const ok = h("button", { class: "btn secondary", onclick: onClose }, h("span", { text: tl("OK") }));
   const nav = h("span", { style: "display:inline-flex;align-items:center;gap:6px" }, older, counter, newer);
   const stack = h("div", { class: "stack" }, app, title, body, h("div", { class: "actions" }, nav, open, ok));
   stack.style.padding = "4px 16px 4px 116px";

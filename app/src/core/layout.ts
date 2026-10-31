@@ -102,7 +102,7 @@ export const VIEW_LAYOUTS: Record<IslandViewName, ViewLayout> = {
   // Taller than a card, for two rows of items with their line.
   whatsNew: { height: 222, botX: 62, botY: null, botDiameter: 58, agentMode: "none" },
   // Una notificación de Windows: la app, el título y dos líneas de texto.
-  notification: { height: 160, botX: 62, botY: null, botDiameter: 58, agentMode: "none" },
+  notification: { height: 188, botX: 62, botY: null, botDiameter: 58, agentMode: "none" },
 };
 
 // The upload views above are only the fallback geometry. Once a file is actually

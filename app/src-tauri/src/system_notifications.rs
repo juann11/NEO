@@ -104,6 +104,8 @@ fn decode(s: &str) -> String {
 /// "5319275A.WhatsAppDesktop_cv1g…!App" → "WhatsApp"; "ai.opencode.desktop" → "Opencode".
 pub fn app_name(app_id: &str) -> String {
     let id = app_id.split('!').next().unwrap_or(app_id);
+    // Programas de escritorio: "{carpeta}\ruta\programa.exe".
+    let id = id.rsplit('\\').next().unwrap_or(id);
     // Apps de la Tienda: "Editor.Nombre_hashdelpaquete".
     let id = id.rsplit_once('_').map_or(id, |(name, _)| name);
     let generic = |s: &str| matches!(s.to_ascii_lowercase().as_str(), "desktop" | "app" | "exe" | "");
@@ -111,6 +113,13 @@ pub fn app_name(app_id: &str) -> String {
     let name = match last.len().checked_sub("desktop".len()) {
         Some(cut) if cut > 0 && last[cut..].eq_ignore_ascii_case("desktop") => &last[..cut],
         _ => last,
+    };
+    // Los nombres internos que no se parecen al que ve la gente.
+    let name = match name {
+        "SkyDrive" => "OneDrive",
+        "ScreenSketch" => "Snipping Tool",
+        "powershell" => "PowerShell",
+        other => other,
     };
     let mut chars = name.chars();
     match chars.next() {
@@ -145,7 +154,13 @@ pub fn new_toasts(db: &Connection, after: i64, muted: &[String]) -> rusqlite::Re
 }
 
 fn silenced(app_id: &str, muted: &[String]) -> bool {
-    app_id.eq_ignore_ascii_case(OWN_APP_ID) || muted.iter().any(|m| m.eq_ignore_ascii_case(app_id))
+    app_id.eq_ignore_ascii_case(OWN_APP_ID) || is_system(app_id) || muted.iter().any(|m| m.eq_ignore_ascii_case(app_id))
+}
+
+/// Los avisos de Windows (Defender, reproducción automática, Configuración, iconos de la bandeja) se quedan en Windows.
+fn is_system(app_id: &str) -> bool {
+    let id = app_id.to_ascii_lowercase();
+    id.starts_with("windows.") || id.starts_with("notifyicongeneratedaumid")
 }
 
 /// Las apps que tienen notificaciones en la base, sin repetir, por nombre.
@@ -262,7 +277,7 @@ pub fn start(app: AppHandle) {
 /// (interruptor apagado o app silenciada). `hidden` son los que NEO apagó.
 pub fn banner_plan(enabled: bool, seen: &[String], muted: &[String], hidden: &[String]) -> (Vec<String>, Vec<String>) {
     let has = |list: &[String], id: &str| list.iter().any(|x| x.eq_ignore_ascii_case(id));
-    let restore = hidden.iter().filter(|id| !enabled || has(muted, id)).cloned().collect();
+    let restore = hidden.iter().filter(|id| !enabled || has(muted, id) || is_system(id)).cloned().collect();
     let mut hide: Vec<String> = Vec::new();
     if enabled {
         for id in seen {
@@ -424,7 +439,9 @@ mod tests {
     fn apps_get_a_readable_name_from_their_id() {
         assert_eq!(app_name("5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App"), "WhatsApp");
         assert_eq!(app_name("Claude_pzs8sxrjxfjjc!Claude"), "Claude");
-        assert_eq!(app_name("Microsoft.SkyDrive.Desktop"), "SkyDrive");
+        assert_eq!(app_name("Microsoft.SkyDrive.Desktop"), "OneDrive");
+        assert_eq!(app_name(r"{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\WindowsPowerShell\v1.0\powershell.exe"), "PowerShell");
+        assert_eq!(app_name("Microsoft.ScreenSketch_8wekyb3d8bbwe!App"), "Snipping Tool");
         assert_eq!(app_name("ai.opencode.desktop"), "Opencode");
         assert_eq!(app_name("Chrome"), "Chrome");
     }
@@ -491,6 +508,30 @@ mod tests {
     }
 
     #[test]
+    fn windows_own_notifications_stay_in_windows() {
+        let db = base();
+        for (rec, app) in [(4, "Windows.Defender.SecurityCenter"), (5, "NotifyIconGeneratedAumid_1430487863343215151")] {
+            db.execute("INSERT INTO NotificationHandler (RecordId, PrimaryId, HandlerType) VALUES (?1, ?2, 'app:system')", params![rec, app]).unwrap();
+            let xml = "<toast><visual><binding><text>Aviso</text></binding></visual></toast>";
+            db.execute(
+                "INSERT INTO Notification ([Order], Id, HandlerId, Type, Payload, ArrivalTime, PayloadType) VALUES (?1, ?1, ?2, 'toast', ?3, 0, 'Xml')",
+                params![900 + rec, rec, xml.as_bytes()],
+            )
+            .unwrap();
+        }
+        assert!(new_toasts(&db, 804, &[]).unwrap().is_empty(), "NEO no las enseña");
+        assert!(!apps(&db).unwrap().iter().any(|a| a.id.contains("Windows.") || a.id.contains("NotifyIcon")), "ni salen en Ajustes");
+        let seen = ids(&["Windows.Defender.SecurityCenter", "Windows.SystemToast.AutoPlay", "windows.immersivecontrolpanel_x!y"]);
+        assert!(banner_plan(true, &seen, &[], &[]).0.is_empty(), "su aviso no se apaga");
+    }
+
+    #[test]
+    fn a_banner_neo_hid_on_a_windows_app_goes_back() {
+        let (_, restore) = banner_plan(true, &[], &[], &ids(&["Windows.Defender.SecurityCenter", "Teams"]));
+        assert_eq!(restore, ids(&["Windows.Defender.SecurityCenter"]));
+    }
+
+    #[test]
     fn only_an_app_that_sent_a_notification_can_be_opened() {
         let known = vec![App { id: "5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App".into(), name: "WhatsApp".into() }];
         assert!(may_open("5319275a.whatsappdesktop_cv1g1gvanyjgm!app", &known));
@@ -502,7 +543,7 @@ mod tests {
     fn the_settings_list_the_apps_that_sent_toasts() {
         let db = base();
         assert_eq!(apps(&db).unwrap(), vec![
-            App { id: "Microsoft.SkyDrive.Desktop".into(), name: "SkyDrive".into() },
+            App { id: "Microsoft.SkyDrive.Desktop".into(), name: "OneDrive".into() },
             App { id: "5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App".into(), name: "WhatsApp".into() },
         ]);
     }

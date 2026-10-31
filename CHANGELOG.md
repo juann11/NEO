@@ -2,6 +2,16 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). NEO sigue [versionado semántico](https://semver.org/lang/es/).
 
+## [0.1.2] - 2026-10-30
+
+### Cambiado
+- La ventana de NEO abre en **General**, con los ajustes de la isla primero y **Voz** (dictado y compañía) después.
+- Nombres de apps legibles en las notificaciones: PowerShell, OneDrive, Snipping Tool.
+
+### Corregido
+- Los avisos de Windows (Defender, reproducción automática, Configuración, iconos de la bandeja) se quedan en Windows; si NEO ya los había apagado, los devuelve.
+- La tarjeta de notificación ya no corta los botones y **Abrir** sale en tu idioma.
+
 ## [0.1.1] - 2026-10-30
 
 ### Añadido
@@ -22,5 +32,6 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). NEO 
 
 Primera versión de NEO: isla con sesiones de agentes en vivo, permisos y preguntas, chat, integraciones, dictado, Notetaker, « OK NEO », personaje, icono y sonidos propios, en 12 idiomas.
 
+[0.1.2]: https://github.com/juann11/NEO/releases/tag/windows-v0.1.2
 [0.1.1]: https://github.com/juann11/NEO/releases/tag/windows-v0.1.1
 [0.1.0]: https://github.com/juann11/NEO/commits/main

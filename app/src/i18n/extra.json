@@ -3648,19 +3648,6 @@
       "de": "Nicht zugestellt",
       "tr": "Teslim edilmedi"
     },
-    "Dictate anywhere on your computer": {
-      "zh-Hans": "在电脑上的任何地方听写",
-      "hi": "अपने कंप्यूटर पर कहीं भी बोलकर लिखें",
-      "es": "Dicta en cualquier parte de tu ordenador",
-      "ar": "أملِ في أي مكان على حاسوبك",
-      "fr": "Dicte partout sur ton ordinateur",
-      "bn": "আপনার কম্পিউটারে যেকোনো জায়গায় ডিক্টেট করুন",
-      "pt-BR": "Dite em qualquer lugar do seu computador",
-      "ru": "Диктуйте где угодно на компьютере",
-      "id": "Dikte di mana saja di komputermu",
-      "de": "Überall auf deinem Computer diktieren",
-      "tr": "Bilgisayarında her yerde dikte et"
-    },
     "Parakeet, on your computer": {
       "zh-Hans": "Parakeet，在你的电脑上",
       "hi": "Parakeet, आपके कंप्यूटर पर",
@@ -3779,15 +3766,15 @@
       "tr": "Sesin bu bilgisayardan asla dışarı çıkmaz: Parakeet burada metne dönüştürür; kayıt, metin yapıştırılır yapıştırılmaz silinir."
     },
     "With Claude, the transcript (never the audio) goes to Anthropic with your key from Notch → Chat.": {
-      "zh-Hans": "使用 Claude 时，文字记录（绝不包括音频）会通过你在“Notch → 聊天”中设置的密钥发送给 Anthropic。",
+      "zh-Hans": "使用 Claude 时，文字记录（绝不包括音频）会通过你在“岛 → 聊天”中设置的密钥发送给 Anthropic。",
       "hi": "Claude के साथ, ट्रांसक्रिप्ट (ऑडियो कभी नहीं) Notch → चैट में दी गई आपकी कुंजी के साथ Anthropic को जाता है।",
-      "es": "Con Claude, la transcripción (nunca el audio) va a Anthropic con tu clave de Notch → Chat.",
+      "es": "Con Claude, la transcripción (nunca el audio) va a Anthropic con tu clave de Isla → Chat.",
       "ar": "مع Claude، يذهب النص المكتوب (لا الصوت أبدًا) إلى Anthropic بمفتاحك من Notch ← الدردشة.",
-      "fr": "Avec Claude, la transcription (jamais l'audio) part chez Anthropic avec ta clé de Notch → Chat.",
+      "fr": "Avec Claude, la transcription (jamais l'audio) part chez Anthropic avec ta clé de Île → Chat.",
       "bn": "Claude-এ, ট্রান্সক্রিপ্ট (অডিও কখনো নয়) Notch → চ্যাট থেকে আপনার কী দিয়ে Anthropic-এ যায়।",
-      "pt-BR": "Com o Claude, a transcrição (nunca o áudio) vai para a Anthropic com sua chave de Notch → Chat.",
-      "ru": "С Claude расшифровка (но никогда не звук) уходит в Anthropic с вашим ключом из Notch → Чат.",
-      "id": "Dengan Claude, transkrip (tidak pernah audionya) dikirim ke Anthropic dengan kuncimu dari Notch → Obrolan.",
+      "pt-BR": "Com o Claude, a transcrição (nunca o áudio) vai para a Anthropic com sua chave de Ilha → Chat.",
+      "ru": "С Claude расшифровка (но никогда не звук) уходит в Anthropic с вашим ключом из Остров → Чат.",
+      "id": "Dengan Claude, transkrip (tidak pernah audionya) dikirim ke Anthropic dengan kuncimu dari Pulau → Obrolan.",
       "de": "Mit Claude wird das Transkript mit deinem Schlüssel aus Notch → Chat an Anthropic gesendet, niemals das Audio.",
       "tr": "Claude ile döküm, Çentik → Sohbet bölümündeki anahtarınla Anthropic'e gönderilir; ses asla gönderilmez."
     },
@@ -3870,15 +3857,15 @@
       "tr": "NEO görüşmelerini bu bilgisayarda Parakeet ile yazıya döker ve ikinci küçük bir modelle sesleri ayırt eder. İkisi de bir kez indirilir (yaklaşık {0} MB), sonra her şey çevrimdışı çalışır."
     },
     "The clean-up uses your Claude key. Add it in Notch → Chat.": {
-      "zh-Hans": "清理功能使用你的 Claude 密钥。请在“Notch → 聊天”中添加。",
+      "zh-Hans": "清理功能使用你的 Claude 密钥。请在“岛 → 聊天”中添加。",
       "hi": "सफ़ाई आपकी Claude कुंजी इस्तेमाल करती है। इसे Notch → चैट में जोड़ें।",
-      "es": "La limpieza usa tu clave de Claude. Añádela en Notch → Chat.",
+      "es": "La limpieza usa tu clave de Claude. Añádela en Isla → Chat.",
       "ar": "يستخدم التنظيف مفتاح Claude الخاص بك. أضفه في Notch ← الدردشة.",
-      "fr": "Le nettoyage utilise ta clé Claude. Ajoute-la dans Notch → Chat.",
+      "fr": "Le nettoyage utilise ta clé Claude. Ajoute-la dans Île → Chat.",
       "bn": "পরিষ্কার করতে আপনার Claude কী লাগে। Notch → চ্যাট-এ যোগ করুন।",
-      "pt-BR": "A limpeza usa sua chave do Claude. Adicione-a em Notch → Chat.",
-      "ru": "Для очистки нужен ваш ключ Claude. Добавьте его в Notch → Чат.",
-      "id": "Pembersihan memakai kunci Claude-mu. Tambahkan di Notch → Obrolan.",
+      "pt-BR": "A limpeza usa sua chave do Claude. Adicione-a em Ilha → Chat.",
+      "ru": "Для очистки нужен ваш ключ Claude. Добавьте его в Остров → Чат.",
+      "id": "Pembersihan memakai kunci Claude-mu. Tambahkan di Pulau → Obrolan.",
       "de": "Die Überarbeitung nutzt deinen Claude-Schlüssel. Füge ihn unter Notch → Chat hinzu.",
       "tr": "Düzenleme, Claude anahtarını kullanır. Çentik → Sohbet bölümünden ekle."
     },
@@ -4117,15 +4104,15 @@
       "tr": "« OK NEO » ifadesini burada, internet olmadan duyar."
     },
     "NEO answers with Claude: add your Claude key in Notch → Chat.": {
-      "zh-Hans": "NEO 用 Claude 回答：请在 Notch → 聊天 中添加你的 Claude 密钥。",
+      "zh-Hans": "NEO 用 Claude 回答：请在 岛 → 聊天 中添加你的 Claude 密钥。",
       "hi": "NEO Claude से जवाब देता है: Notch → चैट में अपनी Claude कुंजी जोड़ें।",
-      "es": "NEO responde con Claude: añade tu clave de Claude en Notch → Chat.",
+      "es": "NEO responde con Claude: añade tu clave de Claude en Isla → Chat.",
       "ar": "يجيب NEO باستخدام Claude: أضف مفتاح Claude الخاص بك في Notch ← الدردشة.",
-      "fr": "NEO répond avec Claude : ajoute ta clé Claude dans Notch → Chat.",
+      "fr": "NEO répond avec Claude : ajoute ta clé Claude dans Île → Chat.",
       "bn": "NEO Claude দিয়ে উত্তর দেয়: Notch → চ্যাট-এ আপনার Claude কী যোগ করুন।",
-      "pt-BR": "O NEO responde com o Claude: adicione sua chave do Claude em Notch → Chat.",
-      "ru": "NEO отвечает с помощью Claude: добавьте свой ключ Claude в Notch → Чат.",
-      "id": "NEO menjawab dengan Claude: tambahkan kunci Claude-mu di Notch → Obrolan.",
+      "pt-BR": "O NEO responde com o Claude: adicione sua chave do Claude em Ilha → Chat.",
+      "ru": "NEO отвечает с помощью Claude: добавьте свой ключ Claude в Остров → Чат.",
+      "id": "NEO menjawab dengan Claude: tambahkan kunci Claude-mu di Pulau → Obrolan.",
       "de": "NEO antwortet mit Claude: Füge deinen Claude-Schlüssel unter Notch → Chat hinzu.",
       "tr": "NEO, Claude ile yanıt verir: Çentik → Sohbet bölümünden Claude anahtarını ekle."
     },
@@ -4247,15 +4234,15 @@
       "tr": "NEO asla e-posta göndermez: posta uygulaman yazılmış e-postayla açılır ve sen gönderirsin."
     },
     "NEO couldn't answer: check your Claude key in Notch → Chat.": {
-      "zh-Hans": "NEO 无法回答：请检查 Notch → 聊天 中的 Claude 密钥。",
+      "zh-Hans": "NEO 无法回答：请检查 岛 → 聊天 中的 Claude 密钥。",
       "hi": "NEO जवाब नहीं दे सका: Notch → चैट में अपनी Claude कुंजी जाँचें।",
-      "es": "NEO no pudo responder: revisa tu clave de Claude en Notch → Chat.",
+      "es": "NEO no pudo responder: revisa tu clave de Claude en Isla → Chat.",
       "ar": "تعذّر على NEO الإجابة: تحقّق من مفتاح Claude في Notch ← الدردشة.",
-      "fr": "NEO n'a pas pu répondre : vérifie ta clé Claude dans Notch → Chat.",
+      "fr": "NEO n'a pas pu répondre : vérifie ta clé Claude dans Île → Chat.",
       "bn": "NEO উত্তর দিতে পারেনি: Notch → চ্যাট-এ আপনার Claude কী যাচাই করুন।",
-      "pt-BR": "O NEO não conseguiu responder: verifique sua chave do Claude em Notch → Chat.",
-      "ru": "NEO не смог ответить: проверьте ключ Claude в Notch → Чат.",
-      "id": "NEO tidak bisa menjawab: periksa kunci Claude-mu di Notch → Obrolan.",
+      "pt-BR": "O NEO não conseguiu responder: verifique sua chave do Claude em Ilha → Chat.",
+      "ru": "NEO не смог ответить: проверьте ключ Claude в Остров → Чат.",
+      "id": "NEO tidak bisa menjawab: periksa kunci Claude-mu di Pulau → Obrolan.",
       "de": "NEO konnte nicht antworten: Prüfe deinen Claude-Schlüssel unter Notch → Chat.",
       "tr": "NEO yanıt veremedi: Çentik → Sohbet bölümündeki Claude anahtarını kontrol et."
     },

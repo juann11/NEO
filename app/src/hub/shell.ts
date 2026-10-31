@@ -1,6 +1,6 @@
-// The NEO window: a sidebar with Flow (dictation, the Notetaker, the
-// statistics, the dictionary, the snippets, the styles and their settings)
-// and Notch (every setting of the island), and the page on the right, under
+// The NEO window: a sidebar with the island (every setting of the island) and
+// voice (dictation, the Notetaker, the statistics, the dictionary, the
+// snippets, the styles and their settings), and the page on the right, under
 // its coloured band.
 
 import "./hub.css";
@@ -88,7 +88,7 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
   await onEvent<boolean>("hub-visible", setWindowShown);
   const shown = await FlowBridge.hubShown();
   if (shown !== null) setWindowShown(shown);
-  let current: PageId = "dictation";
+  let current: PageId = "general";
   let status: FlowStatus = (await FlowBridge.status()) ?? DEFAULT_STATUS;
   const items = new Map<PageId, HTMLElement>();
   const statusLine = h("div", { class: "hub-status" });
@@ -172,8 +172,8 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
       side.append(b);
     }
   };
-  group("Flow", FLOW_PAGES);
   group(t("Notch"), NOTCH_PAGES);
+  group(t("Voice"), FLOW_PAGES);
   side.append(h("div", { class: "spacer" }), statusLine, h("div", { class: "hub-version", text: `NEO ${opts.version}` }));
 
   clear(root);

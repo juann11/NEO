@@ -136,7 +136,6 @@ function setup(ctx: HubContext): HTMLElement {
   const key = keyLabel(status.keys === "wayland" ? "wayland" : status.prefs.key, status.platform);
   const body = h("div", { style: "display:flex;flex-direction:column;gap:12px" });
   body.append(
-    h("div", { style: "font:700 17px var(--font)", text: t("Dictate anywhere on your computer") }),
     h("div", { class: "hub-note", style: "color:#b7bbc2;font-size:13px", text: t("Hold {0} in any app, speak, let go: your words are pasted where you type.", { 0: key }) }),
   );
   body.append(row(t("Turn on dictation"), null, toggle(status.prefs.enabled, (on) => {

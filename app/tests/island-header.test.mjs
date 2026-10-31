@@ -2,6 +2,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { installFakeDom } from "./fakedom.mjs";
 
 installFakeDom();
@@ -18,4 +19,11 @@ test("the island's gear opens NEO's window", () => {
   button.fire("click");
   assert.equal(opened, 1);
   assert.ok(!all(header.el).some((n) => n.getAttribute?.("title") === "Open NEO"), "un solo botón para lo mismo");
+});
+
+test("NEO's window opens on the island's settings, with voice as a second group", () => {
+  const shell = readFileSync(new URL("../src/hub/shell.ts", import.meta.url), "utf8");
+  assert.match(shell, /let current: PageId = "general"/);
+  assert.ok(shell.indexOf('group(t("Notch"), NOTCH_PAGES)') < shell.indexOf('group(t("Voice"), FLOW_PAGES)'));
+  assert.match(shell, /id: "dictation"/, "las funciones de voz siguen ahí");
 });

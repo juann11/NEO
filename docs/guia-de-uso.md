@@ -93,6 +93,8 @@ En **General → Notificaciones de Windows**, enciende el interruptor. Desde ent
 
 La primera notificación de una app nueva puede salir también en Windows: NEO apaga su aviso justo después.
 
+Los avisos del propio Windows (Defender, reproducción automática, Configuración) no pasan por NEO.
+
 > **Si cierras NEO**, esas apps no mostrarán aviso (siguen en el centro de notificaciones). Antes de desinstalar NEO, apaga el interruptor: así devuelve el aviso a todas.
 
 ## Chat
