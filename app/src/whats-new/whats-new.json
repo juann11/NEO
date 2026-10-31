@@ -2,6 +2,42 @@
  "about": "Novedades que NEO muestra una vez en la isla tras actualizarse (src/whats-new/). Cada versión añade aquí su entrada en los 12 idiomas: de 1 a 4 elementos, con un icono de ICON_NAMES, un título corto y una línea.",
  "releases": [
   {
+   "version": "0.1.2",
+   "items": [
+    {
+     "icon": "bell",
+     "title": {
+      "en": "Cleaner notifications",
+      "zh-Hans": "更清爽的通知",
+      "hi": "साफ़-सुथरी सूचनाएँ",
+      "es": "Notificaciones más limpias",
+      "ar": "إشعارات أوضح",
+      "fr": "Des notifications plus claires",
+      "bn": "আরও পরিষ্কার বিজ্ঞপ্তি",
+      "pt-BR": "Notificações mais limpas",
+      "ru": "Более аккуратные уведомления",
+      "id": "Notifikasi lebih rapi",
+      "de": "Aufgeräumtere Benachrichtigungen",
+      "tr": "Daha temiz bildirimler"
+     },
+     "detail": {
+      "en": "Windows' own alerts stay in Windows, apps show readable names and the settings window opens on General.",
+      "zh-Hans": "Windows 自身的提醒留在 Windows，应用显示易读的名称，设置窗口打开时显示“常规”。",
+      "hi": "Windows की अपनी सूचनाएँ Windows में रहती हैं, ऐप्स के नाम पढ़ने में आसान हैं और सेटिंग्स विंडो सामान्य पर खुलती है।",
+      "es": "Los avisos de Windows se quedan en Windows, las apps tienen nombres legibles y la ventana abre en General.",
+      "ar": "تبقى تنبيهات Windows في Windows، وتظهر التطبيقات بأسماء واضحة، وتُفتح نافذة الإعدادات على عام.",
+      "fr": "Les alertes de Windows restent dans Windows, les apps ont des noms lisibles et la fenêtre s’ouvre sur Général.",
+      "bn": "Windows-এর নিজের সতর্কতা Windows-এই থাকে, অ্যাপের নাম সহজে পড়া যায় আর সেটিংস উইন্ডো সাধারণ-এ খোলে।",
+      "pt-BR": "Os avisos do Windows ficam no Windows, os apps têm nomes legíveis e a janela abre em Geral.",
+      "ru": "Оповещения Windows остаются в Windows, у приложений понятные имена, а окно открывается на разделе «Общие».",
+      "id": "Peringatan Windows tetap di Windows, aplikasi punya nama yang mudah dibaca, dan jendela terbuka di Umum.",
+      "de": "Windows-Hinweise bleiben in Windows, Apps haben lesbare Namen und das Fenster öffnet sich bei Allgemein.",
+      "tr": "Windows'un kendi uyarıları Windows'ta kalır, uygulamaların adları okunaklıdır ve pencere Genel'de açılır."
+     }
+    }
+   ]
+  },
+  {
    "version": "0.1.1",
    "items": [
     {
