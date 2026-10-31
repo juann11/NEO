@@ -112,7 +112,7 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
       drawStatus();
       await FlowBridge.setPrefs(next);
     },
-    hero: (page, title, subtitle, actions = [], compact = false) => hero(page, title, subtitle, actions, compact),
+    hero: (page, title, subtitle, actions = [], compact = true) => hero(page, title, subtitle, actions, compact),
   };
 
   function drawStatus() {
@@ -140,6 +140,7 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
     ctx.onLeave?.();
     ctx.onLeave = undefined;
     current = def.id;
+    if (FLOW_PAGES.includes(def)) foldVoice(true);
     for (const [id, el] of items) el.classList.toggle("on", id === current);
     const token = ++rendering;
     const page_ = h("div", { class: "hub-page" });
@@ -163,17 +164,23 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
   const logo = h("canvas", {});
   side.append(h("div", { class: "hub-brand" }, logo, h("span", { text: "NEO" })));
   liveNeo(logo as HTMLCanvasElement);
-  const group = (title: string, pages: PageDef[]) => {
-    side.append(h("div", { class: "hub-group", text: title }));
-    for (const p of pages) {
-      const b = h("button", { class: "hub-item", onclick: () => void show(p.id) });
-      b.append(icon(p.icon), h("span", { text: p.title() }));
-      items.set(p.id, b);
-      side.append(b);
-    }
+  const pageButtons = (pages: PageDef[]) => pages.map((p) => {
+    const b = h("button", { class: "hub-item", onclick: () => void show(p.id) });
+    b.append(icon(p.icon), h("span", { text: p.title() }));
+    items.set(p.id, b);
+    return b;
+  });
+  side.append(h("div", { class: "hub-group", text: t("Notch") }), ...pageButtons(NOTCH_PAGES));
+  // Voice stays folded for whoever doesn't dictate; its pages are one click away.
+  const voicePages = h("div", { class: "hub-fold" }, ...pageButtons(FLOW_PAGES));
+  const voiceHead = h("button", { class: "hub-group hub-fold-head", onclick: () => foldVoice(voicePages.hidden) },
+    h("span", { text: t("Voice") }), icon("chevron"));
+  const foldVoice = (open: boolean) => {
+    voicePages.hidden = !open;
+    voiceHead.setAttribute("aria-expanded", String(open));
   };
-  group(t("Notch"), NOTCH_PAGES);
-  group(t("Voice"), FLOW_PAGES);
+  foldVoice(status.prefs.enabled);
+  side.append(voiceHead, voicePages);
   side.append(h("div", { class: "spacer" }), statusLine, h("div", { class: "hub-version", text: `NEO ${opts.version}` }));
 
   clear(root);

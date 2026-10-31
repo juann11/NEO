@@ -7,6 +7,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). NEO 
 ### Cambiado
 - La ventana de NEO abre en **General**, con los ajustes de la isla primero y **Voz** (dictado y compañía) después.
 - Nombres de apps legibles en las notificaciones: PowerShell, OneDrive, Snipping Tool.
+- El grupo **Voz** se pliega si no usas el dictado, las bandas de cada página ocupan menos y **General** se parte en Sonido, Comportamiento, Notificaciones de Windows y App.
 
 ### Corregido
 - Los avisos de Windows (Defender, reproducción automática, Configuración, iconos de la bandeja) se quedan en Windows; si NEO ya los había apagado, los devuelve.

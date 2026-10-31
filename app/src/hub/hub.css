@@ -64,6 +64,46 @@ body.hub-window {
   padding: 12px 10px 6px;
 }
 
+.hub-fold-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: transparent;
+  text-align: start;
+}
+
+.hub-fold-head:hover:not(:disabled) {
+  color: var(--hub-text);
+  background: transparent;
+  transform: none;
+}
+
+.hub-fold-head svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.15s ease;
+}
+
+.hub-fold-head[aria-expanded="true"] svg {
+  transform: rotate(90deg);
+}
+
+.hub-fold {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+
+.hub-fold[hidden] {
+  display: none;
+}
+
 .hub-item {
   display: flex;
   align-items: center;
@@ -179,7 +219,8 @@ body.hub-window {
 }
 
 .hub-hero.compact {
-  height: 116px;
+  height: auto;
+  min-height: 104px;
 }
 
 .hub-hero canvas.backdrop,

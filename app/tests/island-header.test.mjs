@@ -24,6 +24,13 @@ test("the island's gear opens NEO's window", () => {
 test("NEO's window opens on the island's settings, with voice as a second group", () => {
   const shell = readFileSync(new URL("../src/hub/shell.ts", import.meta.url), "utf8");
   assert.match(shell, /let current: PageId = "general"/);
-  assert.ok(shell.indexOf('group(t("Notch"), NOTCH_PAGES)') < shell.indexOf('group(t("Voice"), FLOW_PAGES)'));
+  assert.ok(shell.indexOf('text: t("Notch")') < shell.indexOf('text: t("Voice")'));
   assert.match(shell, /id: "dictation"/, "las funciones de voz siguen ahí");
+});
+
+test("the voice group folds: open when dictation is on, and whenever one of its pages opens", () => {
+  const shell = readFileSync(new URL("../src/hub/shell.ts", import.meta.url), "utf8");
+  assert.match(shell, /foldVoice\(status\.prefs\.enabled\)/);
+  assert.match(shell, /if \(FLOW_PAGES\.includes\(def\)\) foldVoice\(true\)/);
+  assert.match(shell, /aria-expanded/);
 });

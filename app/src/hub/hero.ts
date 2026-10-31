@@ -403,7 +403,7 @@ export const THEMES: Record<string, Theme> = {
 };
 
 /** The band itself: title, line, actions, and the Neos. */
-export function hero(page: string, title: string, subtitle: string | null, actions: HTMLElement[] = [], compact = false): HTMLElement {
+export function hero(page: string, title: string, subtitle: string | null, actions: HTMLElement[] = [], compact = true): HTMLElement {
   const theme = THEMES[page] ?? THEMES.general;
   const el = document.createElement("div");
   el.className = compact ? "hub-hero compact" : "hub-hero";

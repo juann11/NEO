@@ -916,7 +916,7 @@ function whatsappSections(): HTMLElement[] {
 
 // ── General section ───────────────────────────────────────────────────────────
 
-function generalSection(): HTMLElement {
+function generalSections(): HTMLElement[] {
   const volume = h("input", {
     type: "range", min: "0", max: "0.2", step: "0.005",
     value: String(settings.soundVolume),
@@ -977,45 +977,49 @@ function generalSection(): HTMLElement {
     void save();
   });
 
-  return h(
-    "section",
-    {},
-    h("h2", {}, h("span", { text: t("General") })),
-    h("div", { class: "row" },
-      h("label", { text: t("Sound") }),
-      toggle(settings.soundEnabled, (v) => { settings.soundEnabled = v; void save(); }),
-      volume,
+  const block = (title: string, ...rows: HTMLElement[]) => h("section", {}, h("h2", {}, h("span", { text: title })), ...rows);
+  return [
+    block(t("Sound"),
+      h("div", { class: "row" },
+        h("label", { text: t("Sound") }),
+        toggle(settings.soundEnabled, (v) => { settings.soundEnabled = v; void save(); }),
+        volume,
+      ),
+      h("div", { class: "row" }, soundsFolder, reloadSounds, customCount),
+      h("div", { class: "hint", text: t("Drop a file named like one of NEO's sounds (finish.wav, approval.mp3, greet.m4a…) in the sounds folder to replace it, then Reload.") }),
     ),
-    h("div", { class: "row" }, soundsFolder, reloadSounds, customCount),
-    h("div", { class: "hint", text: t("Drop a file named like one of NEO's sounds (finish.wav, approval.mp3, greet.m4a…) in the sounds folder to replace it, then Reload.") }),
-    h("div", { class: "row" },
-      h("label", { text: t("Open on hover") }),
-      toggle(settings.openOnHover, (v) => { settings.openOnHover = v; void save(); }),
+    block(t("Behavior"),
+      h("div", { class: "row" },
+        h("label", { text: t("Open on hover") }),
+        toggle(settings.openOnHover, (v) => { settings.openOnHover = v; void save(); }),
+      ),
+      h("div", { class: "hint", text: t("Hovering the island opens it; it folds again shortly after the pointer leaves. Click inside to keep it open.") }),
+      h("div", { class: "row" },
+        h("label", { text: t("Show clock in the island") }),
+        toggle(settings.showClock, (v) => { settings.showClock = v; void save(); }),
+      ),
+      h("div", { class: "hint", text: t("The date and the time in the middle of the island when it is compact.") }),
+      h("div", { class: "row" },
+        h("label", { text: t("Auto-close") }),
+        autoClose,
+        h("span", { class: "hint", text: t("seconds after you leave the island") }),
+      ),
+      h("div", { class: "row" },
+        h("label", { text: t("Island lives on") }),
+        screen,
+      ),
     ),
-    h("div", { class: "hint", text: t("Hovering the island opens it; it folds again shortly after the pointer leaves. Click inside to keep it open.") }),
-    h("div", { class: "row" },
-      h("label", { text: t("Show clock in the island") }),
-      toggle(settings.showClock, (v) => { settings.showClock = v; void save(); }),
+    block(t("Windows notifications"), ...notificationRows()),
+    block(t("App"),
+      h("div", { class: "row" },
+        h("label", { text: t("Launch at startup") }),
+        toggle(settings.autostart, (v) => { settings.autostart = v; void save(); }),
+      ),
+      ...recapRows(),
+      ...updateRows(toggle, version),
+      languageRow(),
     ),
-    h("div", { class: "hint", text: t("The date and the time in the middle of the island when it is compact.") }),
-    h("div", { class: "row" },
-      h("label", { text: t("Auto-close") }),
-      autoClose,
-      h("span", { class: "hint", text: t("seconds after you leave the island") }),
-    ),
-    h("div", { class: "row" },
-      h("label", { text: t("Island lives on") }),
-      screen,
-    ),
-    h("div", { class: "row" },
-      h("label", { text: t("Launch at startup") }),
-      toggle(settings.autostart, (v) => { settings.autostart = v; void save(); }),
-    ),
-    ...notificationRows(),
-    ...recapRows(),
-    ...updateRows(toggle, version),
-    languageRow(),
-  );
+  ];
 }
 
 /**
@@ -1436,7 +1440,7 @@ async function render() {
   shortcutsListener = null;
   clear(root);
   const sections: Partial<Record<PageId, () => HTMLElement[]>> = {
-    general: () => [generalSection()],
+    general: generalSections,
     pills: () => [activePillsSection(connected)],
     agents: () => [claudeSection(status), agentsSection(agents), planSection(status)],
     chat: () => [apiSection(hasKey), chatProvidersSection(chatKeys, keyChanged), localSection(customKey)],
