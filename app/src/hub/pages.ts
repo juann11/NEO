@@ -10,9 +10,13 @@ import { stylesPage } from "./pages/styles";
 import { flowSettingsPage } from "./pages/flowsettings";
 import { voicePage } from "./pages/voice";
 import { homePage } from "./pages/home";
+import { notificationsPage } from "./pages/notifications";
+import { lookPage } from "./pages/look";
 
 export const FLOW_PAGE_RENDERERS: Partial<Record<PageId, FlowPageRenderer>> = {
   home: homePage,
+  notifications: notificationsPage,
+  look: lookPage,
   dictation: dictationPage,
   notes: notesPage,
   insights: insightsPage,

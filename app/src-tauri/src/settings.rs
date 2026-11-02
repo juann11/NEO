@@ -57,6 +57,8 @@ pub struct Settings {
     /// season), "none" or an outfit id — the Mac's raw values. The island reads
     /// anything it doesn't know as "auto", so the value is stored as it comes.
     pub neo_outfit: String,
+    /// El color del cuerpo de NEO (src/neo/neo-look.ts); uno que no se conoce se ve grafito.
+    pub neo_color: String,
     /// A colour of the user's own for a pill's NEO, by pill ID ("#RRGGBB"),
     /// picked in Settings → Active pills. Empty means the catalog's colours.
     /// Kept as it comes, like `neo_outfit`: src/core/pill-colors.ts reads
@@ -131,6 +133,7 @@ impl Default for Settings {
             custom_url: String::new(),
             shortcuts: Default::default(),
             neo_outfit: "auto".into(),
+            neo_color: "graphite".into(),
             pill_colors: BTreeMap::new(),
             language: String::new(),
             desktop_neo: DesktopNeoPref::default(),
@@ -414,6 +417,7 @@ mod tests {
   "customUrl": "https://llm.example.com",
   "shortcuts": { "openChat": { "keys": "Ctrl+Shift+K", "enabled": false } },
   "neoOutfit": "witchHat",
+  "neoColor": "pink",
   "pillColors": { "integration_claude": "#2DD4BF" },
   "language": "pt-BR",
   "desktopNeo": { "onDesktop": true, "spot": { "x": 1500.5, "y": -300.0, "space": "screen" } },
@@ -821,6 +825,7 @@ mod tests {
                 "customUrl",
                 "shortcuts",
                 "neoOutfit",
+                "neoColor",
                 "pillColors",
                 "language",
                 "desktopNeo",

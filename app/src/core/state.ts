@@ -143,6 +143,8 @@ export interface Settings {
    * Same raw values as the Mac's "neoOutfit"; read it through parseOutfit.
    */
   neoOutfit: string;
+  /** El color del cuerpo (neo-look.ts, NEO_SKINS); "graphite" es el de siempre. */
+  neoColor: string;
   /**
    * A colour of the user's own for a pill's NEO, by pill ID ("#RRGGBB").
    * Empty means the catalog's colours; read it through core/pill-colors.ts.
@@ -188,6 +190,7 @@ export const DEFAULT_SETTINGS: Settings = {
   customUrl: "",
   shortcuts: {},
   neoOutfit: DEFAULT_OUTFIT,
+  neoColor: "graphite",
   pillColors: {},
   language: "",
 };

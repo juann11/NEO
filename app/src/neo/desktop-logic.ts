@@ -15,6 +15,8 @@ export interface DesktopSnapshot {
   state: BotStateName;
   /** He is always the main NEO, so always dressed (try-ons included). */
   outfit: Outfit;
+  /** El color de Aspecto (neo-look.ts, NEO_SKINS). */
+  color: string;
   soundEnabled: boolean;
   soundVolume: number;
   /** Tray → Pause: he dozes off and stays asleep. */

@@ -411,7 +411,7 @@ const EVENT: &str = "system-notification";
 #[tauri::command]
 pub fn recent_system_notifications(app: AppHandle, limit: usize) -> Vec<Toast> {
     let Some(muted) = wanted(&app) else { return Vec::new() };
-    database().and_then(|p| open_read_only(&p).ok()).and_then(|db| recent_toasts(&db, limit.min(50), &muted).ok()).unwrap_or_default()
+    database().and_then(|p| open_read_only(&p).ok()).and_then(|db| recent_toasts(&db, limit.min(200), &muted).ok()).unwrap_or_default()
 }
 
 /// Las apps que han mandado notificaciones, para elegir en Ajustes cuáles avisan.

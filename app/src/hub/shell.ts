@@ -14,7 +14,7 @@ import { icon, keyLabel } from "./ui";
 
 export type PageId =
   | "dictation" | "notes" | "insights" | "dictionary" | "snippets" | "styles" | "flowsettings"
-  | "home" | "general" | "pills" | "agents" | "chat" | "voice" | "integrations" | "shortcuts";
+  | "home" | "notifications" | "general" | "look" | "pills" | "agents" | "chat" | "voice" | "integrations" | "shortcuts";
 
 interface PageDef {
   id: PageId;
@@ -36,6 +36,7 @@ export const FLOW_PAGES: PageDef[] = [
 
 export const NOTCH_PAGES: PageDef[] = [
   { id: "general", icon: "gear", title: () => t("General"), subtitle: () => t("NEO, his sounds and how the island behaves.") },
+  { id: "look", icon: "shirt", title: () => t("Appearance") },
   { id: "pills", icon: "grid", title: () => t("Active pills"), subtitle: () => t("The pills shown in the island, their order and their colours.") },
   { id: "agents", icon: "terminal", title: () => t("Agents"), subtitle: () => t("Claude Code, Codex and the other agents NEO follows.") },
   { id: "chat", icon: "chat", title: () => t("Chat"), subtitle: () => t("The AI of the island's chat, with your own keys.") },
@@ -44,9 +45,12 @@ export const NOTCH_PAGES: PageDef[] = [
   { id: "shortcuts", icon: "keyboard", title: () => t("Shortcuts"), subtitle: () => t("The keys that open the island and its actions.") },
 ];
 
-const HOME_PAGE: PageDef = { id: "home", icon: "home", title: () => t("Home") };
+const HOME_PAGES: PageDef[] = [
+  { id: "home", icon: "home", title: () => t("Home") },
+  { id: "notifications", icon: "bell", title: () => t("Notifications") },
+];
 
-const ALL = [HOME_PAGE, ...FLOW_PAGES, ...NOTCH_PAGES];
+const ALL = [...HOME_PAGES, ...FLOW_PAGES, ...NOTCH_PAGES];
 
 /** What a page gets to draw itself and reach the rest of the window. */
 export interface HubContext {
@@ -183,7 +187,7 @@ export async function startHub(root: HTMLElement, opts: HubOptions) {
     items.set(p.id, b);
     return b;
   });
-  side.append(...pageButtons([HOME_PAGE]), h("div", { class: "hub-group", text: t("Notch") }), ...pageButtons(NOTCH_PAGES));
+  side.append(...pageButtons(HOME_PAGES), h("div", { class: "hub-group", text: t("Notch") }), ...pageButtons(NOTCH_PAGES));
   // Voice stays folded for whoever doesn't dictate; its pages are one click away.
   const voicePages = h("div", { class: "hub-fold" }, ...pageButtons(FLOW_PAGES));
   const voiceHead = h("button", { class: "hub-group hub-fold-head", onclick: () => foldVoice(voicePages.hidden) },

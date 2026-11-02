@@ -194,6 +194,8 @@ export class BotEngine {
   isMini = false;
   /** Solid body colour for mini bots / integration pills (null = NEO gradient). */
   bodyColor: RGB | null = null;
+  /** Arriba y abajo del cuerpo cuando no hay `bodyColor`: el color elegido en Aspecto. */
+  baseColors: [RGB, RGB] = [BASE_TOP, BASE_BOTTOM];
   /**
    * A new NEO waits (whats-new/whats-new.ts): while NEO is idle or asleep
    * he wears the up-arrow badge. The island turns his body blue alongside.
@@ -894,8 +896,8 @@ export class BotEngine {
       if (pumpkin <= 0.001) return;
     } else {
       const g = x.createLinearGradient(rx * 0.7, -ry * 0.85, -rx * 0.8, ry * 0.9);
-      g.addColorStop(0, rgba(BASE_TOP));
-      g.addColorStop(1, rgba(BASE_BOTTOM));
+      g.addColorStop(0, rgba(this.baseColors[0]));
+      g.addColorStop(1, rgba(this.baseColors[1]));
       x.fillStyle = g;
       x.fill(body);
     }

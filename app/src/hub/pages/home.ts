@@ -14,6 +14,8 @@ import {
 import { HOME_ASK, HOME_OPEN, HOME_SESSIONS, ago, type HomeSession } from "../../core/home-feed";
 import type { BotStateName } from "../../core/layout";
 import type { HubContext, PageId } from "../shell";
+import type { SystemToast } from "../../island/system-notifications";
+import { dressNeo } from "./look";
 import { emptyState, isWindowShown, liveNeo } from "../hero";
 import { button, icon, iconButton, number, shortCount, toggle } from "../ui";
 
@@ -37,7 +39,7 @@ interface Feed {
 }
 
 /** Redibuja solo si cambió: la lista no parpadea y lo que tenga el foco no lo pierde. */
-function drawWhenChanged(el: HTMLElement) {
+export function drawWhenChanged(el: HTMLElement) {
   let last = "";
   return (key: unknown, draw: () => void) => {
     const next = JSON.stringify(key);
@@ -54,6 +56,18 @@ function agoText(arrival: number): string {
   if (when.unit === "now") return t("Just now");
   if (when.unit === "min") return t("{0} min", { 0: when.n });
   return when.unit === "h" ? t("{0} h", { 0: when.n }) : t("{0} d", { 0: when.n });
+}
+
+/** Una notificación: su app, título y texto; al pulsarla se abre la app. */
+export function toastRow(toast: SystemToast): HTMLElement {
+  return h("button", { class: "home-row", title: t("Open"), onclick: () => void Bridge.openNotificationApp(toast.appId) },
+    h("span", { class: "home-badge", text: toast.app.slice(0, 1).toUpperCase() }),
+    h("span", { class: "home-text" },
+      h("span", { class: "home-title", text: toast.title }),
+      h("span", { class: "home-sub", text: toast.body || toast.app }),
+    ),
+    h("span", { class: "home-meta" }, h("span", { text: toast.app }), h("span", { text: agoText(toast.arrival) })),
+  );
 }
 
 function notificationsCard(ctx: HubContext, feed: Feed): CardView {
@@ -76,20 +90,11 @@ function notificationsCard(ctx: HubContext, feed: Feed): CardView {
         el.append(emptyState(t("No notifications yet."), "sleeping"));
         return;
       }
-      for (const toast of toasts) {
-        el.append(h("button", { class: "home-row", title: t("Open"), onclick: () => void Bridge.openNotificationApp(toast.appId) },
-          h("span", { class: "home-badge", text: toast.app.slice(0, 1).toUpperCase() }),
-          h("span", { class: "home-text" },
-            h("span", { class: "home-title", text: toast.title }),
-            h("span", { class: "home-sub", text: toast.body || toast.app }),
-          ),
-          h("span", { class: "home-meta" }, h("span", { text: toast.app }), h("span", { text: agoText(toast.arrival) })),
-        ));
-      }
+      for (const toast of toasts) el.append(toastRow(toast));
     });
   };
   void refresh();
-  return { el, live: () => void refresh(), link: [t("Settings"), "general"] };
+  return { el, live: () => void refresh(), link: [t("See all"), "notifications"] };
 }
 
 const STATE_TEXT: Partial<Record<BotStateName, () => string>> = {
@@ -150,7 +155,7 @@ function agentsCard(): CardView {
 
 function statusCard(ctx: HubContext, feed: Feed): CardView {
   const neo = h("canvas", { class: "home-neo" }) as HTMLCanvasElement;
-  liveNeo(neo, "#475569");
+  dressNeo(liveNeo(neo), ctx.settings());
   const flag = (text: string, on: boolean, change: (v: boolean) => void) =>
     h("label", { class: "home-flag" }, h("span", { text }), toggle(on, change));
   const s = ctx.settings();

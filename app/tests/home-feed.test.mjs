@@ -35,3 +35,26 @@ test("the line is the last step, or the final message once it stopped", () => {
   assert.equal(none.line, "");
   assert.equal(none.project, "");
 });
+
+test("the search finds words in the app, the title or the text, without caring about accents or case", async () => {
+  const { filterToasts } = await import("../src/core/home-feed.ts");
+  const toasts = [
+    { id: 1, appId: "wa", app: "WhatsApp", title: "Ana", body: "¿Vienes a la reunión?", arrival: 0 },
+    { id: 2, appId: "od", app: "OneDrive", title: "Sincronizado", body: "", arrival: 0 },
+    { id: 3, appId: "wa", app: "WhatsApp", title: "Luis", body: "Listo", arrival: 0 },
+  ];
+  assert.deepEqual(filterToasts(toasts, "REUNION", null).map((x) => x.id), [1]);
+  assert.deepEqual(filterToasts(toasts, "onedrive", null).map((x) => x.id), [2]);
+  assert.deepEqual(filterToasts(toasts, "  ", "wa").map((x) => x.id), [1, 3]);
+  assert.deepEqual(filterToasts(toasts, "luis", "od"), []);
+});
+
+test("notifications are grouped by day: today, yesterday, and older ones by their date", async () => {
+  const { dayOf } = await import("../src/core/home-feed.ts");
+  const now = new Date(2026, 10, 2, 9, 30).getTime() / 1000;
+  const at = (d, h) => new Date(2026, 10, d, h).getTime() / 1000;
+  assert.equal(dayOf(at(2, 0), now), "today");
+  assert.equal(dayOf(at(1, 23), now), "yesterday");
+  assert.equal(dayOf(new Date(2026, 9, 30, 12).getTime() / 1000, now), "2026-10-30");
+  assert.equal(dayOf(0, now), "unknown");
+});

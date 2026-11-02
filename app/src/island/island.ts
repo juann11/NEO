@@ -15,6 +15,7 @@ import { State } from "../core/state";
 import { islandDances } from "../core/spotify";
 import { openTarget } from "./targets";
 import { BotEngine, hexToRGB } from "../neo/engine";
+import { neoSkin } from "../neo/neo-look";
 import { Greeting } from "../neo/greeting";
 import { createMiniBot, pruneMiniBots, syncMiniBotStates, tickMiniBots } from "../neo/minibots";
 import { SeasonCache, parseOutfit } from "../neo/wardrobe";
@@ -1107,6 +1108,7 @@ export class Island {
         : focus?.isIntegration
           ? hexToRGB(focus.color)
           : null;
+    this.engine.baseColors = neoSkin(State.settings.neoColor);
     this.engine.particleOverhang = BOT_OVERHANG;
     this.engine.lookX = this.lookX();
     this.engine.lookY = this.lookY();

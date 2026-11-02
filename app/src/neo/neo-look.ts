@@ -3,6 +3,8 @@
 // la caja de subida (upload/canvas.ts) y las miniaturas del armario (outfits.ts).
 // Paleta "terminal oscuro + verde" de ui-ux-pro-max.
 
+import { N_ } from "../i18n/i18n";
+
 export type RGB = [number, number, number];
 
 /** Cuerpo: slate-600 → slate-800. El tono de arriba se distingue sobre la isla negra. */
@@ -10,6 +12,28 @@ export const NEO_TOP = "#475569";
 export const NEO_BOTTOM = "#1E293B";
 export const NEO_TOP_RGB: RGB = [0.278, 0.333, 0.412];
 export const NEO_BOTTOM_RGB: RGB = [0.118, 0.161, 0.231];
+/** Los colores que se pueden elegir para el cuerpo (Aspecto): el de arriba y uno más oscuro abajo. */
+export const NEO_SKINS = [
+  { id: "graphite", name: N_("Graphite"), top: NEO_TOP, bottom: NEO_BOTTOM },
+  { id: "blue", name: N_("Blue"), top: "#3B82F6", bottom: "#1E3A8A" },
+  { id: "violet", name: N_("Violet"), top: "#8B5CF6", bottom: "#4C1D95" },
+  { id: "pink", name: N_("Pink"), top: "#EC4899", bottom: "#831843" },
+  { id: "red", name: N_("Red"), top: "#EF4444", bottom: "#7F1D1D" },
+  { id: "orange", name: N_("Orange"), top: "#F97316", bottom: "#7C2D12" },
+  { id: "yellow", name: N_("Yellow"), top: "#EAB308", bottom: "#713F12" },
+  { id: "green", name: N_("Green"), top: "#22C55E", bottom: "#14532D" },
+  { id: "white", name: N_("White"), top: "#E2E8F0", bottom: "#94A3B8" },
+  { id: "black", name: N_("Black"), top: "#1F2937", bottom: "#030712" },
+];
+
+const rgbOf = (hex: string): RGB => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255) as RGB;
+
+/** Los dos tonos del cuerpo para un color guardado; el grafito si no se conoce. */
+export function neoSkin(id: string): [RGB, RGB] {
+  const skin = NEO_SKINS.find((s) => s.id === id);
+  return !skin || skin.id === "graphite" ? [NEO_TOP_RGB, NEO_BOTTOM_RGB] : [rgbOf(skin.top), rgbOf(skin.bottom)];
+}
+
 /** Borde claro: sin él el cuerpo oscuro desaparece sobre el negro de la isla. */
 export const NEO_RIM = "rgba(148,163,184,0.55)";
 /** Cristal del visor. */

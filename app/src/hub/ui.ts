@@ -28,6 +28,7 @@ export const HUB_ICONS: Record<string, string> = {
   plus: "M12 5v14M5 12h14",
   chevron: "M9 6l6 6-6 6",
   grip: "M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01",
+  shirt: "M8.5 4 4 7l2 3.5 2-1V20h8V9.5l2 1L20 7l-4.5-3c-.5 1.6-1.9 2.5-3.5 2.5S9 5.6 8.5 4z",
   home: "M4 11.5 12 4.5l8 7M6.5 9.5V20h11V9.5",
   bell: "M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 21h4",
   pencil: "M4.5 19.5l4-1 10.5-10.5-3-3L5.5 15.5l-1 4z",
