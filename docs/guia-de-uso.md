@@ -34,6 +34,17 @@ Pulsa **Personalizar** para arrastrar las tarjetas por sus puntos, moverlas con 
 
 Las notificaciones salen de las que Windows ya guarda: NEO no hace ninguna copia, así que si las borras en Windows también desaparecen de Inicio.
 
+## Notificaciones y Aspecto
+
+**Notificaciones**, debajo de Inicio, enseña las que guarda Windows (hasta 100), agrupadas por día. Busca por app, título o texto, sin importar tildes ni mayúsculas, y filtra por app con los botones de arriba.
+
+**Aspecto**, en el grupo Isla, cambia cómo se ve NEO:
+
+- **Color del cuerpo:** 10 colores. Los ojos siguen cambiando de color según el estado.
+- **Guardarropa:** los accesorios para la cabeza. Pasa el ratón para probarlos en la vista previa y haz clic para dejar uno puesto.
+
+El mismo guardarropa se abre desde la isla con clic derecho en NEO, con `Ctrl+Alt+G` o desde el menú de la bandeja.
+
 ## Atajos
 
 | Atajo | Acción |

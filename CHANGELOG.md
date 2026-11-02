@@ -7,6 +7,8 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). NEO 
 ### Añadido
 - **Inicio:** la ventana de NEO abre en una página de tarjetas con Notificaciones, Sesiones activas, Agentes y Estado de NEO, y puedes añadir Servicios y Dictado.
 - **Personalizar:** arrastra, mueve, ensancha, quita o agrega tarjetas. NEO recuerda cómo las dejaste.
+- **Notificaciones:** página con todas las que guarda Windows, un buscador, filtro por app y agrupadas por día.
+- **Aspecto:** elige lo que NEO lleva en la cabeza, con vista previa, y el color de su cuerpo.
 
 ### Cambiado
 - En el menú de la ventana, los ajustes de la isla van primero y **Voz** (dictado y compañía) después.
