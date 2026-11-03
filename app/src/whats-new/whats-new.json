@@ -5,34 +5,127 @@
    "version": "0.1.2",
    "items": [
     {
-     "icon": "bell",
+     "icon": "sparkles",
      "title": {
-      "en": "Cleaner notifications",
-      "zh-Hans": "更清爽的通知",
-      "hi": "साफ़-सुथरी सूचनाएँ",
-      "es": "Notificaciones más limpias",
-      "ar": "إشعارات أوضح",
-      "fr": "Des notifications plus claires",
-      "bn": "আরও পরিষ্কার বিজ্ঞপ্তি",
-      "pt-BR": "Notificações mais limpas",
-      "ru": "Более аккуратные уведомления",
-      "id": "Notifikasi lebih rapi",
-      "de": "Aufgeräumtere Benachrichtigungen",
-      "tr": "Daha temiz bildirimler"
+      "en": "Home, your way",
+      "zh-Hans": "按你的方式设置主页",
+      "hi": "आपके अंदाज़ में होम",
+      "es": "Inicio a tu manera",
+      "ar": "الصفحة الرئيسية على طريقتك",
+      "fr": "Un accueil à ta façon",
+      "bn": "আপনার মতো হোম",
+      "pt-BR": "Início do seu jeito",
+      "ru": "Главная — как вам удобно",
+      "id": "Beranda sesuai caramu",
+      "de": "Start nach deinem Geschmack",
+      "tr": "Ana sayfa senin tarzında"
      },
      "detail": {
-      "en": "Windows' own alerts stay in Windows, apps show readable names and the settings window opens on General.",
-      "zh-Hans": "Windows 自身的提醒留在 Windows，应用显示易读的名称，设置窗口打开时显示“常规”。",
-      "hi": "Windows की अपनी सूचनाएँ Windows में रहती हैं, ऐप्स के नाम पढ़ने में आसान हैं और सेटिंग्स विंडो सामान्य पर खुलती है।",
-      "es": "Los avisos de Windows se quedan en Windows, las apps tienen nombres legibles y la ventana abre en General.",
-      "ar": "تبقى تنبيهات Windows في Windows، وتظهر التطبيقات بأسماء واضحة، وتُفتح نافذة الإعدادات على عام.",
-      "fr": "Les alertes de Windows restent dans Windows, les apps ont des noms lisibles et la fenêtre s’ouvre sur Général.",
-      "bn": "Windows-এর নিজের সতর্কতা Windows-এই থাকে, অ্যাপের নাম সহজে পড়া যায় আর সেটিংস উইন্ডো সাধারণ-এ খোলে।",
-      "pt-BR": "Os avisos do Windows ficam no Windows, os apps têm nomes legíveis e a janela abre em Geral.",
-      "ru": "Оповещения Windows остаются в Windows, у приложений понятные имена, а окно открывается на разделе «Общие».",
-      "id": "Peringatan Windows tetap di Windows, aplikasi punya nama yang mudah dibaca, dan jendela terbuka di Umum.",
-      "de": "Windows-Hinweise bleiben in Windows, Apps haben lesbare Namen und das Fenster öffnet sich bei Allgemein.",
-      "tr": "Windows'un kendi uyarıları Windows'ta kalır, uygulamaların adları okunaklıdır ve pencere Genel'de açılır."
+      "en": "NEO's window opens on cards for notifications, sessions and agents: drag, resize and add them.",
+      "zh-Hans": "NEO 窗口打开即显示通知、会话和代理卡片：可拖动、调整大小和添加。",
+      "hi": "NEO की विंडो सूचनाओं, सत्रों और एजेंटों के कार्ड पर खुलती है: उन्हें खींचें, बड़ा करें और जोड़ें।",
+      "es": "La ventana de NEO abre con tarjetas de notificaciones, sesiones y agentes: arrástralas, ensánchalas y agrega otras.",
+      "ar": "تُفتح نافذة NEO على بطاقات للإشعارات والجلسات والوكلاء: اسحبها وكبّرها وأضف غيرها.",
+      "fr": "La fenêtre de NEO s’ouvre sur des cartes de notifications, sessions et agents : déplace-les, élargis-les, ajoutes-en.",
+      "bn": "NEO-র উইন্ডো বিজ্ঞপ্তি, সেশন আর এজেন্টের কার্ডে খোলে: টেনে আনুন, বড় করুন, আরও যোগ করুন।",
+      "pt-BR": "A janela do NEO abre com cartões de notificações, sessões e agentes: arraste, amplie e adicione outros.",
+      "ru": "Окно NEO открывается с карточками уведомлений, сеансов и агентов: перетаскивайте, расширяйте, добавляйте.",
+      "id": "Jendela NEO terbuka dengan kartu notifikasi, sesi, dan agen: seret, perlebar, dan tambah lainnya.",
+      "de": "NEOs Fenster öffnet mit Karten für Benachrichtigungen, Sitzungen und Agenten: verschieben, verbreitern, hinzufügen.",
+      "tr": "NEO penceresi bildirim, oturum ve ajan kartlarıyla açılır: sürükle, genişlet, yenilerini ekle."
+     }
+    },
+    {
+     "icon": "bell",
+     "title": {
+      "en": "All your notifications",
+      "zh-Hans": "你的所有通知",
+      "hi": "आपकी सारी सूचनाएँ",
+      "es": "Todas tus notificaciones",
+      "ar": "كل إشعاراتك",
+      "fr": "Toutes tes notifications",
+      "bn": "আপনার সব বিজ্ঞপ্তি",
+      "pt-BR": "Todas as suas notificações",
+      "ru": "Все ваши уведомления",
+      "id": "Semua notifikasimu",
+      "de": "Alle deine Benachrichtigungen",
+      "tr": "Tüm bildirimlerin"
+     },
+     "detail": {
+      "en": "A page with search, a filter per app and days; Windows' own alerts stay in Windows.",
+      "zh-Hans": "新页面支持搜索、按应用筛选和按天分组；Windows 自身的提醒留在 Windows。",
+      "hi": "खोज, ऐप के हिसाब से फ़िल्टर और दिनों वाला पेज; Windows की अपनी सूचनाएँ Windows में रहती हैं।",
+      "es": "Una página con buscador, filtro por app y por días; los avisos del propio Windows se quedan en Windows.",
+      "ar": "صفحة فيها بحث وتصفية حسب التطبيق والأيام؛ وتبقى تنبيهات Windows في Windows.",
+      "fr": "Une page avec recherche, filtre par app et par jour ; les alertes de Windows restent dans Windows.",
+      "bn": "খোঁজ, অ্যাপ অনুযায়ী ফিল্টার আর দিনভিত্তিক পেজ; Windows-এর নিজের সতর্কতা Windows-এই থাকে।",
+      "pt-BR": "Uma página com busca, filtro por app e por dia; os avisos do Windows ficam no Windows.",
+      "ru": "Страница с поиском, фильтром по приложениям и по дням; оповещения самой Windows остаются в Windows.",
+      "id": "Halaman dengan pencarian, filter per aplikasi dan hari; peringatan Windows tetap di Windows.",
+      "de": "Eine Seite mit Suche, Filter pro App und nach Tagen; Windows-eigene Hinweise bleiben in Windows.",
+      "tr": "Arama, uygulamaya göre filtre ve günler içeren bir sayfa; Windows'un kendi uyarıları Windows'ta kalır."
+     }
+    },
+    {
+     "icon": "paint",
+     "title": {
+      "en": "Dress NEO up",
+      "zh-Hans": "打扮 NEO",
+      "hi": "NEO को सजाएँ",
+      "es": "Viste a NEO",
+      "ar": "ألبِس NEO",
+      "fr": "Habille NEO",
+      "bn": "NEO-কে সাজান",
+      "pt-BR": "Vista o NEO",
+      "ru": "Наряжайте NEO",
+      "id": "Dandani NEO",
+      "de": "Zieh NEO an",
+      "tr": "NEO'yu giydir"
+     },
+     "detail": {
+      "en": "In Appearance, pick what he wears and the colour of his body, and see it on him first.",
+      "zh-Hans": "在“外观”中选择它的穿戴和身体颜色，并先看看效果。",
+      "hi": "रूप में चुनें कि वह क्या पहनेगा और उसके शरीर का रंग, और पहले उस पर देख लें।",
+      "es": "En Aspecto eliges lo que lleva y el color de su cuerpo, y lo ves puesto antes.",
+      "ar": "في المظهر اختر ما يرتديه ولون جسمه، وشاهده عليه أولًا.",
+      "fr": "Dans Apparence, choisis sa tenue et la couleur de son corps, et vois-les sur lui d’abord.",
+      "bn": "চেহারা-য় বেছে নিন সে কী পরবে আর তার শরীরের রং, আগে তাকে পরিয়ে দেখুন।",
+      "pt-BR": "Em Aparência, escolha a roupa e a cor do corpo e veja nele antes.",
+      "ru": "В разделе «Внешний вид» выберите наряд и цвет корпуса и сначала примерьте их.",
+      "id": "Di Tampilan, pilih apa yang dipakainya dan warna badannya, lalu lihat dulu hasilnya.",
+      "de": "Unter Aussehen wählst du sein Outfit und seine Körperfarbe und siehst sie vorher an ihm.",
+      "tr": "Görünüm'de ne giyeceğini ve gövde rengini seç, önce üzerinde gör."
+     }
+    },
+    {
+     "icon": "heart",
+     "title": {
+      "en": "Reactions per app",
+      "zh-Hans": "按应用设置反应",
+      "hi": "हर ऐप की प्रतिक्रिया",
+      "es": "Reacciones por app",
+      "ar": "تفاعلات لكل تطبيق",
+      "fr": "Réactions par app",
+      "bn": "অ্যাপ অনুযায়ী প্রতিক্রিয়া",
+      "pt-BR": "Reações por app",
+      "ru": "Реакции для каждого приложения",
+      "id": "Reaksi per aplikasi",
+      "de": "Reaktionen pro App",
+      "tr": "Uygulamaya göre tepkiler"
+     },
+     "detail": {
+      "en": "Each app with its own sound, gesture and outfit, plus quiet hours when NEO stays silent.",
+      "zh-Hans": "每个应用都有自己的声音、表情和装扮，还有让 NEO 保持安静的时段。",
+      "hi": "हर ऐप की अपनी आवाज़, हाव-भाव और पोशाक, और शांत समय जब NEO चुप रहता है।",
+      "es": "Cada app con su sonido, su gesto y su traje, y horas de silencio en las que NEO no molesta.",
+      "ar": "لكل تطبيق صوته وإيماءته وزيّه، مع ساعات هدوء يبقى فيها NEO صامتًا.",
+      "fr": "Chaque app avec son son, son geste et sa tenue, et des heures calmes où NEO se tait.",
+      "bn": "প্রতিটি অ্যাপের নিজস্ব শব্দ, ভঙ্গি আর পোশাক, আর নীরব সময় যখন NEO চুপ থাকে।",
+      "pt-BR": "Cada app com seu som, gesto e roupa, e horários de silêncio em que o NEO fica quieto.",
+      "ru": "У каждого приложения свой звук, жест и наряд, а в тихие часы NEO молчит.",
+      "id": "Setiap aplikasi dengan suara, gestur, dan kostumnya sendiri, plus jam tenang saat NEO diam.",
+      "de": "Jede App mit eigenem Ton, eigener Geste und eigenem Outfit, dazu Ruhezeiten, in denen NEO still bleibt.",
+      "tr": "Her uygulamanın kendi sesi, hareketi ve kıyafeti; NEO'nun sessiz kaldığı saatler de var."
      }
     }
    ]
