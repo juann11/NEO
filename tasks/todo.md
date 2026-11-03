@@ -29,10 +29,11 @@
 - [ ] Accesibilidad: tareas 3 a 6 de este archivo
 - [ ] Firmar el instalador, para que Smart App Control deje actualizar
 
-### Antes de lanzar la próxima versión
-- [ ] Añadir Inicio a la entrada de novedades de `whats-new.json`, en los 12 idiomas
-- [ ] Revisar el número de versión y `CHANGELOG.md`
-- [ ] Tests, instalador y prueba en la app instalada
+### Lanzamiento de la 0.1.2
+- [x] Novedades de `whats-new.json` con Inicio, notificaciones, aspecto y reacciones, en los 12 idiomas
+- [x] Tests (455 de TypeScript y 350 de Rust) e instalador local `app/release/NEO-Windows-0.1.2-setup.exe` (2026-11-02)
+- [ ] Prueba en la app instalada (lista de arriba)
+- [ ] Publicar: unir `mejoras-ventana` a `main`, subirlo, poner la fecha en `CHANGELOG.md` y la etiqueta `windows-v0.1.2`
 
 ## Plan original
 
