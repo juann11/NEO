@@ -939,6 +939,156 @@ function bunnyEars(ctx: Ctx, H: Head) {
   }
 }
 
+// ── NEO's own outfits ─────────────────────────────────────────────────────────
+
+/** Headphones: the band over the head, a cup on each side; a cup behind the head is drawn first. */
+function headphones(ctx: Ctx, H: Head, front: boolean) {
+  const R = H.R;
+  for (const sd of [-1, 1]) {
+    const c = proj(H, [sd * 1.06, 0.06, 0]);
+    if (c.z >= 0 !== front) continue;
+    const w = R * 0.3;
+    const h = R * 0.56;
+    ctx.save();
+    ctx.translate(c.x, c.y);
+    roundRect(ctx, -w / 2, -h / 2, w, h, w * 0.45);
+    ctx.fillStyle = lin(ctx, 0, -h / 2, 0, h / 2, [[0, "#F8FAFC"], [1, "#94A3B8"]]);
+    ctx.fill();
+    roundRect(ctx, -w * 0.2, -h * 0.3, w * 0.4, h * 0.6, w * 0.2);
+    ctx.fillStyle = NEO_EYE;
+    ctx.fill();
+    ctx.restore();
+  }
+  if (!front) return;
+  const band: Pt[] = [];
+  for (let i = 0; i <= 32; i++) {
+    const a = Math.PI - (i / 32) * Math.PI;
+    band.push(proj(H, [Math.cos(a) * 1.1, 0.12 + Math.sin(a) * 1.12, 0]));
+  }
+  polyline(ctx, band);
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "#CBD5E1";
+  ctx.lineWidth = R * 0.16;
+  ctx.stroke();
+  ctx.strokeStyle = "#F8FAFC";
+  ctx.lineWidth = R * 0.05;
+  ctx.stroke();
+}
+
+/** A golden halo floating over the head. */
+function halo(ctx: Ctx, H: Head) {
+  const R = H.R;
+  const pts: Pt[] = [];
+  for (let i = 0; i <= 48; i++) {
+    const a = (i / 48) * Math.PI * 2;
+    pts.push(proj(H, [Math.sin(a) * 0.58, 1.34, Math.cos(a) * 0.58]));
+  }
+  ctx.save();
+  ctx.shadowColor = "rgba(253,224,71,0.8)";
+  ctx.shadowBlur = R * 0.35;
+  polyline(ctx, pts);
+  ctx.closePath();
+  ctx.strokeStyle = "#FDE047";
+  ctx.lineWidth = R * 0.11;
+  ctx.stroke();
+  ctx.restore();
+  polyline(ctx, pts);
+  ctx.closePath();
+  ctx.strokeStyle = "rgba(255,255,255,0.75)";
+  ctx.lineWidth = R * 0.035;
+  ctx.stroke();
+}
+
+/** Two pointed ears or horns, rooted behind the top of the head. */
+function pointedPair(ctx: Ctx, H: Head, x: number, height: number, width: number, lean: number, outer: [string, string], inner: string | null) {
+  const R = H.R;
+  for (const sd of [-1, 1]) {
+    const root = proj(H, [sd * x, 0.8, 0]);
+    const hw = R * width;
+    const tip = { x: root.x + sd * R * lean, y: root.y - R * height };
+    ctx.beginPath();
+    ctx.moveTo(root.x - hw, root.y + R * 0.1);
+    ctx.quadraticCurveTo(root.x - hw * 0.6 + sd * R * lean * 0.3, root.y - R * height * 0.55, tip.x, tip.y);
+    ctx.quadraticCurveTo(root.x + hw * 0.6 + sd * R * lean * 0.3, root.y - R * height * 0.55, root.x + hw, root.y + R * 0.1);
+    ctx.closePath();
+    ctx.fillStyle = lin(ctx, root.x, tip.y, root.x, root.y, [[0, outer[0]], [1, outer[1]]]);
+    ctx.fill();
+    if (!inner) continue;
+    ctx.beginPath();
+    ctx.moveTo(root.x - hw * 0.45, root.y + R * 0.05);
+    ctx.quadraticCurveTo(root.x + sd * R * lean * 0.5, root.y - R * height * 0.5, root.x + sd * R * lean * 0.75, tip.y + R * height * 0.28);
+    ctx.quadraticCurveTo(root.x + sd * R * lean * 0.3, root.y - R * height * 0.4, root.x + hw * 0.45, root.y + R * 0.05);
+    ctx.closePath();
+    ctx.fillStyle = inner;
+    ctx.fill();
+  }
+}
+
+function devilHorns(ctx: Ctx, H: Head) {
+  pointedPair(ctx, H, 0.5, 0.82, 0.17, 0.26, ["#FF6B6B", "#B91C1C"], null);
+}
+
+function catEars(ctx: Ctx, H: Head) {
+  pointedPair(ctx, H, 0.56, 0.6, 0.24, 0.12, ["#475569", "#1E293B"], "rgba(249,168,212,0.85)");
+}
+
+/** Flowers along the front of the head, on a green vine. */
+function flowerCrown(ctx: Ctx, H: Head, simple: boolean) {
+  const arc = frontArc(H, 0.7, 1.03);
+  if (arc.length < 2) return;
+  const R = H.R;
+  polyline(ctx, arc);
+  ctx.strokeStyle = "#16A34A";
+  ctx.lineWidth = R * 0.06;
+  ctx.lineCap = "round";
+  ctx.stroke();
+  const colours = ["#F472B6", "#FDE68A", "#C4B5FD", "#FFFFFF", "#FB7185"];
+  const n = simple ? 4 : 7;
+  for (let i = 0; i < n; i++) {
+    const q = arc[Math.round(((i + 0.5) / n) * (arc.length - 1))];
+    const r = R * (simple ? 0.14 : 0.11) * (0.7 + 0.3 * Math.max(0, q.z));
+    ctx.fillStyle = colours[i % colours.length];
+    for (let k = 0; k < 5; k++) {
+      const a = (k / 5) * Math.PI * 2 + i;
+      ctx.beginPath();
+      ctx.arc(q.x + Math.cos(a) * r * 0.75, q.y + Math.sin(a) * r * 0.75, r * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.beginPath();
+    ctx.arc(q.x, q.y, r * 0.42, 0, Math.PI * 2);
+    ctx.fillStyle = "#F59E0B";
+    ctx.fill();
+  }
+}
+
+/** A white chef's hat: a band round the head and a puffy top. */
+function chefHat(ctx: Ctx, H: Head) {
+  const R = H.R;
+  const bottom = frontArc(H, 0.72, 1.02);
+  if (bottom.length < 2) return;
+  const lift = R * 0.28;
+  const band = new Path2D();
+  bottom.forEach((q, i) => (i ? band.lineTo(q.x, q.y) : band.moveTo(q.x, q.y)));
+  for (let i = bottom.length - 1; i >= 0; i--) band.lineTo(bottom[i].x * 0.92, bottom[i].y - lift);
+  band.closePath();
+  const left = bottom[0];
+  const right = bottom[bottom.length - 1];
+  const top = Math.min(...bottom.map((q) => q.y)) - lift;
+  const cx = (left.x + right.x) / 2;
+  const span = (right.x - left.x) * 0.92;
+  ctx.fillStyle = rad(ctx, cx - span * 0.15, top - R * 0.45, R * 0.1, span * 0.9, [[0, "#FFFFFF"], [1, "#D9DEE7"]]);
+  for (const [u, dy, r] of [[-0.32, 0.25, 0.36], [0.32, 0.25, 0.36], [0, 0.45, 0.42], [-0.14, 0.12, 0.3], [0.16, 0.12, 0.3]]) {
+    ctx.beginPath();
+    ctx.arc(cx + u * span, top - R * dy, R * r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.fillStyle = lin(ctx, 0, top, 0, top + lift + R * 0.2, [[0, "#FFFFFF"], [1, "#CBD2DD"]]);
+  ctx.fill(band);
+  ctx.strokeStyle = "rgba(15,23,42,0.12)";
+  ctx.lineWidth = R * 0.025;
+  ctx.stroke(band);
+}
+
 // ── Layers and transitions ────────────────────────────────────────────────────
 
 let scratch: HTMLCanvasElement | null = null;
@@ -978,7 +1128,9 @@ function withLayer(ctx: Ctx, alpha: number, fn: (c: Ctx) => void) {
 
 /** Glasses, bow, scarf and pumpkin are on the face: behind the head once it has turned away. */
 const ON_FACE: ReadonlySet<Outfit> = new Set(["sunglasses", "roundGlasses", "bow", "scarf", "pumpkin"]);
-const HATS: ReadonlySet<Outfit> = new Set(["beanie", "santaHat", "partyHat", "crown", "witchHat"]);
+const HATS: ReadonlySet<Outfit> = new Set(["beanie", "santaHat", "partyHat", "crown", "witchHat", "headphones", "halo", "flowerCrown", "chefHat"]);
+/** Drawn only behind the head: what shows is what sticks out of it. */
+const BEHIND_ONLY: ReadonlySet<Outfit> = new Set(["bunnyEars", "devilHorns", "catEars"]);
 
 export interface OutfitState {
   /** 0 = gone, 1 = fully on. Animated by the engine. */
@@ -1029,6 +1181,9 @@ export function drawOutfitBehind(ctx: Ctx, outfit: Outfit, H: Head, st: OutfitSt
   ctx.scale(hatScale, hatScale);
   withLayer(ctx, alpha, (l) => {
     if (outfit === "bunnyEars") bunnyEars(l, H);
+    else if (outfit === "devilHorns") devilHorns(l, H);
+    else if (outfit === "catEars") catEars(l, H);
+    else if (outfit === "headphones") headphones(l, H, false);
     else if (outfit === "crown") crownPart(l, H, -1, simple);
     else if (outfit === "witchHat") witchHatBack(l, H);
   });
@@ -1037,7 +1192,7 @@ export function drawOutfitBehind(ctx: Ctx, outfit: Outfit, H: Head, st: OutfitSt
 
 /** The parts in front of NEO, drawn after the body and the eyes. */
 export function drawOutfitFront(ctx: Ctx, outfit: Outfit, H: Head, st: OutfitState) {
-  if (outfit === "none" || outfit === "bunnyEars") return;
+  if (outfit === "none" || BEHIND_ONLY.has(outfit)) return;
   if (ON_FACE.has(outfit) && faceTurnedAway(H)) return;
   const alpha = layerAlpha(st);
   if (alpha <= 0.005) return;
@@ -1066,6 +1221,10 @@ export function drawOutfitFront(ctx: Ctx, outfit: Outfit, H: Head, st: OutfitSta
       case "partyHat": partyHat(l, H, simple); break;
       case "crown": crownFront(l, H, body, simple); break;
       case "witchHat": witchHatFront(l, H, body); break;
+      case "headphones": headphones(l, H, true); break;
+      case "halo": halo(l, H); break;
+      case "flowerCrown": flowerCrown(l, H, simple); break;
+      case "chefHat": chefHat(l, H); break;
       default: drawFace(l, outfit, H, body, simple);
     }
   });

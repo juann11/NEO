@@ -84,10 +84,11 @@ test("auto dresses for the season, any other choice is worn as is", () => {
   assert.equal(resolveOutfit("beanie", d), "beanie");
 });
 
-test("the stored values are the Mac's, in the wardrobe's order", () => {
+test("the stored values keep the Mac's, in the wardrobe's order, with NEO's own after them", () => {
   assert.deepEqual([...OUTFIT_SELECTIONS], [
     "auto", "none", "partyHat", "beanie", "crown", "sunglasses", "roundGlasses",
     "bow", "scarf", "witchHat", "pumpkin", "santaHat", "bunnyEars",
+    "headphones", "halo", "devilHorns", "catEars", "flowerCrown", "chefHat",
   ]);
   for (const sel of OUTFIT_SELECTIONS) assert.ok(OUTFIT_LABELS[sel], `${sel} has a label`);
 });

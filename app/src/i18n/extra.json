@@ -6390,6 +6390,84 @@
       "id": "Menguap",
       "de": "Gähnen",
       "tr": "Esneme"
+    },
+    "Headphones": {
+      "zh-Hans": "耳机",
+      "hi": "हेडफ़ोन",
+      "es": "Auriculares",
+      "ar": "سماعات",
+      "fr": "Casque",
+      "bn": "হেডফোন",
+      "pt-BR": "Fones de ouvido",
+      "ru": "Наушники",
+      "id": "Headphone",
+      "de": "Kopfhörer",
+      "tr": "Kulaklık"
+    },
+    "Halo": {
+      "zh-Hans": "光环",
+      "hi": "प्रभामंडल",
+      "es": "Aureola",
+      "ar": "هالة",
+      "fr": "Auréole",
+      "bn": "জ্যোতির্বলয়",
+      "pt-BR": "Auréola",
+      "ru": "Нимб",
+      "id": "Lingkaran cahaya",
+      "de": "Heiligenschein",
+      "tr": "Hale"
+    },
+    "Devil horns": {
+      "zh-Hans": "恶魔角",
+      "hi": "शैतानी सींग",
+      "es": "Cuernos de diablo",
+      "ar": "قرنا شيطان",
+      "fr": "Cornes de diable",
+      "bn": "শয়তানের শিং",
+      "pt-BR": "Chifres de diabo",
+      "ru": "Рожки чертёнка",
+      "id": "Tanduk setan",
+      "de": "Teufelshörner",
+      "tr": "Şeytan boynuzları"
+    },
+    "Cat ears": {
+      "zh-Hans": "猫耳",
+      "hi": "बिल्ली के कान",
+      "es": "Orejas de gato",
+      "ar": "أذنا قطة",
+      "fr": "Oreilles de chat",
+      "bn": "বিড়ালের কান",
+      "pt-BR": "Orelhas de gato",
+      "ru": "Кошачьи ушки",
+      "id": "Telinga kucing",
+      "de": "Katzenohren",
+      "tr": "Kedi kulakları"
+    },
+    "Flower crown": {
+      "zh-Hans": "花冠",
+      "hi": "फूलों का ताज",
+      "es": "Corona de flores",
+      "ar": "تاج زهور",
+      "fr": "Couronne de fleurs",
+      "bn": "ফুলের মুকুট",
+      "pt-BR": "Coroa de flores",
+      "ru": "Венок",
+      "id": "Mahkota bunga",
+      "de": "Blumenkranz",
+      "tr": "Çiçek tacı"
+    },
+    "Chef's hat": {
+      "zh-Hans": "厨师帽",
+      "hi": "शेफ़ की टोपी",
+      "es": "Gorro de chef",
+      "ar": "قبعة الطاهي",
+      "fr": "Toque de chef",
+      "bn": "শেফের টুপি",
+      "pt-BR": "Chapéu de chef",
+      "ru": "Поварской колпак",
+      "id": "Topi koki",
+      "de": "Kochmütze",
+      "tr": "Aşçı şapkası"
     }
   }
 }
