@@ -9,11 +9,10 @@ import { State } from "../core/state";
 import { ago } from "../core/home-feed";
 import { projectName } from "../core/projects";
 import { SystemNotifications, type SystemToast } from "../island/system-notifications";
-import { dismissToast, swipeOutcome } from "../core/swipe";
+import { swipeOutcome } from "../core/swipe";
 import { t, tl } from "../i18n/i18n";
 import type { ViewHost } from "./views";
 
-const SHOWN_TOASTS = 3;
 const SHOWN_PROJECTS = 4;
 
 function agoShort(arrival: number): string {
@@ -106,23 +105,26 @@ export function buildSideCard(): ViewHost {
       return;
     }
     front.append(title(t("Notifications")));
-    const toasts = SystemNotifications.history.slice(0, SHOWN_TOASTS);
+    const toasts = SystemNotifications.history;
     if (!toasts.length) {
-      front.append(h("div", { class: "side-empty", text: State.settings.systemNotifications ? t("No notifications yet.") : t("Turn on Windows notifications in NEO's window.") }));
+      front.append(h("div", { class: "side-empty", text: State.settings.systemNotifications ? t("No notifications right now.") : t("Turn on Windows notifications in NEO's window.") }));
       return;
     }
-    for (const toast of toasts) front.append(swipeRow(toast));
+    // Caben 3; el resto, con la rueda del ratón.
+    front.append(h("div", { class: "side-list" }, ...toasts.map(swipeRow)));
   }
 
   /** Una notificación que se arrastra: a la derecha se abre (verde), a la izquierda se elimina (rojo). */
   function swipeRow(toast: SystemToast): HTMLElement {
-    const open = () => void Bridge.openNotificationApp(toast.appId);
     const remove = () => {
-      SystemNotifications.dismiss(toast.id);
-      State.settings.dismissedNotifications = dismissToast(State.settings.dismissedNotifications, toast.id);
-      void Bridge.saveSettings(State.settings);
+      SystemNotifications.forget(toast.id);
       shownKey = "";
       State.notify();
+    };
+    // Abierta ya está vista: también sale de la lista.
+    const open = () => {
+      void Bridge.openNotificationApp(toast.appId);
+      remove();
     };
     const row = h("button", { class: "side-row", title: toast.body || toast.title, "aria-keyshortcuts": "Delete" },
       h("span", { class: "side-badge", text: toast.app.slice(0, 1).toUpperCase() }),
@@ -160,7 +162,7 @@ export function buildSideCard(): ViewHost {
       if (outcome) {
         // Sale por su lado y luego actúa.
         row.style.transform = `translateX(${dx > 0 ? "" : "-"}110%)`;
-        window.setTimeout(outcome === "open" ? () => { row.style.transform = ""; wrap.className = "swipe"; open(); } : remove, 180);
+        window.setTimeout(outcome === "open" ? open : remove, 180);
       } else {
         row.style.transform = "";
         wrap.classList.remove("to-open", "to-del", "armed");
@@ -207,7 +209,7 @@ export function buildSideCard(): ViewHost {
     }
     const key = back
       ? `b|${State.settings.recentProjects.join("|")}`
-      : `f|${JSON.stringify(State.awayReport)}|${State.settings.systemNotifications}|${SystemNotifications.history.slice(0, SHOWN_TOASTS).map((x) => `${x.id}:${agoShort(x.arrival)}`).join("|")}`;
+      : `f|${JSON.stringify(State.awayReport)}|${State.settings.systemNotifications}|${SystemNotifications.history.map((x) => `${x.id}:${agoShort(x.arrival)}`).join("|")}`;
     if (key === shownKey) return;
     shownKey = key;
     if (back) drawBack();

@@ -21,7 +21,12 @@ export function buildNotification(onClose: () => void): ViewHost {
     class: "btn primary",
     onclick: () => {
       const toast = SystemNotifications.current;
-      if (toast) void Bridge.openNotificationApp(toast.appId);
+      if (!toast) return;
+      void Bridge.openNotificationApp(toast.appId);
+      // Abierta ya está vista: sale de la lista; sin más, la tarjeta se cierra.
+      SystemNotifications.forget(toast.id);
+      if (SystemNotifications.history.length) sync();
+      else onClose();
     },
   }, h("span", { text: tl("Open") }));
   const ok = h("button", { class: "btn secondary", onclick: onClose }, h("span", { text: tl("OK") }));

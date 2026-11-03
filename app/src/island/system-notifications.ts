@@ -7,6 +7,7 @@ import { Bridge, onEvent } from "../core/bridge";
 import { Sound } from "../core/sound";
 import { State } from "../core/state";
 import { NOTIFICATION_TRY, isQuiet, reactionFor } from "../core/reactions";
+import { dismissToast } from "../core/swipe";
 import type { BotEmoteName, IslandViewName } from "../core/layout";
 import type { Outfit } from "../neo/wardrobe";
 
@@ -39,10 +40,12 @@ export const SystemNotifications = {
     this.history = [toast, ...this.history].slice(0, MAX_HISTORY);
     this.index = 0;
   },
-  /** Eliminada desde la tarjeta: sale del historial. */
-  dismiss(id: number) {
+  /** Abierta o eliminada: sale de la lista, sube la siguiente y no vuelve al reiniciar NEO. */
+  forget(id: number) {
     this.history = this.history.filter((t) => t.id !== id);
     this.index = Math.min(this.index, Math.max(0, this.history.length - 1));
+    State.settings.dismissedNotifications = dismissToast(State.settings.dismissedNotifications, id);
+    void Bridge.saveSettings(State.settings);
   },
   /** ‹ : una más vieja. */
   older() {

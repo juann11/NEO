@@ -6559,6 +6559,19 @@
       "id": "Notifikasi dari {0}",
       "de": "Benachrichtigungen von {0}",
       "tr": "{0} bildirimleri"
+    },
+    "No notifications right now.": {
+      "zh-Hans": "目前没有通知。",
+      "hi": "इस समय कोई सूचना नहीं है।",
+      "es": "No hay notificaciones en este momento.",
+      "ar": "لا توجد إشعارات حاليًا.",
+      "fr": "Aucune notification pour le moment.",
+      "bn": "এই মুহূর্তে কোনো বিজ্ঞপ্তি নেই।",
+      "pt-BR": "Nenhuma notificação no momento.",
+      "ru": "Сейчас уведомлений нет.",
+      "id": "Tidak ada notifikasi saat ini.",
+      "de": "Gerade keine Benachrichtigungen.",
+      "tr": "Şu anda bildirim yok."
     }
   }
 }

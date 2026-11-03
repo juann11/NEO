@@ -88,3 +88,20 @@ test("Open asks Rust to open the app of the notification you are looking at", ()
   button(view, "Open").fire("click");
   assert.deepEqual(sent("open_notification_app").at(-1), { appId: "MSTeams_8wekyb3d8bbwe!MSTeams" });
 });
+
+test("new notifications always come in on top; past 10 the oldest leaves", () => {
+  for (let id = 1; id <= 12; id++) SystemNotifications.push(toast(id));
+  assert.equal(SystemNotifications.history.length, 10);
+  assert.equal(SystemNotifications.history[0].id, 12);
+  assert.equal(SystemNotifications.history.at(-1).id, 3);
+});
+
+test("a notification that is deleted or opened leaves the list and the next one moves up, and stays gone", () => {
+  for (let id = 1; id <= 4; id++) SystemNotifications.push(toast(id));
+  SystemNotifications.forget(4);
+  assert.deepEqual(SystemNotifications.history.map((t) => t.id), [3, 2, 1]);
+  assert.ok(State.settings.dismissedNotifications.includes(4), "no vuelve al reiniciar");
+  for (const id of [3, 2, 1]) SystemNotifications.forget(id);
+  assert.deepEqual(SystemNotifications.history, []);
+  assert.equal(SystemNotifications.current, null);
+});
