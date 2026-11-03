@@ -45,7 +45,7 @@
 
 ### Lanzamiento de la 0.1.2
 - [x] Novedades de `whats-new.json` con Inicio, notificaciones, aspecto y reacciones, en los 12 idiomas
-- [x] Tests (455 de TypeScript y 350 de Rust) e instalador local `app/release/NEO-Windows-0.1.2-setup.exe` (2026-11-02)
+- [x] Tests (462 de TypeScript y 353 de Rust) e instalador local `app/release/NEO-Windows-0.1.2-setup.exe`, rehecho con la isla nueva (2026-11-02 22:40)
 - [ ] Prueba en la app instalada (lista de arriba)
 - [ ] Publicar: unir `mejoras-ventana` a `main`, subirlo, poner la fecha en `CHANGELOG.md` y la etiqueta `windows-v0.1.2`
 
