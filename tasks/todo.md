@@ -14,6 +14,8 @@
 - [x] Página Notificaciones: buscador sin importar tildes, filtro por app y agrupadas por día (hasta 100, de la base de Windows)
 - [x] Página Aspecto: guardarropa con vista previa y color del cuerpo (10 colores) en la isla, el escritorio y la ventana
 - [x] Reacciones por app (sonido, gesto y traje mientras se ve su tarjeta) y horas de silencio, con botón Probar
+- [x] Arreglo: el color de Aspecto no llegaba a la isla (la pestaña principal le ponía el color del servicio)
+- [x] Seis accesorios nuevos: auriculares, aureola, cuernos, orejas de gato, corona de flores y gorro de chef
 
 ### Falta comprobar en la app instalada
 - [ ] Notificaciones reales en Inicio (hasta ahora, base de prueba y datos simulados)
@@ -22,7 +24,15 @@
 - [ ] Color del cuerpo en la isla y en NEO del escritorio (en la ventana ya se vio)
 - [ ] Reacciones en la isla real: Probar, una notificación de verdad y las horas de silencio
 
-### Siguiente
+### Siguiente: la isla a tope (plan propuesto, falta el OK)
+- [ ] Barra compacta viva: lo más urgente de un vistazo (permiso, sesión, última notificación)
+- [ ] Puntos de estado por agente y contador de notificaciones sin ver en la barra
+- [ ] "Mientras no estabas": resumen al volver
+- [ ] Tarjeta de notificación con acciones: copiar código, silenciar la app 1 h, varias juntas
+- [ ] No molestar rápido desde la isla
+- [ ] Temporizador en la isla
+
+### Después
 - [ ] Notificaciones: guardar las que Windows borra (decidir antes: guardaría su texto en disco)
 - [ ] El saludo al arrancar y la caja de subida siguen en grafito: pasarles el color de Aspecto
 - [ ] Sacar tarjetas al escritorio como ventanas sueltas
