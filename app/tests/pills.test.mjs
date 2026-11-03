@@ -360,3 +360,14 @@ test("a fresh NEO pins no service: you add the ones you use in Integrations", ()
   State.loadIntegrationTasks();
   assert.deepEqual(ids(), ["integration_claude"]);
 });
+
+test("NEO takes a service pill's colour, but not the main tool's: there he wears the colour chosen in Appearance", async () => {
+  const { serviceTint } = await import("../src/core/pills.ts");
+  const claude = { id: "integration_claude", color: "#FFFFFF", isIntegration: true };
+  const stripe = { id: "integration_stripe", color: "#635BFF", isIntegration: true };
+  const codex = { id: "agent_codex", color: "#10A37F", isIntegration: false };
+  assert.equal(serviceTint(claude, "integration_claude"), null);
+  assert.equal(serviceTint(stripe, "integration_claude"), "#635BFF");
+  assert.equal(serviceTint(codex, "integration_claude"), null);
+  assert.equal(serviceTint(null, "integration_claude"), null);
+});

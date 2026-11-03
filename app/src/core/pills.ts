@@ -245,6 +245,14 @@ export function chooseMainPill(d: Declared, id: string, os: HostOs = HOST_OS): D
  * rank keep their order. Mirrors sortTasksByCatalog on macOS, with the main
  * pill (not always VS Code here) leading.
  */
+/**
+ * El color que toma NEO por la pestaña al frente: el de un servicio, para saber cuál miras.
+ * En la herramienta principal es el propio NEO y lleva el color de Aspecto.
+ */
+export function serviceTint(focus: { id: string; color: string; isIntegration: boolean } | null, mainPill: string): string | null {
+  return focus?.isIntegration && focus.id !== mainPill ? focus.color : null;
+}
+
 export function orderPills<T extends { id: string }>(tasks: T[], mainPill: string): T[] {
   const index = new Map(PILL_CATALOG.map((p, i) => [p.id, i]));
   const rank = (t: T) => (t.id === mainPill ? -2 : index.has(t.id) ? index.get(t.id)! : -1);

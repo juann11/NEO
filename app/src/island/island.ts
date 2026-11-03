@@ -20,6 +20,7 @@ import { Greeting } from "../neo/greeting";
 import { createMiniBot, pruneMiniBots, syncMiniBotStates, tickMiniBots } from "../neo/minibots";
 import { SeasonCache, parseOutfit } from "../neo/wardrobe";
 import { notificationOutfit } from "./system-notifications";
+import { serviceTint } from "../core/pills";
 import { UploadCanvas } from "../upload/canvas";
 import { USC, UploadSeq } from "../upload/sequence";
 import { closePlanCard, openPlanColor, planCardOpen } from "../views/usage";
@@ -1106,8 +1107,8 @@ export class Island {
       ? hexToRGB(openPlanColor())
       : this.engine.showsUpdateHint
         ? UPDATE_BLUE_RGB
-        : focus?.isIntegration
-          ? hexToRGB(focus.color)
+        : serviceTint(focus, State.mainPillId)
+          ? hexToRGB(focus!.color)
           : null;
     this.engine.baseColors = neoSkin(State.settings.neoColor);
     this.engine.particleOverhang = BOT_OVERHANG;

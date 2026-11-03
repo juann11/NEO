@@ -1188,8 +1188,8 @@ export class BotEngine {
         g.addColorStop(0, rgba(mix3(this.bodyColor, [1, 1, 1], 0.35)));
         g.addColorStop(1, rgba(this.bodyColor));
       } else {
-        g.addColorStop(0, rgba(BASE_TOP));
-        g.addColorStop(1, rgba(BASE_BOTTOM));
+        g.addColorStop(0, rgba(this.baseColors[0]));
+        g.addColorStop(1, rgba(this.baseColors[1]));
       }
       x.beginPath();
       x.ellipse(0, 0, hew, heh, 0, 0, Math.PI * 2);
