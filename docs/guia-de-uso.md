@@ -38,6 +38,11 @@ Las notificaciones salen de las que Windows ya guarda: NEO no hace ninguna copia
 
 **Notificaciones**, debajo de Inicio, enseña las que guarda Windows (hasta 100), agrupadas por día. Busca por app, título o texto, sin importar tildes ni mayúsculas, y filtra por app con los botones de arriba.
 
+En la pestaña **Reacciones** de esa página:
+
+- **Horas de silencio:** de una hora a otra, aunque crucen la medianoche. NEO guarda las notificaciones sin abrir la isla ni sonar.
+- **Por app:** su sonido (o ninguno), su gesto y el traje que NEO se pone mientras se ve su tarjeta. **Probar** lo enseña en la isla al momento, también en horas de silencio.
+
 **Aspecto**, en el grupo Isla, cambia cómo se ve NEO:
 
 - **Color del cuerpo:** 10 colores. Los ojos siguen cambiando de color según el estado.

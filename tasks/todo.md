@@ -13,17 +13,18 @@
 - [x] Personalizar Inicio: arrastrar, mover con flechas, ensanchar, quitar, agregar y restablecer
 - [x] Página Notificaciones: buscador sin importar tildes, filtro por app y agrupadas por día (hasta 100, de la base de Windows)
 - [x] Página Aspecto: guardarropa con vista previa y color del cuerpo (10 colores) en la isla, el escritorio y la ventana
+- [x] Reacciones por app (sonido, gesto y traje mientras se ve su tarjeta) y horas de silencio, con botón Probar
 
 ### Falta comprobar en la app instalada
 - [ ] Notificaciones reales en Inicio (hasta ahora, base de prueba y datos simulados)
 - [ ] Sesiones reales en Inicio y abrir una con un clic
 - [ ] Tarjeta de notificación de la isla con su altura nueva
 - [ ] Color del cuerpo en la isla y en NEO del escritorio (en la ventana ya se vio)
+- [ ] Reacciones en la isla real: Probar, una notificación de verdad y las horas de silencio
 
 ### Siguiente
 - [ ] Notificaciones: guardar las que Windows borra (decidir antes: guardaría su texto en disco)
 - [ ] El saludo al arrancar y la caja de subida siguen en grafito: pasarles el color de Aspecto
-- [ ] Reacciones por app: sonido, gesto y traje de NEO; horas de silencio
 - [ ] Sacar tarjetas al escritorio como ventanas sueltas
 - [ ] Accesibilidad: tareas 3 a 6 de este archivo
 - [ ] Firmar el instalador, para que Smart App Control deje actualizar

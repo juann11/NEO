@@ -9,6 +9,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). NEO 
 - **Personalizar:** arrastra, mueve, ensancha, quita o agrega tarjetas. NEO recuerda cómo las dejaste.
 - **Notificaciones:** página con todas las que guarda Windows, un buscador, filtro por app y agrupadas por día.
 - **Aspecto:** elige lo que NEO lleva en la cabeza, con vista previa, y el color de su cuerpo.
+- **Reacciones:** cada app puede tener su sonido, su gesto y su traje, y hay horas de silencio en las que NEO guarda las notificaciones sin abrir la isla.
 
 ### Cambiado
 - En el menú de la ventana, los ajustes de la isla van primero y **Voz** (dictado y compañía) después.
