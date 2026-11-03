@@ -1445,3 +1445,75 @@ button.hub-chip:focus-visible {
     min-height: 0;
   }
 }
+
+/* -- Reacciones ------------------------------------------------------------ */
+.react {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.react[hidden],
+.notif-tools[hidden],
+.notif-days[hidden] {
+  display: none;
+}
+
+.react-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.react-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.react-times label,
+.react-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--hub-secondary);
+}
+
+.react-time {
+  width: 130px;
+}
+
+.react-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.react-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--hub-line);
+}
+
+.react-fields {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.react-row:first-child {
+  border-top: 0;
+}
+
+.react-name {
+  min-width: 0;
+}
+
+.react-field .hub-select {
+  width: 100%;
+}

@@ -13,6 +13,7 @@ import type { Bindings } from "./shortcuts";
 import { DEFAULT_OUTFIT, type Outfit } from "../neo/wardrobe";
 import { pillColor } from "./pill-colors";
 import { DEFAULT_HOME_CARDS, type HomeCard } from "./home-cards";
+import type { NotificationReaction, QuietHours } from "./reactions";
 import { Spotify, musicPlaying } from "./spotify";
 
 export type AgentSource = "claudeCode" | "n8n" | "agent";
@@ -111,6 +112,9 @@ export interface Settings {
   /** Apps whose notifications NEO keeps quiet about, by Windows app id. */
   mutedNotificationApps: string[];
   homeCards: HomeCard[];
+  /** Por id de app de Windows (core/reactions.ts). */
+  notificationReactions: Record<string, NotificationReaction>;
+  quietHours: QuietHours;
   absenceInterval: number;
   /** Declared pills next to the main one (at most 4), in the order they were added. */
   activeIntegrations: string[];
@@ -172,6 +176,8 @@ export const DEFAULT_SETTINGS: Settings = {
   systemNotifications: false,
   mutedNotificationApps: [],
   homeCards: DEFAULT_HOME_CARDS,
+  notificationReactions: {},
+  quietHours: { enabled: false, from: "22:00", to: "08:00" },
   absenceInterval: 180,
   // Ningún servicio de fábrica: cada uno se añade en Integraciones.
   activeIntegrations: [],

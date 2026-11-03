@@ -19,6 +19,7 @@ import { neoSkin } from "../neo/neo-look";
 import { Greeting } from "../neo/greeting";
 import { createMiniBot, pruneMiniBots, syncMiniBotStates, tickMiniBots } from "../neo/minibots";
 import { SeasonCache, parseOutfit } from "../neo/wardrobe";
+import { notificationOutfit } from "./system-notifications";
 import { UploadCanvas } from "../upload/canvas";
 import { USC, UploadSeq } from "../upload/sequence";
 import { closePlanCard, openPlanColor, planCardOpen } from "../views/usage";
@@ -1128,7 +1129,10 @@ export class Island {
     const inWardrobe = State.mode === "expanded" && State.view === "wardrobe";
     const mainFocused = State.focusId == null || State.focusId === State.mainPillId;
     const showOutfit = mainFocused || State.mode !== "expanded" || inWardrobe;
-    const outfit = State.wardrobePreview ?? this.seasons.get(parseOutfit(State.settings.neoOutfit));
+    const onNotification = State.mode === "expanded" && State.view === "notification";
+    const outfit = State.wardrobePreview
+      ?? (onNotification ? notificationOutfit() : null)
+      ?? this.seasons.get(parseOutfit(State.settings.neoOutfit));
     this.engine.setOutfit(showOutfit ? outfit : "none", !inWardrobe);
     // Dances while music plays: always in the compact island, expanded only on
     // the music pill's card (BotCanvasView, macOS). Asked every frame.

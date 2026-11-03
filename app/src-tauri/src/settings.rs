@@ -79,12 +79,31 @@ pub struct Settings {
     pub muted_notification_apps: Vec<String>,
     /// Las tarjetas de Inicio, en orden (src/core/home-cards.ts).
     pub home_cards: Vec<HomeCard>,
+    /// Cómo reacciona NEO a cada app, por su id de Windows (src/core/reactions.ts).
+    pub notification_reactions: BTreeMap<String, NotificationReaction>,
+    pub quiet_hours: QuietHours,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct HomeCard {
     pub id: String,
     pub wide: bool,
+}
+
+/// Una parte vacía es la reacción de siempre; la isla valida los valores.
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct NotificationReaction {
+    pub sound: String,
+    pub emote: String,
+    pub outfit: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct QuietHours {
+    pub enabled: bool,
+    pub from: String,
+    pub to: String,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -143,6 +162,8 @@ impl Default for Settings {
             home_cards: [("notifications", true), ("sessions", false), ("agents", false), ("status", true)]
                 .map(|(id, wide)| HomeCard { id: id.into(), wide })
                 .to_vec(),
+            notification_reactions: BTreeMap::new(),
+            quiet_hours: QuietHours { enabled: false, from: "22:00".into(), to: "08:00".into() },
         }
     }
 }
@@ -424,7 +445,9 @@ mod tests {
   "showClock": true,
   "systemNotifications": true,
   "mutedNotificationApps": ["Microsoft.SkyDrive.Desktop"],
-  "homeCards": [{ "id": "agents", "wide": true }]
+  "homeCards": [{ "id": "agents", "wide": true }],
+  "notificationReactions": { "5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App": { "sound": "love", "emote": "happy", "outfit": "partyHat" } },
+  "quietHours": { "enabled": true, "from": "23:00", "to": "07:30" }
 }"##;
 
     fn custom() -> Value {
@@ -833,6 +856,8 @@ mod tests {
                 "systemNotifications",
                 "mutedNotificationApps",
                 "homeCards",
+                "notificationReactions",
+                "quietHours",
             ]
         );
         let _ = std::fs::remove_dir_all(&dir);

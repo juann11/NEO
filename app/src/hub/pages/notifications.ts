@@ -3,12 +3,15 @@
 
 import { h, clear } from "../../views/dom";
 import { language, t } from "../../i18n/i18n";
-import { Bridge } from "../../core/bridge";
+import { Bridge, emitToWindow } from "../../core/bridge";
 import { dayOf, filterToasts } from "../../core/home-feed";
+import { NOTIFICATION_TRY, REACTION_EMOTES, type NotificationReaction } from "../../core/reactions";
+import { SOUND_NAMES } from "../../core/sound";
+import { OUTFIT_KEYS, OUTFIT_SELECTIONS } from "../../neo/wardrobe";
 import type { SystemToast } from "../../island/system-notifications";
 import type { HubContext } from "../shell";
 import { emptyState, isWindowShown } from "../hero";
-import { button } from "../ui";
+import { button, segmented, select, toggle } from "../ui";
 import { drawWhenChanged, toastRow } from "./home";
 
 const REFRESH_MS = 3000;
@@ -20,6 +23,86 @@ function dayTitle(day: string): string {
   if (day === "unknown") return t("Earlier");
   const [y, m, d] = day.split("-").map(Number);
   return new Date(y, m - 1, d).toLocaleDateString(language(), { weekday: "long", day: "numeric", month: "long" });
+}
+
+const EMOTE_LABELS: Record<string, () => string> = {
+  surprised: () => t("Surprised"),
+  love: () => t("Love"),
+  happy: () => t("Happy"),
+  proud: () => t("Proud"),
+  wink: () => t("Wink"),
+  yawn: () => t("Yawn"),
+  annoyed: () => t("Annoyed"),
+};
+
+/** Horas de silencio y, por app, su sonido, su gesto y su traje, con un botón para probarlos en la isla. */
+function reactionsPanel(ctx: HubContext): HTMLElement {
+  const quiet = ctx.settings().quietHours;
+  const time = (value: string, change: (v: string) => void) => {
+    const input = h("input", { class: "hub-input react-time", type: "time", value }) as HTMLInputElement;
+    input.addEventListener("change", () => input.value && change(input.value));
+    return input;
+  };
+  const setQuiet = (change: (q: typeof quiet) => void) =>
+    ctx.changeSettings((s) => {
+      s.quietHours = { ...s.quietHours };
+      change(s.quietHours);
+    });
+  const quietCard = h("div", { class: "hub-card" },
+    h("div", { class: "react-head" },
+      h("h2", { class: "look-title", text: t("Quiet hours") }),
+      toggle(quiet.enabled, (on) => setQuiet((q) => (q.enabled = on))),
+    ),
+    h("div", { class: "react-times" },
+      h("label", {}, h("span", { text: t("From") }), time(quiet.from, (v) => setQuiet((q) => (q.from = v)))),
+      h("label", {}, h("span", { text: t("Until") }), time(quiet.to, (v) => setQuiet((q) => (q.to = v)))),
+    ),
+    h("div", { class: "hub-note", text: t("During these hours NEO keeps your notifications without opening the island or making a sound.") }),
+  );
+
+  const apps = h("div", { class: "react-list" });
+  const set = (appId: string, part: keyof NotificationReaction, value: string) =>
+    ctx.changeSettings((s) => {
+      const own = s.notificationReactions[appId] ?? { sound: "", emote: "", outfit: "" };
+      s.notificationReactions = { ...s.notificationReactions, [appId]: { ...own, [part]: value } };
+    });
+  const sounds: [string, string][] = [["", t("Default")], ["none", t("No sound")], ...SOUND_NAMES.map((n): [string, string] => [n, n])];
+  const emotes: [string, string][] = [["", t("Default")], ["none", t("None")], ...REACTION_EMOTES.map((e): [string, string] => [e, EMOTE_LABELS[e]()])];
+  const outfits: [string, string][] = [
+    ["", t("As usual")],
+    ...OUTFIT_SELECTIONS.filter((o) => o !== "auto").map((o): [string, string] => [o, t(OUTFIT_KEYS[o])]),
+  ];
+  void Bridge.systemNotificationApps().then((list) => {
+    if (!list?.length) {
+      apps.append(h("div", { class: "hub-note", text: t("No app has shown a notification yet.") }));
+      return;
+    }
+    for (const app of list) {
+      const own = ctx.settings().notificationReactions[app.id] ?? { sound: "", emote: "", outfit: "" };
+      const field = (label: string, el: HTMLElement) => h("label", { class: "react-field" }, h("span", { text: label }), el);
+      apps.append(h("div", { class: "react-row" },
+        h("span", { class: "home-badge", text: app.name.slice(0, 1).toUpperCase() }),
+        h("span", { class: "react-name home-title", text: app.name, title: app.id }),
+        button(t("Try"), () => void emitToWindow("island", NOTIFICATION_TRY, {
+          id: -Date.now(), appId: app.id, app: app.name, title: t("This is how NEO reacts"), body: app.name, arrival: Date.now() / 1000,
+        }), "", true),
+        h("div", { class: "react-fields" },
+          field(t("Sound"), select(sounds, own.sound, (v) => set(app.id, "sound", v))),
+          field(t("Gesture"), select(emotes, own.emote, (v) => set(app.id, "emote", v))),
+          field(t("Outfit"), select(outfits, own.outfit, (v) => set(app.id, "outfit", v))),
+        ),
+      ));
+    }
+  });
+
+  return h("div", { class: "react" },
+    quietCard,
+    h("div", { class: "hub-card" },
+      h("h2", { class: "look-title", text: t("Reactions") }),
+      h("div", { class: "hub-note", text: t("Each app can have its own sound, gesture and outfit. Try shows it in the island.") }),
+      apps,
+    ),
+  );
 }
 
 export async function notificationsPage(page: HTMLElement, ctx: HubContext) {
@@ -93,11 +176,14 @@ export async function notificationsPage(page: HTMLElement, ctx: HubContext) {
     query = search.value;
     draw();
   });
-  page.append(
-    ctx.hero("notifications", t("Notifications"), t("What your apps told you, all in one place.")),
-    h("div", { class: "notif-tools" }, search, chips),
-    list,
-  );
+  const tools = h("div", { class: "notif-tools" }, search, chips);
+  let reactions: HTMLElement | null = null;
+  const tabs = segmented<"latest" | "reactions">([["latest", t("Latest")], ["reactions", t("Reactions")]], "latest", (tab) => {
+    reactions ??= page.appendChild(reactionsPanel(ctx));
+    reactions.hidden = tab !== "reactions";
+    tools.hidden = list.hidden = tab === "reactions";
+  });
+  page.append(ctx.hero("notifications", t("Notifications"), t("What your apps told you, all in one place."), [tabs]), tools, list);
   clear(list);
   await refresh();
   const timer = window.setInterval(() => {

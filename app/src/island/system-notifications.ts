@@ -1,11 +1,14 @@
 // Notificaciones de Windows → la isla (src-tauri/src/system_notifications.rs): cada toast nuevo abre
 // la isla en su tarjeta, salvo en pausa o mientras un permiso espera respuesta, que va primero.
+// Cada app tiene su reacción (core/reactions.ts); en las horas de silencio solo se guarda.
 // La isla guarda las 10 últimas para recorrerlas desde la tarjeta.
 
 import { onEvent } from "../core/bridge";
 import { Sound } from "../core/sound";
 import { State } from "../core/state";
+import { NOTIFICATION_TRY, isQuiet, reactionFor } from "../core/reactions";
 import type { BotEmoteName, IslandViewName } from "../core/layout";
+import type { Outfit } from "../neo/wardrobe";
 
 /** Un toast tal como lo manda Rust. */
 export interface SystemToast {
@@ -47,11 +50,23 @@ export const SystemNotifications = {
 };
 
 export function registerSystemNotifications(island: SystemNotificationsHost) {
-  void onEvent<SystemToast>("system-notification", (toast) => {
-    if (State.paused || State.pendingApproval) return;
+  /** `trying`: el botón Probar de la ventana, que reacciona aunque sea hora de silencio. */
+  const react = (toast: SystemToast, trying = false) => {
+    if (!trying && (State.paused || State.pendingApproval)) return;
     SystemNotifications.push(toast);
+    if (!trying && isQuiet(new Date(), State.settings.quietHours)) return;
+    const reaction = reactionFor(toast.appId, State.settings.notificationReactions);
     island.alert("notification");
-    island.emote("surprised");
-    Sound.play("pop");
-  });
+    if (reaction.emote !== "none") island.emote(reaction.emote as BotEmoteName);
+    if (reaction.sound !== "none") Sound.play(reaction.sound);
+  };
+  void onEvent<SystemToast>("system-notification", (toast) => react(toast));
+  void onEvent<SystemToast>(NOTIFICATION_TRY, (toast) => react(toast, true));
+}
+
+/** El traje de la app de la tarjeta que se ve: null si su reacción no cambia el traje. */
+export function notificationOutfit(): Outfit | null {
+  const toast = SystemNotifications.current;
+  const outfit = toast ? reactionFor(toast.appId, State.settings.notificationReactions).outfit : "";
+  return outfit ? (outfit as Outfit) : null;
 }
