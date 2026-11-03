@@ -29,7 +29,9 @@
 - [x] Las pestañas (Claude, Vercel, GitHub…) suben a la cabecera, con su estado
 - [x] Tarjeta derecha de doble cara: notificaciones recientes delante, proyectos recientes (carpetas holograma) detrás
 - [x] "Mientras no estabas": Rust detecta la ausencia (tiempo sin teclado ni ratón) y la tarjeta enseña lo que pasó
-- [ ] Comprobar en la app instalada: altura de la isla y posición de NEO, girar la tarjeta, abrir proyectos, volver tras 3 min
+- [x] Deslizar una notificación en la isla: a la derecha abre (verde), a la izquierda la elimina de NEO (rojo, papelera); también tecla Supr
+- [ ] Comprobar en la app instalada: altura de la isla y posición de NEO, girar la tarjeta, abrir proyectos, volver tras 3 min, deslizar
+- [ ] Tarjeta de NEO: cambiar "Integración / Hooks instalados / Abrir Claude" por información útil (propuesta pendiente de OK)
 - [ ] Barra compacta viva: lo más urgente de un vistazo (permiso, sesión, última notificación)
 - [ ] Contador de notificaciones sin ver en la barra
 - [ ] Tarjeta de notificación con acciones: copiar código, silenciar la app 1 h, varias juntas

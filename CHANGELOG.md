@@ -12,6 +12,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). NEO 
 - **Reacciones:** cada app puede tener su sonido, su gesto y su traje, y hay horas de silencio en las que NEO guarda las notificaciones sin abrir la isla.
 - **Isla:** la tarjeta de la derecha tiene doble cara, con notificaciones recientes delante y proyectos recientes detrás. Un clic abre el proyecto en el Explorador o en la terminal.
 - **Mientras no estabas:** al volver al PC, la isla resume las notificaciones y lo que hicieron tus agentes.
+- **Deslizar notificaciones** en la isla: a la derecha para abrir, a la izquierda para eliminarla de NEO. Windows la conserva en su centro de notificaciones.
 - Seis accesorios nuevos: auriculares, aureola, cuernos, orejas de gato, corona de flores y gorro de chef.
 
 ### Cambiado

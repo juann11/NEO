@@ -118,6 +118,8 @@ export interface Settings {
   quietHours: QuietHours;
   /** Carpetas donde trabajaron los agentes (core/projects.ts). Solo rutas. */
   recentProjects: string[];
+  /** Notificaciones eliminadas en NEO (core/swipe.ts): ids de Windows, las 200 últimas. */
+  dismissedNotifications: number[];
   absenceInterval: number;
   /** Declared pills next to the main one (at most 4), in the order they were added. */
   activeIntegrations: string[];
@@ -182,6 +184,7 @@ export const DEFAULT_SETTINGS: Settings = {
   notificationReactions: {},
   quietHours: { enabled: false, from: "22:00", to: "08:00" },
   recentProjects: [],
+  dismissedNotifications: [],
   absenceInterval: 180,
   // Ningún servicio de fábrica: cada uno se añade en Integraciones.
   activeIntegrations: [],

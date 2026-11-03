@@ -84,6 +84,8 @@ pub struct Settings {
     pub quiet_hours: QuietHours,
     /// Carpetas donde trabajaron los agentes, la más reciente primero (src/core/projects.ts). Solo rutas.
     pub recent_projects: Vec<String>,
+    /// Notificaciones eliminadas en NEO: no vuelven a salir en él (Windows las conserva).
+    pub dismissed_notifications: Vec<i64>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -167,6 +169,7 @@ impl Default for Settings {
             notification_reactions: BTreeMap::new(),
             quiet_hours: QuietHours { enabled: false, from: "22:00".into(), to: "08:00".into() },
             recent_projects: Vec::new(),
+            dismissed_notifications: Vec::new(),
         }
     }
 }
@@ -451,7 +454,8 @@ mod tests {
   "homeCards": [{ "id": "agents", "wide": true }],
   "notificationReactions": { "5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App": { "sound": "love", "emote": "happy", "outfit": "partyHat" } },
   "quietHours": { "enabled": true, "from": "23:00", "to": "07:30" },
-  "recentProjects": ["C:/code/tienda"]
+  "recentProjects": ["C:/code/tienda"],
+  "dismissedNotifications": [801]
 }"##;
 
     fn custom() -> Value {
@@ -863,6 +867,7 @@ mod tests {
                 "notificationReactions",
                 "quietHours",
                 "recentProjects",
+                "dismissedNotifications",
             ]
         );
         let _ = std::fs::remove_dir_all(&dir);

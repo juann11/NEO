@@ -411,7 +411,18 @@ const EVENT: &str = "system-notification";
 #[tauri::command]
 pub fn recent_system_notifications(app: AppHandle, limit: usize) -> Vec<Toast> {
     let Some(muted) = wanted(&app) else { return Vec::new() };
-    database().and_then(|p| open_read_only(&p).ok()).and_then(|db| recent_toasts(&db, limit.min(200), &muted).ok()).unwrap_or_default()
+    let dismissed = app.try_state::<crate::Shared>().map(|s| s.settings.lock().unwrap().dismissed_notifications.clone()).unwrap_or_default();
+    let limit = limit.min(200);
+    database()
+        .and_then(|p| open_read_only(&p).ok())
+        .and_then(|db| recent_toasts(&db, limit + dismissed.len(), &muted).ok())
+        .map(|list| without_dismissed(list, &dismissed, limit))
+        .unwrap_or_default()
+}
+
+/// Las que el usuario eliminó en NEO no se enseñan.
+fn without_dismissed(list: Vec<Toast>, dismissed: &[i64], limit: usize) -> Vec<Toast> {
+    list.into_iter().filter(|t| !dismissed.contains(&t.id)).take(limit).collect()
 }
 
 /// Las apps que han mandado notificaciones, para elegir en Ajustes cuáles avisan.
@@ -546,6 +557,17 @@ mod tests {
         assert_eq!(recent[0].id, all.last().unwrap().id);
         let muted = vec![all.last().unwrap().app_id.clone()];
         assert!(recent_toasts(&db, 50, &muted).unwrap().iter().all(|t| t.app_id != muted[0]));
+    }
+
+    #[test]
+    fn deleted_notifications_stay_out_and_the_list_keeps_its_length() {
+        let db = base();
+        let all = recent_toasts(&db, 50, &[]).unwrap();
+        assert!(all.len() >= 2);
+        let first = all[0].id;
+        let shown = without_dismissed(all.clone(), &[first], 1);
+        assert_eq!(shown.len(), 1);
+        assert_ne!(shown[0].id, first);
     }
 
     #[test]

@@ -39,6 +39,11 @@ export const SystemNotifications = {
     this.history = [toast, ...this.history].slice(0, MAX_HISTORY);
     this.index = 0;
   },
+  /** Eliminada desde la tarjeta: sale del historial. */
+  dismiss(id: number) {
+    this.history = this.history.filter((t) => t.id !== id);
+    this.index = Math.min(this.index, Math.max(0, this.history.length - 1));
+  },
   /** ‹ : una más vieja. */
   older() {
     this.index = Math.min(this.index + 1, this.history.length - 1);

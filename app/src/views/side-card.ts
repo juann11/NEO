@@ -8,7 +8,8 @@ import { Bridge } from "../core/bridge";
 import { State } from "../core/state";
 import { ago } from "../core/home-feed";
 import { projectName } from "../core/projects";
-import { SystemNotifications } from "../island/system-notifications";
+import { SystemNotifications, type SystemToast } from "../island/system-notifications";
+import { dismissToast, swipeOutcome } from "../core/swipe";
 import { t, tl } from "../i18n/i18n";
 import type { ViewHost } from "./views";
 
@@ -110,13 +111,71 @@ export function buildSideCard(): ViewHost {
       front.append(h("div", { class: "side-empty", text: State.settings.systemNotifications ? t("No notifications yet.") : t("Turn on Windows notifications in NEO's window.") }));
       return;
     }
-    for (const toast of toasts) {
-      front.append(h("button", { class: "side-row", title: toast.body || toast.title, onclick: () => void Bridge.openNotificationApp(toast.appId) },
-        h("span", { class: "side-badge", text: toast.app.slice(0, 1).toUpperCase() }),
-        h("span", { class: "side-text" }, h("b", { text: toast.title }), h("span", { text: toast.app })),
-        h("span", { class: "side-ago", text: agoShort(toast.arrival) }),
-      ));
-    }
+    for (const toast of toasts) front.append(swipeRow(toast));
+  }
+
+  /** Una notificación que se arrastra: a la derecha se abre (verde), a la izquierda se elimina (rojo). */
+  function swipeRow(toast: SystemToast): HTMLElement {
+    const open = () => void Bridge.openNotificationApp(toast.appId);
+    const remove = () => {
+      SystemNotifications.dismiss(toast.id);
+      State.settings.dismissedNotifications = dismissToast(State.settings.dismissedNotifications, toast.id);
+      void Bridge.saveSettings(State.settings);
+      shownKey = "";
+      State.notify();
+    };
+    const row = h("button", { class: "side-row", title: toast.body || toast.title, "aria-keyshortcuts": "Delete" },
+      h("span", { class: "side-badge", text: toast.app.slice(0, 1).toUpperCase() }),
+      h("span", { class: "side-text" }, h("b", { text: toast.title }), h("span", { text: toast.app })),
+      h("span", { class: "side-ago", text: agoShort(toast.arrival) }),
+    );
+    const wrap = h("div", { class: "swipe" },
+      h("div", { class: "swipe-bg" },
+        h("span", { class: "swipe-open" }, svg(ICONS.arrowUpRight, 9), h("span", { text: t("Open") })),
+        h("span", { class: "swipe-del" }, h("span", { text: t("Delete") }), svg(ICONS.trash, 10, { stroke: 2 })),
+      ),
+      row,
+    );
+    let startX: number | null = null;
+    let dx = 0;
+    row.addEventListener("pointerdown", (e) => {
+      startX = e.clientX;
+      dx = 0;
+      row.setPointerCapture(e.pointerId);
+      wrap.classList.add("dragging");
+    });
+    row.addEventListener("pointermove", (e) => {
+      if (startX == null) return;
+      dx = e.clientX - startX;
+      row.style.transform = `translateX(${dx}px)`;
+      wrap.classList.toggle("to-open", dx > 0);
+      wrap.classList.toggle("to-del", dx < 0);
+      wrap.classList.toggle("armed", swipeOutcome(dx, wrap.clientWidth) != null);
+    });
+    const release = () => {
+      if (startX == null) return;
+      startX = null;
+      wrap.classList.remove("dragging");
+      const outcome = swipeOutcome(dx, wrap.clientWidth);
+      if (outcome) {
+        // Sale por su lado y luego actúa.
+        row.style.transform = `translateX(${dx > 0 ? "" : "-"}110%)`;
+        window.setTimeout(outcome === "open" ? () => { row.style.transform = ""; wrap.className = "swipe"; open(); } : remove, 180);
+      } else {
+        row.style.transform = "";
+        wrap.classList.remove("to-open", "to-del", "armed");
+      }
+    };
+    row.addEventListener("pointerup", release);
+    row.addEventListener("pointercancel", release);
+    // Un clic sin arrastrar también abre; tras un arrastre, no.
+    row.addEventListener("click", () => {
+      if (Math.abs(dx) < 4) open();
+    });
+    row.addEventListener("keydown", (e) => {
+      if (e.key === "Delete") remove();
+    });
+    return wrap;
   }
 
   function drawBack() {

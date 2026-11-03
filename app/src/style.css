@@ -3063,8 +3063,8 @@ html[data-dir="rtl"] #views :is(.bubble, .reply .md-p, .reply .md-h, .reply .md-
   inset: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 10px 12px 8px;
+  gap: 2px;
+  padding: 8px 12px 6px;
   backface-visibility: hidden;
   overflow: hidden;
 }
@@ -3129,8 +3129,8 @@ html[data-dir="rtl"] #views :is(.bubble, .reply .md-p, .reply .md-h, .reply .md-
   display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 26px;
-  padding: 2px 4px;
+  height: 25px;
+  padding: 0 4px;
   border: 0;
   border-radius: 8px;
   background: transparent;
@@ -3146,9 +3146,9 @@ html[data-dir="rtl"] #views :is(.bubble, .reply .md-p, .reply .md-h, .reply .md-
 .side-badge {
   display: grid;
   place-items: center;
-  width: 20px;
-  height: 20px;
-  flex: 0 0 20px;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
   border-radius: 6px;
   background: rgba(74, 222, 128, 0.14);
   color: #4ade80;
@@ -3160,7 +3160,7 @@ html[data-dir="rtl"] #views :is(.bubble, .reply .md-p, .reply .md-h, .reply .md-
   flex-direction: column;
   flex: 1;
   min-width: 0;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .side-text b,
@@ -3171,12 +3171,12 @@ html[data-dir="rtl"] #views :is(.bubble, .reply .md-p, .reply .md-h, .reply .md-
 }
 
 .side-text b {
-  font: 600 11.5px var(--font);
+  font: 600 11px var(--font);
   color: var(--ink);
 }
 
 .side-text span {
-  font: 500 10px var(--font);
+  font: 500 9.5px var(--font);
   color: var(--dim-3);
 }
 
@@ -3278,4 +3278,69 @@ html[data-dir="rtl"] #views :is(.bubble, .reply .md-p, .reply .md-h, .reply .md-
   .holo-body {
     transition: none;
   }
+}
+
+/* -- Deslizar una notificación: abrir (verde) o eliminar (rojo) ---------------- */
+.swipe {
+  position: relative;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.swipe-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-radius: 8px;
+  font: 700 10.5px var(--font);
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.12s, background 0.12s;
+}
+
+.swipe-bg > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  visibility: hidden;
+}
+
+.swipe.to-open .swipe-bg {
+  opacity: 1;
+  background: rgba(34, 197, 94, 0.55);
+}
+
+.swipe.to-del .swipe-bg {
+  opacity: 1;
+  background: rgba(244, 80, 94, 0.55);
+}
+
+.swipe.to-open .swipe-open,
+.swipe.to-del .swipe-del {
+  visibility: visible;
+}
+
+/* Pasado el umbral, el color se enciende del todo: soltar ya actúa. */
+.swipe.armed.to-open .swipe-bg {
+  background: #22c55e;
+}
+
+.swipe.armed.to-del .swipe-bg {
+  background: #f4505e;
+}
+
+.swipe .side-row {
+  position: relative;
+  width: 100%;
+  background: var(--card);
+  touch-action: pan-y;
+  transition: transform 0.18s ease-out;
+}
+
+.swipe.dragging .side-row {
+  transition: none;
 }
