@@ -2,6 +2,7 @@
 
 mod agent_hooks;
 mod agents;
+mod away;
 mod chat;
 mod claude;
 mod codex_plan;
@@ -880,6 +881,8 @@ pub fn run() {
             whatsapp::whatsapp_island,
             system_notifications::system_notification_apps,
             system_notifications::recent_system_notifications,
+            away::open_project,
+            away::open_project_terminal,
             system_notifications::open_notification_app,
             whatsapp::whatsapp_open,
             whatsapp::whatsapp_close,
@@ -978,6 +981,7 @@ pub fn run() {
             whatsapp::start(&handle, &loaded.active_integrations);
             // Notificaciones de Windows: el hilo no lee nada hasta que se enciende el interruptor.
             system_notifications::start(handle.clone());
+            away::start(handle.clone());
             shortcuts::apply(&handle, &loaded.shortcuts);
             // New versions: nothing goes to GitHub until the user agrees (update.rs).
             update::start(handle.clone());

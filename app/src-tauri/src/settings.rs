@@ -82,6 +82,8 @@ pub struct Settings {
     /// Cómo reacciona NEO a cada app, por su id de Windows (src/core/reactions.ts).
     pub notification_reactions: BTreeMap<String, NotificationReaction>,
     pub quiet_hours: QuietHours,
+    /// Carpetas donde trabajaron los agentes, la más reciente primero (src/core/projects.ts). Solo rutas.
+    pub recent_projects: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -164,6 +166,7 @@ impl Default for Settings {
                 .to_vec(),
             notification_reactions: BTreeMap::new(),
             quiet_hours: QuietHours { enabled: false, from: "22:00".into(), to: "08:00".into() },
+            recent_projects: Vec::new(),
         }
     }
 }
@@ -447,7 +450,8 @@ mod tests {
   "mutedNotificationApps": ["Microsoft.SkyDrive.Desktop"],
   "homeCards": [{ "id": "agents", "wide": true }],
   "notificationReactions": { "5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App": { "sound": "love", "emote": "happy", "outfit": "partyHat" } },
-  "quietHours": { "enabled": true, "from": "23:00", "to": "07:30" }
+  "quietHours": { "enabled": true, "from": "23:00", "to": "07:30" },
+  "recentProjects": ["C:/code/tienda"]
 }"##;
 
     fn custom() -> Value {
@@ -858,6 +862,7 @@ mod tests {
                 "homeCards",
                 "notificationReactions",
                 "quietHours",
+                "recentProjects",
             ]
         );
         let _ = std::fs::remove_dir_all(&dir);

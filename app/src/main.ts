@@ -13,6 +13,7 @@ import { applySpotify, registerSpotifyHandlers } from "./island/spotify";
 import { registerWhatsAppHandlers } from "./island/whatsapp";
 import { registerSystemNotifications } from "./island/system-notifications";
 import { registerHomeFeed } from "./island/home-feed";
+import { registerAway } from "./island/away";
 import { SPOTIFY_ID } from "./core/spotify";
 import { Recap } from "./recap/recap";
 import { Updates } from "./island/update";
@@ -164,6 +165,7 @@ async function main() {
   registerWhatsAppHandlers(island);
   registerSystemNotifications(island);
   registerHomeFeed();
+  registerAway(island);
   // New versions: Rust offers the card, the island opens it when nothing else waits.
   await Updates.register(island);
   // Rust may have read Spotify before this page listened: ask once.

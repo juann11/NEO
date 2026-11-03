@@ -1054,19 +1054,6 @@
       "de": "Hooks installieren…",
       "tr": "Hook'ları kur…"
     },
-    "Install relay…": {
-      "zh-Hans": "安装中继…",
-      "hi": "रिले इंस्टॉल करें…",
-      "es": "Instalar relay…",
-      "ar": "تثبيت المُرحِّل…",
-      "fr": "Installer le relais…",
-      "bn": "রিলে ইনস্টল করুন…",
-      "pt-BR": "Instalar relay…",
-      "ru": "Установить ретранслятор…",
-      "id": "Pasang relay…",
-      "de": "Relay installieren…",
-      "tr": "Aracıyı kur…"
-    },
     "Install the hooks to see your Claude Code sessions in the island and approve permissions without leaving what you are doing.": {
       "zh-Hans": "安装 hooks，即可在岛中查看 Claude Code 会话，并在不打断手头工作的情况下批准权限。",
       "hi": "आइलैंड में अपने Claude Code सत्र देखने और अपना काम छोड़े बिना अनुमतियाँ देने के लिए hooks इंस्टॉल करें।",
@@ -2158,32 +2145,6 @@
       "id": "Tampilkan agen coding lain di pulau. NEO menambahkan entrinya ke konfigurasi masing-masing agen: Anda melihat perubahan persisnya dan lokasi cadangan sebelum apa pun ditulis, dan mencopot pemasangan hanya menghapus yang ditambahkan NEO.",
       "de": "Zeige weitere Programmieragenten in der Insel. NEO ergänzt Einträge in der jeweiligen Agentenkonfiguration: Du siehst die genaue Änderung und den Backup-Pfad, bevor etwas geschrieben wird. Beim Deinstallieren wird nur entfernt, was NEO hinzugefügt hat.",
       "tr": "Diğer kodlama ajanlarını adada göster. NEO kendi girdilerini her ajanın yapılandırmasına ekler: herhangi bir şey yazılmadan önce tam değişikliği ve yedeğin konumunu görürsün. Kaldırıldığında yalnızca NEO'nun ekledikleri silinir."
-    },
-    "Shows your Claude plan usage (5-hour and weekly limits) in the island's header. NEO adds a status line relay in ~/.claude/settings.json. If you already have a status line, it keeps working as before. Pro and Max plans only.": {
-      "zh-Hans": "在岛的顶栏显示你的 Claude 套餐用量（5 小时和每周限额）。NEO 会在 ~/.claude/settings.json 中添加一个状态栏中继。如果你已有状态栏，它会照常工作。仅限 Pro 和 Max 套餐。",
-      "hi": "आइलैंड के हेडर में आपके Claude प्लान का उपयोग (5 घंटे और साप्ताहिक सीमा) दिखाता है। NEO ~/.claude/settings.json में एक स्टेटस लाइन रिले जोड़ता है। अगर आपके पास पहले से स्टेटस लाइन है, तो वह पहले की तरह चलती रहेगी। केवल Pro और Max प्लान।",
-      "es": "Muestra el uso de tu plan de Claude (límites de 5 horas y semanal) en la cabecera de la isla. NEO añade un relay de línea de estado en ~/.claude/settings.json. Si ya tienes una línea de estado, sigue funcionando como antes. Solo planes Pro y Max.",
-      "ar": "يعرض استخدام خطة Claude (حدّا الخمس ساعات والأسبوع) في رأس الشريط. يضيف NEO مُرحِّلًا لسطر الحالة في ~/.claude/settings.json. إن كان لديك سطر حالة فسيستمر في العمل كما كان. لخطتَي Pro وMax فقط.",
-      "fr": "Affiche l'utilisation de ton forfait Claude (limites sur 5 heures et à la semaine) dans l'en-tête de l'île. NEO ajoute un relais de ligne d'état dans ~/.claude/settings.json. Si tu as déjà une ligne d'état, elle continue de fonctionner comme avant. Forfaits Pro et Max uniquement.",
-      "bn": "আইল্যান্ডের হেডারে আপনার Claude প্ল্যানের ব্যবহার (৫ ঘণ্টা ও সাপ্তাহিক সীমা) দেখায়। NEO ~/.claude/settings.json-এ একটি স্ট্যাটাস লাইন রিলে যোগ করে। আপনার আগে থেকে স্ট্যাটাস লাইন থাকলে সেটি আগের মতোই চলবে। শুধু Pro ও Max প্ল্যান।",
-      "pt-BR": "Mostra o uso do seu plano Claude (limites de 5 horas e semanal) no cabeçalho da ilha. O NEO adiciona um relay de linha de status em ~/.claude/settings.json. Se você já tem uma linha de status, ela continua funcionando como antes. Apenas planos Pro e Max.",
-      "ru": "Показывает использование тарифа Claude (лимиты на 5 часов и на неделю) в заголовке острова. NEO добавляет ретранслятор строки состояния в ~/.claude/settings.json. Если у вас уже есть строка состояния, она работает как прежде. Только тарифы Pro и Max.",
-      "id": "Menampilkan pemakaian paket Claude Anda (batas 5 jam dan mingguan) di header pulau. NEO menambahkan relay baris status di ~/.claude/settings.json. Jika Anda sudah punya baris status, baris itu tetap berjalan seperti biasa. Khusus paket Pro dan Max.",
-      "de": "Zeigt deine Claude-Tarifnutzung (5-Stunden- und Wochenlimits) im Insel-Kopfbereich. NEO ergänzt einen Statuszeilen-Relay in ~/.claude/settings.json. Eine bestehende Statuszeile funktioniert wie bisher. Nur für Pro- und Max-Tarife.",
-      "tr": "Claude plan kullanımını (5 saatlik ve haftalık sınırlar) adanın başlığında gösterir. NEO, ~/.claude/settings.json içine bir durum satırı aracısı ekler. Mevcut durum satırın varsa eskisi gibi çalışmaya devam eder. Yalnızca Pro ve Max planları için."
-    },
-    "Shows your Codex plan usage (weekly limit and free resets left) in the island's header. NEO asks the Codex CLI (codex app-server) when the pill shows; nothing is installed. Codex must be signed in with ChatGPT.": {
-      "zh-Hans": "在岛的顶栏显示你的 Codex 套餐用量（每周限额和剩余的免费重置次数）。标签显示时，NEO 会询问 Codex CLI（codex app-server），不会安装任何东西。Codex 必须已用 ChatGPT 登录。",
-      "hi": "आइलैंड के हेडर में आपके Codex प्लान का उपयोग (साप्ताहिक सीमा और बचे मुफ़्त रीसेट) दिखाता है। टैब दिखने पर NEO Codex CLI (codex app-server) से पूछता है; कुछ भी इंस्टॉल नहीं होता। Codex में ChatGPT से साइन इन होना ज़रूरी है।",
-      "es": "Muestra el uso de tu plan de Codex (límite semanal y reinicios gratuitos restantes) en la cabecera de la isla. NEO consulta a la CLI de Codex (codex app-server) cuando aparece la pestaña; no se instala nada. Codex debe tener la sesión iniciada con ChatGPT.",
-      "ar": "يعرض استخدام خطة Codex (الحد الأسبوعي وإعادات التعيين المجانية المتبقية) في رأس الشريط. يسأل NEO واجهة Codex CLI (codex app-server) عند ظهور التبويب، ولا يُثبَّت أي شيء. يجب تسجيل الدخول إلى Codex بحساب ChatGPT.",
-      "fr": "Affiche l'utilisation de ton forfait Codex (limite hebdomadaire et réinitialisations gratuites restantes) dans l'en-tête de l'île. NEO interroge la CLI Codex (codex app-server) quand l'onglet s'affiche ; rien n'est installé. Codex doit être connecté avec ChatGPT.",
-      "bn": "আইল্যান্ডের হেডারে আপনার Codex প্ল্যানের ব্যবহার (সাপ্তাহিক সীমা ও বাকি ফ্রি রিসেট) দেখায়। ট্যাব দেখা গেলে NEO Codex CLI (codex app-server)-কে জিজ্ঞেস করে; কিছুই ইনস্টল হয় না। Codex-এ ChatGPT দিয়ে সাইন ইন থাকতে হবে।",
-      "pt-BR": "Mostra o uso do seu plano Codex (limite semanal e redefinições grátis restantes) no cabeçalho da ilha. O NEO consulta a CLI do Codex (codex app-server) quando a aba aparece; nada é instalado. O Codex precisa estar conectado com o ChatGPT.",
-      "ru": "Показывает использование тарифа Codex (недельный лимит и оставшиеся бесплатные сбросы) в заголовке острова. NEO спрашивает Codex CLI (codex app-server), когда видна вкладка; ничего не устанавливается. В Codex нужно войти через ChatGPT.",
-      "id": "Menampilkan pemakaian paket Codex Anda (batas mingguan dan sisa reset gratis) di header pulau. NEO menanyakan Codex CLI (codex app-server) saat tab tampil; tidak ada yang dipasang. Codex harus masuk dengan ChatGPT.",
-      "de": "Zeigt deine Codex-Tarifnutzung (Wochenlimit und verbleibende kostenlose Zurücksetzungen) im Insel-Kopfbereich. NEO fragt die Codex CLI (codex app-server) ab, wenn die Pill angezeigt wird; es wird nichts installiert. Codex muss mit ChatGPT angemeldet sein.",
-      "tr": "Codex plan kullanımını (haftalık sınır ve kalan ücretsiz sıfırlama hakları) adanın başlığında gösterir. Araç göründüğünde NEO, Codex CLI'a (codex app-server) sorgu gönderir; hiçbir şey kurulmaz. Codex'te ChatGPT ile oturum açılmış olmalı."
     },
     "Start a new Antigravity conversation to pick the hooks up.": {
       "zh-Hans": "开启新的 Antigravity 对话即可启用 hooks。",
@@ -3595,19 +3556,6 @@
       "id": "Hanya file yang dijatuhkan ke pulau yang bisa dikirim bersama pertanyaan.",
       "de": "Nur eine auf der Insel abgelegte Datei kann mit einer Frage gesendet werden.",
       "tr": "Soruyla birlikte yalnızca adaya bırakılan bir dosya gönderilebilir."
-    },
-    "The numbers come from the Claude Code command-line tool. The Claude desktop app does not report them, so the gauge stays empty if you only use the desktop app.": {
-      "zh-Hans": "数据来自 Claude Code 命令行工具。Claude 桌面应用不会提供这些数据，因此如果你只使用桌面应用，仪表会一直为空。",
-      "hi": "ये आँकड़े Claude Code कमांड-लाइन टूल से आते हैं। Claude डेस्कटॉप ऐप इन्हें नहीं भेजता, इसलिए अगर आप सिर्फ़ डेस्कटॉप ऐप इस्तेमाल करते हैं तो गेज खाली रहेगा।",
-      "es": "Los datos vienen de la herramienta de línea de comandos de Claude Code. La app de escritorio de Claude no los envía, así que el indicador queda vacío si solo usas la app de escritorio.",
-      "ar": "تأتي الأرقام من أداة سطر الأوامر Claude Code. لا يرسلها تطبيق Claude لسطح المكتب، لذلك يبقى المؤشر فارغًا إذا كنت تستخدم تطبيق سطح المكتب فقط.",
-      "fr": "Les chiffres viennent de l'outil en ligne de commande Claude Code. L'app de bureau Claude ne les transmet pas : si tu n'utilises que l'app de bureau, la jauge reste vide.",
-      "bn": "এই সংখ্যাগুলো Claude Code কমান্ড-লাইন টুল থেকে আসে। Claude ডেস্কটপ অ্যাপ এগুলো পাঠায় না, তাই শুধু ডেস্কটপ অ্যাপ ব্যবহার করলে গেজ খালি থাকবে।",
-      "pt-BR": "Os números vêm da ferramenta de linha de comando do Claude Code. O app Claude para desktop não os envia, então o medidor fica vazio se você usa só o app para desktop.",
-      "ru": "Данные приходят из консольного инструмента Claude Code. Настольное приложение Claude их не передаёт, поэтому индикатор останется пустым, если вы пользуетесь только им.",
-      "id": "Angka-angka ini berasal dari alat baris perintah Claude Code. Aplikasi desktop Claude tidak mengirimkannya, jadi pengukur tetap kosong jika Anda hanya memakai aplikasi desktop.",
-      "de": "Die Zahlen stammen aus dem Kommandozeilenprogramm Claude Code. Die Claude-Desktop-App meldet sie nicht; wenn du nur die Desktop-App nutzt, bleibt die Anzeige leer.",
-      "tr": "Sayılar Claude Code komut satırı aracından gelir. Claude masaüstü uygulaması bunları bildirmez; yalnızca masaüstü uygulamasını kullanıyorsan gösterge boş kalır."
     },
     "Payment failed": {
       "zh-Hans": "付款失败",
@@ -6468,6 +6416,149 @@
       "id": "Topi koki",
       "de": "Kochmütze",
       "tr": "Aşçı şapkası"
+    },
+    "Flip": {
+      "zh-Hans": "翻转",
+      "hi": "पलटें",
+      "es": "Dar la vuelta",
+      "ar": "اقلب",
+      "fr": "Retourner",
+      "bn": "উল্টান",
+      "pt-BR": "Virar",
+      "ru": "Перевернуть",
+      "id": "Balik",
+      "de": "Umdrehen",
+      "tr": "Çevir"
+    },
+    "Open in terminal": {
+      "zh-Hans": "在终端中打开",
+      "hi": "टर्मिनल में खोलें",
+      "es": "Abrir en la terminal",
+      "ar": "افتح في الطرفية",
+      "fr": "Ouvrir dans le terminal",
+      "bn": "টার্মিনালে খুলুন",
+      "pt-BR": "Abrir no terminal",
+      "ru": "Открыть в терминале",
+      "id": "Buka di terminal",
+      "de": "Im Terminal öffnen",
+      "tr": "Terminalde aç"
+    },
+    "Open {0}": {
+      "zh-Hans": "打开 {0}",
+      "hi": "{0} खोलें",
+      "es": "Abrir {0}",
+      "ar": "افتح {0}",
+      "fr": "Ouvrir {0}",
+      "bn": "{0} খুলুন",
+      "pt-BR": "Abrir {0}",
+      "ru": "Открыть {0}",
+      "id": "Buka {0}",
+      "de": "{0} öffnen",
+      "tr": "{0} aç"
+    },
+    "Projects your agents work in show up here.": {
+      "zh-Hans": "你的代理工作过的项目会显示在这里。",
+      "hi": "आपके एजेंट जिन प्रोजेक्ट में काम करते हैं, वे यहाँ दिखते हैं।",
+      "es": "Aquí salen los proyectos donde trabajan tus agentes.",
+      "ar": "تظهر هنا المشاريع التي يعمل عليها وكلاؤك.",
+      "fr": "Les projets où travaillent tes agents s’affichent ici.",
+      "bn": "আপনার এজেন্ট যেসব প্রজেক্টে কাজ করে সেগুলো এখানে দেখা যায়।",
+      "pt-BR": "Os projetos em que seus agentes trabalham aparecem aqui.",
+      "ru": "Здесь появятся проекты, в которых работают ваши агенты.",
+      "id": "Proyek tempat agenmu bekerja muncul di sini.",
+      "de": "Hier erscheinen die Projekte, in denen deine Agenten arbeiten.",
+      "tr": "Ajanlarının çalıştığı projeler burada görünür."
+    },
+    "Recent projects": {
+      "zh-Hans": "最近的项目",
+      "hi": "हाल के प्रोजेक्ट",
+      "es": "Proyectos recientes",
+      "ar": "المشاريع الأخيرة",
+      "fr": "Projets récents",
+      "bn": "সাম্প্রতিক প্রজেক্ট",
+      "pt-BR": "Projetos recentes",
+      "ru": "Недавние проекты",
+      "id": "Proyek terbaru",
+      "de": "Letzte Projekte",
+      "tr": "Son projeler"
+    },
+    "Turn on Windows notifications in NEO's window.": {
+      "zh-Hans": "在 NEO 窗口中开启 Windows 通知。",
+      "hi": "NEO की विंडो में Windows सूचनाएँ चालू करें।",
+      "es": "Activa las notificaciones de Windows en la ventana de NEO.",
+      "ar": "شغّل إشعارات Windows من نافذة NEO.",
+      "fr": "Active les notifications Windows dans la fenêtre de NEO.",
+      "bn": "NEO-র উইন্ডোতে Windows বিজ্ঞপ্তি চালু করুন।",
+      "pt-BR": "Ative as notificações do Windows na janela do NEO.",
+      "ru": "Включите уведомления Windows в окне NEO.",
+      "id": "Aktifkan notifikasi Windows di jendela NEO.",
+      "de": "Schalte Windows-Benachrichtigungen in NEOs Fenster ein.",
+      "tr": "Windows bildirimlerini NEO penceresinden aç."
+    },
+    "While you were away · {0}": {
+      "zh-Hans": "你离开期间 · {0}",
+      "hi": "आपकी ग़ैरमौजूदगी में · {0}",
+      "es": "Mientras no estabas · {0}",
+      "ar": "أثناء غيابك · {0}",
+      "fr": "Pendant ton absence · {0}",
+      "bn": "আপনি না থাকার সময় · {0}",
+      "pt-BR": "Enquanto você estava fora · {0}",
+      "ru": "Пока вас не было · {0}",
+      "id": "Selama kamu pergi · {0}",
+      "de": "Während du weg warst · {0}",
+      "tr": "Sen yokken · {0}"
+    },
+    "{0} finished": {
+      "zh-Hans": "{0} 已完成",
+      "hi": "{0} पूरा हुआ",
+      "es": "{0} terminó",
+      "ar": "انتهى {0}",
+      "fr": "{0} a terminé",
+      "bn": "{0} শেষ হয়েছে",
+      "pt-BR": "{0} terminou",
+      "ru": "{0} закончил",
+      "id": "{0} selesai",
+      "de": "{0} ist fertig",
+      "tr": "{0} bitti"
+    },
+    "{0} hit an error": {
+      "zh-Hans": "{0} 出错了",
+      "hi": "{0} में त्रुटि आई",
+      "es": "{0} tuvo un error",
+      "ar": "واجه {0} خطأ",
+      "fr": "{0} a rencontré une erreur",
+      "bn": "{0}-এ ত্রুটি হয়েছে",
+      "pt-BR": "{0} teve um erro",
+      "ru": "{0}: ошибка",
+      "id": "{0} mengalami galat",
+      "de": "{0} hatte einen Fehler",
+      "tr": "{0} hata verdi"
+    },
+    "{0} is waiting for you": {
+      "zh-Hans": "{0} 在等你",
+      "hi": "{0} आपका इंतज़ार कर रहा है",
+      "es": "{0} te está esperando",
+      "ar": "{0} بانتظارك",
+      "fr": "{0} t’attend",
+      "bn": "{0} আপনার অপেক্ষায়",
+      "pt-BR": "{0} está esperando você",
+      "ru": "{0} ждёт вас",
+      "id": "{0} menunggumu",
+      "de": "{0} wartet auf dich",
+      "tr": "{0} seni bekliyor"
+    },
+    "Notifications from {0}": {
+      "zh-Hans": "来自 {0} 的通知",
+      "hi": "{0} से सूचनाएँ",
+      "es": "Notificaciones de {0}",
+      "ar": "إشعارات من {0}",
+      "fr": "Notifications de {0}",
+      "bn": "{0} থেকে বিজ্ঞপ্তি",
+      "pt-BR": "Notificações de {0}",
+      "ru": "Уведомления: {0}",
+      "id": "Notifikasi dari {0}",
+      "de": "Benachrichtigungen von {0}",
+      "tr": "{0} bildirimleri"
     }
   }
 }

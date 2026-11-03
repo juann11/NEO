@@ -19,6 +19,8 @@ export const ICONS = {
   arrowUpRight: "M8.5 7h8.5v8.5h-2V10.4l-7.1 7.1-1.4-1.4 7.1-7.1H8.5V7z",
   // arrow.clockwise (stroke)
   arrowClockwise: "M19 12a7 7 0 1 1-2.05-4.95M19 4.5V8h-3.5",
+  // terminal (stroke)
+  terminal: "M4 5.5h16v13H4zM7.5 9.5l3 2.5-3 2.5M12.5 14.5h4",
   // chevron.right
   chevronRight: "M9 5.5 15.5 12 9 18.5",
   chevronLeft: "M15 5.5 8.5 12 15 18.5",

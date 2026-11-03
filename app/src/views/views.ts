@@ -13,9 +13,8 @@ import { buildChoose, buildUpload, buildUploading } from "./upload";
 import { renderIntegrationCard, type IntegrationCardHooks } from "./integrations";
 import { highlightRow, listRows, openRow } from "./github";
 import { pillDefinition, sessionSubtitle } from "../core/pills";
-import {
-  PlanCard, buildPlanPill, claudePillVisible, codexPillVisible, planCardOpen, refreshCodexPlanUsage,
-} from "./usage";
+import { PlanCard, planCardOpen } from "./usage";
+import { buildSideCard } from "./side-card";
 import { buildDiffCard } from "./diff";
 import { lastTextStep } from "../core/diff";
 import { Bridge } from "../core/bridge";
@@ -125,11 +124,10 @@ export function buildHeader(actions: ViewActions): ViewHost {
   // El engranaje abre la ventana de NEO, donde están todos los ajustes.
   const gearBtn = h("button", { title: tl("Settings"), onclick: () => actions.openMainWindow() }, svg(ICONS.gear, 14));
   const soundBtn = h("button", { title: tl("Mute"), onclick: () => actions.toggleSound() }, svg(ICONS.speakerOn, 14));
-  // Plan usage pills (off by default): before the gear, Claude first, as on the Mac.
-  const claudePill = buildPlanPill(false);
-  const codexPill = buildPlanPill(true);
-  const planPills = h("div", { class: "plan-pills" }, claudePill.el, codexPill.el);
-  let codexShown = false;
+  // Tus otras pestañas (agentes y servicios), con su estado, entre las pestañas y el engranaje.
+  const pills = h("div", { class: "header-pills" });
+  let pillIds = "";
+  let spotifyPill: SpotifyPillHost | null = null;
 
   function go(v: IslandViewName) {
     actions.blip();
@@ -140,9 +138,9 @@ export function buildHeader(actions: ViewActions): ViewHost {
     "div",
     { id: "header" },
     h("div", { class: "tabs" }, tabHome, tabChat, tabDrop),
-    h("div", { class: "header-actions" }, planPills, gearBtn, soundBtn),
+    pills,
+    h("div", { class: "header-actions" }, gearBtn, soundBtn),
   );
-  const headerActions = el.lastElementChild as HTMLElement;
 
   return {
     el,
@@ -156,25 +154,34 @@ export function buildHeader(actions: ViewActions): ViewHost {
       gearBtn.append(svg(v === "settings" ? ICONS.gearFill : ICONS.gear, 14));
       clear(soundBtn);
       soundBtn.append(svg(State.settings.soundEnabled ? ICONS.speakerOn : ICONS.speakerOff, 14));
-      syncPlanPills();
+      syncPills();
       el.style.opacity = v === "confused" ? "0" : "1";
     },
   };
 
-  function syncPlanPills() {
-    const claudeOn = claudePillVisible();
-    const codexOn = codexPillVisible();
-    claudePill.el.style.display = claudeOn ? "" : "none";
-    codexPill.el.style.display = codexOn ? "" : "none";
-    planPills.classList.toggle("on", claudeOn || codexOn);
-    // Both pills: the right side tightens so it still clears the screen edge.
-    headerActions.classList.toggle("both-plans", claudeOn && codexOn);
-    if (claudeOn) claudePill.sync();
-    if (codexOn) codexPill.sync();
-    // Codex is asked when its pill comes into view (stale answers only).
-    const shown = codexOn && State.mode === "expanded";
-    if (shown && !codexShown) refreshCodexPlanUsage();
-    codexShown = shown;
+  function syncPills() {
+    pills.style.visibility = v() === "overview" ? "" : "hidden";
+    const others = State.otherTasks.slice(0, 4);
+    const pillKey = others.map((t) => `${t.id}:${t.color}:${t.pillBadge ?? ""}`).join("|");
+    if (pillKey !== pillIds) {
+      pillIds = pillKey;
+      clear(pills);
+      spotifyPill = null;
+      for (const t of others) {
+        if (t.id === SPOTIFY_ID) {
+          spotifyPill = buildSpotifyPill(t, () => actions.setFocus(t.id));
+          pills.append(spotifyPill.el);
+        } else {
+          pills.append(buildPill(t, actions));
+        }
+      }
+      pruneMiniBots();
+    }
+    spotifyPill?.sync();
+  }
+
+  function v() {
+    return State.view;
   }
 }
 
@@ -202,15 +209,14 @@ function buildOverview(actions: ViewActions): ViewHost {
     svg(ICONS.arrowUpRight, 8),
   );
   const left = card(null, leftBody, jump);
-  const pills = h("div", { class: "pills" });
-  const right = card(null, pills);
+  const side = buildSideCard();
+  const right = card(null, side.el);
   // Opened from a plan pill in the header: stands in for the left card.
   const plan = new PlanCard();
   let planTimer: number | null = null;
   // Spotify's card and pill are kept and updated in place: the progress bar
   // runs on, and a slider being dragged must not be rebuilt under the pointer.
   const spotifyCard = buildSpotifyCard();
-  let spotifyPill: SpotifyPillHost | null = null;
   // WhatsApp's card too: its reply field keeps the draft and the keyboard while messages arrive.
   const whatsappCard = buildWhatsAppCard({
     openSettings: () => actions.openSettingsWindow(),
@@ -223,7 +229,6 @@ function buildOverview(actions: ViewActions): ViewHost {
     h("div", { class: "right" }, right),
   );
 
-  let pillIds = "";
   let detailOpen = false;
   let lastFocus: string | null = null;
   let mode: "ticker" | "card" | "plan" | "diff" | "spotify" | "whatsapp" | null = null;
@@ -416,23 +421,7 @@ function buildOverview(actions: ViewActions): ViewHost {
       highlightRow(rows, State.cardSelection, State.cardSelection !== shownSelection);
       shownSelection = State.cardSelection;
 
-      const others = State.otherTasks.slice(0, 4);
-      const pillKey = others.map((t) => `${t.id}:${t.color}:${t.pillBadge ?? ""}`).join("|");
-      if (pillKey !== pillIds) {
-        pillIds = pillKey;
-        clear(pills);
-        spotifyPill = null;
-        for (const t of others) {
-          if (t.id === SPOTIFY_ID) {
-            spotifyPill = buildSpotifyPill(t, () => actions.setFocus(t.id));
-            pills.append(spotifyPill.el);
-          } else {
-            pills.append(buildPill(t, actions));
-          }
-        }
-        pruneMiniBots();
-      }
-      spotifyPill?.sync();
+      side.sync();
     },
   };
 }

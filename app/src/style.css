@@ -3021,3 +3021,261 @@ html[data-dir="rtl"] #views :is(.bubble, .reply .md-p, .reply .md-h, .reply .md-
   unicode-bidi: plaintext;
   text-align: start;
 }
+
+/* -- Pestañas en la cabecera ------------------------------------------------ */
+.header-pills {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  overflow: hidden;
+}
+
+.header-pills .pill {
+  flex: 0 1 112px;
+  min-width: 64px;
+  height: 24px;
+}
+
+/* -- Tarjeta de doble cara: notificaciones y proyectos ---------------------- */
+.side-card {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  perspective: 900px;
+}
+
+.side-inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+
+.side-card.flipped .side-inner {
+  transform: rotateY(180deg);
+}
+
+.side-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px 8px;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.side-back {
+  transform: rotateY(180deg);
+}
+
+.side-flip {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  color: var(--dim-2);
+}
+
+.side-flip:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.side-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 26px;
+  font: 700 10.5px var(--font);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim-2);
+}
+
+.side-title.away {
+  color: var(--green-2);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 11.5px;
+}
+
+.side-title.away .icon-btn {
+  margin-left: auto;
+}
+
+.away-line {
+  font: 500 11.5px var(--font);
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.side-empty {
+  margin: auto 0;
+  font: 500 11.5px var(--font);
+  color: var(--dim-3);
+  text-align: center;
+}
+
+.side-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 26px;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  text-align: start;
+  cursor: default;
+}
+
+.side-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.side-badge {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  border-radius: 6px;
+  background: rgba(74, 222, 128, 0.14);
+  color: #4ade80;
+  font: 700 10.5px var(--font);
+}
+
+.side-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.side-text b,
+.side-text span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.side-text b {
+  font: 600 11.5px var(--font);
+  color: var(--ink);
+}
+
+.side-text span {
+  font: 500 10px var(--font);
+  color: var(--dim-3);
+}
+
+.side-ago {
+  flex: 0 0 auto;
+  font: 500 10px var(--font);
+  color: var(--dim-4);
+}
+
+/* Las carpetas holograma de Proyectos recientes. */
+.holo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.holo-item {
+  position: relative;
+  min-width: 0;
+}
+
+.holo-open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  padding: 2px 2px 3px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cyan);
+  cursor: default;
+}
+
+.holo-open span {
+  max-width: 100%;
+  font: 600 10px var(--font);
+  color: #a5f3fc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.holo-folder {
+  width: 48px;
+  height: 40px;
+  overflow: visible;
+  filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.7));
+  transition: filter 0.2s;
+}
+
+.holo-body {
+  opacity: 0.92;
+  transition: transform 0.3s cubic-bezier(0.3, 1.2, 0.4, 1), opacity 0.2s;
+}
+
+.holo-open:hover .holo-folder {
+  filter: drop-shadow(0 0 9px rgba(74, 222, 128, 0.85));
+}
+
+/* Al pasar el ratón, la carpeta sube sobre su haz, como una proyección. */
+.holo-open:hover .holo-body {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.holo-open:hover {
+  background: rgba(34, 211, 238, 0.06);
+}
+
+.holo-term {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  color: var(--cyan);
+  transition: opacity 0.15s;
+}
+
+.holo-item:hover .holo-term,
+.holo-term:focus-visible {
+  opacity: 1;
+}
+
+.side-row:focus-visible,
+.holo-open:focus-visible,
+.side-flip:focus-visible {
+  outline: 2px solid #4ade80;
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-inner,
+  .holo-folder,
+  .holo-body {
+    transition: none;
+  }
+}

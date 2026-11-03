@@ -10,13 +10,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/). NEO 
 - **Notificaciones:** página con todas las que guarda Windows, un buscador, filtro por app y agrupadas por día.
 - **Aspecto:** elige lo que NEO lleva en la cabeza, con vista previa, y el color de su cuerpo.
 - **Reacciones:** cada app puede tener su sonido, su gesto y su traje, y hay horas de silencio en las que NEO guarda las notificaciones sin abrir la isla.
+- **Isla:** la tarjeta de la derecha tiene doble cara, con notificaciones recientes delante y proyectos recientes detrás. Un clic abre el proyecto en el Explorador o en la terminal.
+- **Mientras no estabas:** al volver al PC, la isla resume las notificaciones y lo que hicieron tus agentes.
+- Seis accesorios nuevos: auriculares, aureola, cuernos, orejas de gato, corona de flores y gorro de chef.
 
 ### Cambiado
 - En el menú de la ventana, los ajustes de la isla van primero y **Voz** (dictado y compañía) después.
 - Nombres de apps legibles en las notificaciones: PowerShell, OneDrive, Snipping Tool.
 - El grupo **Voz** se pliega si no usas el dictado, las bandas de cada página ocupan menos y **General** se parte en Sonido, Comportamiento, Notificaciones de Windows y App.
 
+### Quitado
+- El uso del plan de Claude y Codex en la cabecera de la isla. Quien instaló el relay puede quitarlo en Agentes.
+
 ### Corregido
+- El color elegido en Aspecto no llegaba a la isla.
 - Los avisos de Windows (Defender, reproducción automática, Configuración, iconos de la bandeja) se quedan en Windows; si NEO ya los había apagado, los devuelve.
 - La tarjeta de notificación ya no corta los botones y **Abrir** sale en tu idioma.
 

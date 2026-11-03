@@ -3,7 +3,7 @@
 // Cada app tiene su reacción (core/reactions.ts); en las horas de silencio solo se guarda.
 // La isla guarda las 10 últimas para recorrerlas desde la tarjeta.
 
-import { onEvent } from "../core/bridge";
+import { Bridge, onEvent } from "../core/bridge";
 import { Sound } from "../core/sound";
 import { State } from "../core/state";
 import { NOTIFICATION_TRY, isQuiet, reactionFor } from "../core/reactions";
@@ -61,6 +61,9 @@ export function registerSystemNotifications(island: SystemNotificationsHost) {
     if (reaction.sound !== "none") Sound.play(reaction.sound);
   };
   void onEvent<SystemToast>("system-notification", (toast) => react(toast));
+  void Bridge.recentSystemNotifications(MAX_HISTORY).then((list) => {
+    if (list?.length && !SystemNotifications.history.length) SystemNotifications.history = list;
+  });
   void onEvent<SystemToast>(NOTIFICATION_TRY, (toast) => react(toast, true));
 }
 

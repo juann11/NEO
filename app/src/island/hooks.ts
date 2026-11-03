@@ -15,6 +15,15 @@ import type { Island } from "./island";
 import { parseClaudePlan, restorePlanUsage } from "../core/plan";
 import { setClaudePlanUsage, storedClaudePlanUsage } from "../views/usage";
 import { N_, t } from "../i18n/i18n";
+import { rememberProject } from "../core/projects";
+
+/** La carpeta de una sesión pasa a Proyectos recientes; solo se guarda si cambió el orden. */
+function rememberProjectFolder(cwd: string | null | undefined) {
+  const next = rememberProject(State.settings.recentProjects, cwd, "");
+  if (next.join("|") === State.settings.recentProjects.join("|")) return;
+  State.settings.recentProjects = next;
+  void Bridge.saveSettings(State.settings);
+}
 
 const CLAUDE_ID = "integration_claude";
 const CURSOR_ID = "agent_cursor";
@@ -277,6 +286,7 @@ function handleHook(island: Island, payload: HookPayload) {
 
   /** Ensure the agent pill exists (no-op for Claude Code). */
   const ensurePill = () => {
+    rememberProjectFolder(cwd);
     if (isExternalAgent) {
       State.upsertExternalAgent(agentId, agentName(validAgent!), agentColor(validAgent!));
       const t = State.tasks.find((x) => x.id === agentId);

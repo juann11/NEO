@@ -14,6 +14,7 @@ import { DEFAULT_OUTFIT, type Outfit } from "../neo/wardrobe";
 import { pillColor } from "./pill-colors";
 import { DEFAULT_HOME_CARDS, type HomeCard } from "./home-cards";
 import type { NotificationReaction, QuietHours } from "./reactions";
+import type { AwaySummary } from "./projects";
 import { Spotify, musicPlaying } from "./spotify";
 
 export type AgentSource = "claudeCode" | "n8n" | "agent";
@@ -115,6 +116,8 @@ export interface Settings {
   /** Por id de app de Windows (core/reactions.ts). */
   notificationReactions: Record<string, NotificationReaction>;
   quietHours: QuietHours;
+  /** Carpetas donde trabajaron los agentes (core/projects.ts). Solo rutas. */
+  recentProjects: string[];
   absenceInterval: number;
   /** Declared pills next to the main one (at most 4), in the order they were added. */
   activeIntegrations: string[];
@@ -178,6 +181,7 @@ export const DEFAULT_SETTINGS: Settings = {
   homeCards: DEFAULT_HOME_CARDS,
   notificationReactions: {},
   quietHours: { enabled: false, from: "22:00", to: "08:00" },
+  recentProjects: [],
   absenceInterval: 180,
   // Ningún servicio de fábrica: cada uno se añade en Integraciones.
   activeIntegrations: [],
@@ -246,6 +250,8 @@ class AppState {
   codexPlanUsage: CodexPlanUsage | null = null;
   /** A plan card is open in place of the overview's left card. */
   showingPlanDetail = false;
+  /** "Mientras no estabas": lo que pasó, hasta que se cierra (island/away.ts). */
+  awayReport: { seconds: number; summary: AwaySummary } | null = null;
   /** Which one: the Codex card rather than Claude's. */
   planDetailIsCodex = false;
   /** Per-pill file diffs, in order of reception. Steps carry their ids. */

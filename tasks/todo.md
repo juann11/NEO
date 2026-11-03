@@ -24,10 +24,14 @@
 - [ ] Color del cuerpo en la isla y en NEO del escritorio (en la ventana ya se vio)
 - [ ] Reacciones en la isla real: Probar, una notificación de verdad y las horas de silencio
 
-### Siguiente: la isla a tope (plan propuesto, falta el OK)
+### La isla a tope
+- [x] Fuera el uso del plan de Claude/Codex de la cabecera (en Ajustes solo queda desinstalar el relay a quien lo tenga)
+- [x] Las pestañas (Claude, Vercel, GitHub…) suben a la cabecera, con su estado
+- [x] Tarjeta derecha de doble cara: notificaciones recientes delante, proyectos recientes (carpetas holograma) detrás
+- [x] "Mientras no estabas": Rust detecta la ausencia (tiempo sin teclado ni ratón) y la tarjeta enseña lo que pasó
+- [ ] Comprobar en la app instalada: altura de la isla y posición de NEO, girar la tarjeta, abrir proyectos, volver tras 3 min
 - [ ] Barra compacta viva: lo más urgente de un vistazo (permiso, sesión, última notificación)
-- [ ] Puntos de estado por agente y contador de notificaciones sin ver en la barra
-- [ ] "Mientras no estabas": resumen al volver
+- [ ] Contador de notificaciones sin ver en la barra
 - [ ] Tarjeta de notificación con acciones: copiar código, silenciar la app 1 h, varias juntas
 - [ ] No molestar rápido desde la isla
 - [ ] Temporizador en la isla
