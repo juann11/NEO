@@ -7,13 +7,52 @@ import { ICONS } from "./icons";
 import { Bridge } from "../core/bridge";
 import { State } from "../core/state";
 import { ago } from "../core/home-feed";
-import { projectName } from "../core/projects";
+import { addProject, projectName, removeProject } from "../core/projects";
 import { SystemNotifications, type SystemToast } from "../island/system-notifications";
 import { swipeOutcome } from "../core/swipe";
 import { t, tl } from "../i18n/i18n";
 import type { ViewHost } from "./views";
 
-const SHOWN_PROJECTS = 4;
+/** El color de una app sin logo: siempre el mismo para la misma app. */
+const FALLBACK_COLORS = ["#22C55E", "#3B82F6", "#F59E0B", "#EC4899", "#8B5CF6", "#14B8A6", "#F97316", "#64748B"];
+
+function fallbackColor(appId: string): string {
+  let n = 0;
+  for (const ch of appId) n = (n * 31 + ch.charCodeAt(0)) >>> 0;
+  return FALLBACK_COLORS[n % FALLBACK_COLORS.length];
+}
+
+/** Logos ya pedidos a Windows, por app, mientras la isla está abierta. */
+const appIcons = new Map<string, Promise<{ canvas: HTMLCanvasElement; color: string } | null>>();
+
+function appIcon(appId: string) {
+  let icon = appIcons.get(appId);
+  if (!icon) {
+    icon = Bridge.notificationAppIcon(appId).then((found) => {
+      const ctx = found && document.createElement("canvas").getContext("2d");
+      if (!found || !ctx) return null;
+      ctx.canvas.width = ctx.canvas.height = found.size;
+      ctx.putImageData(new ImageData(new Uint8ClampedArray(found.rgba), found.size, found.size), 0, 0);
+      return { canvas: ctx.canvas, color: found.color };
+    });
+    appIcons.set(appId, icon);
+  }
+  return icon;
+}
+
+/** La insignia de la fila: la inicial con su color y, cuando llega, el logo y el color de la app. */
+function badge(toast: SystemToast, row: HTMLElement): HTMLElement {
+  const el = h("span", { class: "side-badge", text: toast.app.slice(0, 1).toUpperCase() });
+  row.style.setProperty("--app", fallbackColor(toast.appId));
+  void appIcon(toast.appId).then((icon) => {
+    if (!icon) return;
+    const img = h("img", { src: icon.canvas.toDataURL(), alt: "" });
+    el.replaceChildren(img);
+    el.classList.add("logo");
+    row.style.setProperty("--app", icon.color);
+  });
+  return el;
+}
 
 function agoShort(arrival: number): string {
   const when = ago(arrival, Date.now() / 1000);
@@ -104,8 +143,8 @@ export function buildSideCard(): ViewHost {
       );
       return;
     }
-    front.append(title(t("Notifications")));
     const toasts = SystemNotifications.history;
+    front.append(toasts.length ? h("div", { class: "side-title" }, h("span", { text: t("Notifications") }), clearAll()) : title(t("Notifications")));
     if (!toasts.length) {
       front.append(h("div", { class: "side-empty", text: State.settings.systemNotifications ? t("No notifications right now.") : t("Turn on Windows notifications in NEO's window.") }));
       return;
@@ -127,10 +166,10 @@ export function buildSideCard(): ViewHost {
       remove();
     };
     const row = h("button", { class: "side-row", title: toast.body || toast.title, "aria-keyshortcuts": "Delete" },
-      h("span", { class: "side-badge", text: toast.app.slice(0, 1).toUpperCase() }),
       h("span", { class: "side-text" }, h("b", { text: toast.title }), h("span", { text: toast.app })),
       h("span", { class: "side-ago", text: agoShort(toast.arrival) }),
     );
+    row.prepend(badge(toast, row));
     const wrap = h("div", { class: "swipe" },
       h("div", { class: "swipe-bg" },
         h("span", { class: "swipe-open" }, svg(ICONS.arrowUpRight, 9), h("span", { text: t("Open") })),
@@ -180,24 +219,61 @@ export function buildSideCard(): ViewHost {
     return wrap;
   }
 
+  /** La papelera: el primer clic pregunta, el segundo borra todas; sin segundo clic en 3 s, vuelve. */
+  function clearAll(): HTMLElement {
+    let timer: number | null = null;
+    const bin = h("button", { class: "icon-btn side-clear", title: tl("Delete all"), "aria-label": tl("Delete all") }, svg(ICONS.trash, 10, { stroke: 2 }));
+    bin.addEventListener("click", () => {
+      if (timer == null) {
+        bin.classList.add("confirm");
+        bin.replaceChildren(h("span", { text: t("Delete all?") }));
+        timer = window.setTimeout(() => {
+          timer = null;
+          bin.classList.remove("confirm");
+          bin.replaceChildren(svg(ICONS.trash, 10, { stroke: 2 }));
+        }, 3000);
+        return;
+      }
+      window.clearTimeout(timer);
+      SystemNotifications.forgetAll();
+      shownKey = "";
+      State.notify();
+    });
+    return bin;
+  }
+
+  /** Cambia la lista de proyectos, la guarda y redibuja. */
+  function setProjects(next: string[]) {
+    State.settings.myProjects = next;
+    void Bridge.saveSettings(State.settings);
+    shownKey = "";
+    State.notify();
+  }
+
   function drawBack() {
     clear(rear);
-    rear.append(title(t("Recent projects")));
-    const projects = State.settings.recentProjects.slice(0, SHOWN_PROJECTS);
-    if (!projects.length) {
-      rear.append(h("div", { class: "side-empty", text: t("Projects your agents work in show up here.") }));
-      return;
-    }
+    rear.append(title(t("Projects")));
     const grid = h("div", { class: "holo-grid" });
-    for (const path of projects) {
+    for (const path of State.settings.myProjects) {
       const name = projectName(path);
       grid.append(h("div", { class: "holo-item" },
         h("button", { class: "holo-open", title: path, "aria-label": t("Open {0}", { 0: name }), onclick: () => void Bridge.openProject(path) },
           hologram(), h("span", { text: name })),
         h("button", { class: "icon-btn holo-term", title: tl("Open in terminal"), "aria-label": tl("Open in terminal"), onclick: () => void Bridge.openProjectTerminal(path) },
           svg(ICONS.terminal, 10, { stroke: 2 })),
+        h("button", { class: "icon-btn holo-remove", title: tl("Remove"), "aria-label": t("Remove {0}", { 0: name }), onclick: () => setProjects(removeProject(State.settings.myProjects, path)) },
+          svg(ICONS.xmark, 7)),
       ));
     }
+    grid.append(h("button", {
+      class: "holo-add",
+      title: tl("Add a project"),
+      "aria-label": tl("Add a project"),
+      onclick: async () => {
+        const folder = await Bridge.pickFolder();
+        if (folder) setProjects(addProject(State.settings.myProjects, folder));
+      },
+    }, svg(ICONS.plus, 14), h("span", { text: t("Add") })));
     rear.append(grid);
   }
 
@@ -208,7 +284,7 @@ export function buildSideCard(): ViewHost {
       el.classList.remove("flipped");
     }
     const key = back
-      ? `b|${State.settings.recentProjects.join("|")}`
+      ? `b|${State.settings.myProjects.join("|")}`
       : `f|${JSON.stringify(State.awayReport)}|${State.settings.systemNotifications}|${SystemNotifications.history.map((x) => `${x.id}:${agoShort(x.arrival)}`).join("|")}`;
     if (key === shownKey) return;
     shownKey = key;

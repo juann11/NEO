@@ -1,29 +1,20 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { awaySummary, projectName, rememberProject } from "../src/core/projects.ts";
+import { addProject, awaySummary, projectName, removeProject } from "../src/core/projects.ts";
 
-const HOME = String.raw`C:\Users\ana`;
-
-test("a project folder goes first, once, whatever its case or trailing slash", () => {
-  let list = rememberProject([], String.raw`C:\code\tienda`, HOME);
-  list = rememberProject(list, "C:\\code\\neo\\", HOME);
-  list = rememberProject(list, String.raw`c:\CODE\tienda`, HOME);
-  assert.deepEqual(list, [String.raw`c:\CODE\tienda`, String.raw`C:\code\neo`]);
+test("a folder you add goes last, once, whatever its case or trailing slash", () => {
+  let list = addProject([], String.raw`C:\code\tienda`);
+  list = addProject(list, "C:\\code\\neo\\");
+  list = addProject(list, "c:\\CODE\\tienda\\");
+  assert.deepEqual(list, [String.raw`C:\code\tienda`, String.raw`C:\code\neo`]);
+  assert.deepEqual(addProject(list, ""), list);
+  assert.deepEqual(addProject(list, null), list);
 });
 
-test("the home folder, a drive and nothing at all are not projects", () => {
-  assert.deepEqual(rememberProject([], HOME, HOME), []);
-  assert.deepEqual(rememberProject([], "C:\\", HOME), []);
-  assert.deepEqual(rememberProject([], "/", HOME), []);
-  assert.deepEqual(rememberProject([], "", HOME), []);
-  assert.deepEqual(rememberProject([], null, HOME), []);
-});
-
-test("only the 8 newest are kept", () => {
-  let list = [];
-  for (let i = 0; i < 10; i++) list = rememberProject(list, `/home/ana/p${i}`, "/home/ana");
-  assert.equal(list.length, 8);
-  assert.equal(list[0], "/home/ana/p9");
+test("a folder you remove leaves the list, whatever its case", () => {
+  const list = [String.raw`C:\code\tienda`, String.raw`C:\code\neo`];
+  assert.deepEqual(removeProject(list, String.raw`c:\code\TIENDA`), [String.raw`C:\code\neo`]);
+  assert.deepEqual(removeProject(list, String.raw`D:\otra`), list);
 });
 
 test("a project is shown by its folder's name", () => {

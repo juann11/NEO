@@ -241,6 +241,10 @@ export const Bridge = {
   /** Proyectos recientes de la isla: en el Explorador o en la terminal. */
   openProject: (path: string) => call<void>("open_project", { path }),
   openProjectTerminal: (path: string) => call<void>("open_project_terminal", { path }),
+  /** El selector de carpetas del sistema; null si se cancela. */
+  pickFolder: () => call<string>("pick_folder"),
+  /** El logo de la app de una notificación y su color (app_icons.rs); null si no hay. */
+  notificationAppIcon: (appId: string) => call<{ size: number; rgba: number[]; color: string }>("notification_app_icon", { appId }),
   /** Las últimas notificaciones, para Inicio. */
   recentSystemNotifications: (limit: number) => call<SystemToast[]>("recent_system_notifications", { limit }),
   /** Abre la app que mandó una notificación (Rust solo abre apps que de verdad mandaron alguna). */

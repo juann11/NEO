@@ -116,8 +116,8 @@ export interface Settings {
   /** Por id de app de Windows (core/reactions.ts). */
   notificationReactions: Record<string, NotificationReaction>;
   quietHours: QuietHours;
-  /** Carpetas donde trabajaron los agentes (core/projects.ts). Solo rutas. */
-  recentProjects: string[];
+  /** Las carpetas que el usuario fija en Proyectos de la isla (core/projects.ts). Solo rutas. */
+  myProjects: string[];
   /** Notificaciones eliminadas en NEO (core/swipe.ts): ids de Windows, las 200 últimas. */
   dismissedNotifications: number[];
   absenceInterval: number;
@@ -183,7 +183,7 @@ export const DEFAULT_SETTINGS: Settings = {
   homeCards: DEFAULT_HOME_CARDS,
   notificationReactions: {},
   quietHours: { enabled: false, from: "22:00", to: "08:00" },
-  recentProjects: [],
+  myProjects: [],
   dismissedNotifications: [],
   absenceInterval: 180,
   // Ningún servicio de fábrica: cada uno se añade en Integraciones.

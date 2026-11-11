@@ -6456,32 +6456,6 @@
       "de": "{0} öffnen",
       "tr": "{0} aç"
     },
-    "Projects your agents work in show up here.": {
-      "zh-Hans": "你的代理工作过的项目会显示在这里。",
-      "hi": "आपके एजेंट जिन प्रोजेक्ट में काम करते हैं, वे यहाँ दिखते हैं।",
-      "es": "Aquí salen los proyectos donde trabajan tus agentes.",
-      "ar": "تظهر هنا المشاريع التي يعمل عليها وكلاؤك.",
-      "fr": "Les projets où travaillent tes agents s’affichent ici.",
-      "bn": "আপনার এজেন্ট যেসব প্রজেক্টে কাজ করে সেগুলো এখানে দেখা যায়।",
-      "pt-BR": "Os projetos em que seus agentes trabalham aparecem aqui.",
-      "ru": "Здесь появятся проекты, в которых работают ваши агенты.",
-      "id": "Proyek tempat agenmu bekerja muncul di sini.",
-      "de": "Hier erscheinen die Projekte, in denen deine Agenten arbeiten.",
-      "tr": "Ajanlarının çalıştığı projeler burada görünür."
-    },
-    "Recent projects": {
-      "zh-Hans": "最近的项目",
-      "hi": "हाल के प्रोजेक्ट",
-      "es": "Proyectos recientes",
-      "ar": "المشاريع الأخيرة",
-      "fr": "Projets récents",
-      "bn": "সাম্প্রতিক প্রজেক্ট",
-      "pt-BR": "Projetos recentes",
-      "ru": "Недавние проекты",
-      "id": "Proyek terbaru",
-      "de": "Letzte Projekte",
-      "tr": "Son projeler"
-    },
     "Turn on Windows notifications in NEO's window.": {
       "zh-Hans": "在 NEO 窗口中开启 Windows 通知。",
       "hi": "NEO की विंडो में Windows सूचनाएँ चालू करें।",
@@ -6572,6 +6546,58 @@
       "id": "Tidak ada notifikasi saat ini.",
       "de": "Gerade keine Benachrichtigungen.",
       "tr": "Şu anda bildirim yok."
+    },
+    "Add a project": {
+      "zh-Hans": "添加项目",
+      "hi": "प्रोजेक्ट जोड़ें",
+      "es": "Agregar un proyecto",
+      "ar": "إضافة مشروع",
+      "fr": "Ajouter un projet",
+      "bn": "প্রজেক্ট যোগ করুন",
+      "pt-BR": "Adicionar um projeto",
+      "ru": "Добавить проект",
+      "id": "Tambah proyek",
+      "de": "Projekt hinzufügen",
+      "tr": "Proje ekle"
+    },
+    "Delete all": {
+      "zh-Hans": "全部删除",
+      "hi": "सभी हटाएँ",
+      "es": "Borrar todas",
+      "ar": "حذف الكل",
+      "fr": "Tout supprimer",
+      "bn": "সব মুছুন",
+      "pt-BR": "Excluir todas",
+      "ru": "Удалить все",
+      "id": "Hapus semua",
+      "de": "Alle löschen",
+      "tr": "Tümünü sil"
+    },
+    "Delete all?": {
+      "zh-Hans": "全部删除？",
+      "hi": "सभी हटाएँ?",
+      "es": "¿Borrar todas?",
+      "ar": "حذف الكل؟",
+      "fr": "Tout supprimer ?",
+      "bn": "সব মুছবেন?",
+      "pt-BR": "Excluir todas?",
+      "ru": "Удалить все?",
+      "id": "Hapus semua?",
+      "de": "Alle löschen?",
+      "tr": "Tümü silinsin mi?"
+    },
+    "Remove {0}": {
+      "zh-Hans": "移除 {0}",
+      "hi": "{0} हटाएँ",
+      "es": "Quitar {0}",
+      "ar": "إزالة {0}",
+      "fr": "Retirer {0}",
+      "bn": "{0} সরান",
+      "pt-BR": "Remover {0}",
+      "ru": "Убрать {0}",
+      "id": "Hapus {0}",
+      "de": "{0} entfernen",
+      "tr": "{0} kaldır"
     }
   }
 }

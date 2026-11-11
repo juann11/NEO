@@ -1,19 +1,20 @@
-// Proyectos recientes (el reverso de la tarjeta de notificaciones) y el resumen de "Mientras no estabas".
-// De los proyectos se guardan solo las rutas de las carpetas donde trabajaron los agentes.
+// Proyectos de la isla (el reverso de la tarjeta de notificaciones): solo las carpetas que agrega
+// el usuario, en su orden. Y el resumen de "Mientras no estabas".
 
 import type { BotStateName } from "./layout";
-
-const MAX_PROJECTS = 8;
 
 const trimSlash = (path: string) => path.replace(/[\\/]+$/, "");
 const same = (a: string, b: string) => trimSlash(a).toLowerCase() === trimSlash(b).toLowerCase();
 
-/** La carpeta de una sesión, la primera de la lista; nunca la carpeta personal ni la raíz de un disco. */
-export function rememberProject(list: string[], cwd: string | null | undefined, home: string): string[] {
-  const path = trimSlash(cwd ?? "");
-  const userRoot = /^[A-Za-z]:[\\/]Users[\\/][^\\/]+$/i.test(path) || /^\/(home\/[^/]+|root)$/.test(path);
-  if (!path || /^[A-Za-z]:$/.test(path) || userRoot || (home && same(path, home))) return list;
-  return [path, ...list.filter((p) => !same(p, path))].slice(0, MAX_PROJECTS);
+/** Una carpeta elegida con el +: va al final, sin repetirse. */
+export function addProject(list: string[], folder: string | null | undefined): string[] {
+  const path = trimSlash(folder ?? "");
+  if (!path || list.some((p) => same(p, path))) return list;
+  return [...list, path];
+}
+
+export function removeProject(list: string[], folder: string): string[] {
+  return list.filter((p) => !same(p, folder));
 }
 
 export function projectName(path: string): string {

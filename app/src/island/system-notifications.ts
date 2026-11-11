@@ -47,6 +47,15 @@ export const SystemNotifications = {
     State.settings.dismissedNotifications = dismissToast(State.settings.dismissedNotifications, id);
     void Bridge.saveSettings(State.settings);
   },
+  /** La papelera de la tarjeta: todas fuera de una vez, y ninguna vuelve. */
+  forgetAll() {
+    let dismissed = State.settings.dismissedNotifications;
+    for (const toast of this.history) dismissed = dismissToast(dismissed, toast.id);
+    State.settings.dismissedNotifications = dismissed;
+    this.history = [];
+    this.index = 0;
+    void Bridge.saveSettings(State.settings);
+  },
   /** ‹ : una más vieja. */
   older() {
     this.index = Math.min(this.index + 1, this.history.length - 1);

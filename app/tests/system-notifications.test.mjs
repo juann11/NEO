@@ -105,3 +105,10 @@ test("a notification that is deleted or opened leaves the list and the next one 
   assert.deepEqual(SystemNotifications.history, []);
   assert.equal(SystemNotifications.current, null);
 });
+
+test("delete all empties the list at once, and none of them comes back", () => {
+  for (let id = 1; id <= 3; id++) SystemNotifications.push(toast(id));
+  SystemNotifications.forgetAll();
+  assert.deepEqual(SystemNotifications.history, []);
+  for (const id of [1, 2, 3]) assert.ok(State.settings.dismissedNotifications.includes(id));
+});
