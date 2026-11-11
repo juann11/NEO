@@ -2,6 +2,7 @@
 
 mod agent_hooks;
 mod agents;
+mod app_icons;
 mod away;
 mod chat;
 mod claude;
@@ -883,6 +884,8 @@ pub fn run() {
             system_notifications::recent_system_notifications,
             away::open_project,
             away::open_project_terminal,
+            away::pick_folder,
+            app_icons::notification_app_icon,
             system_notifications::open_notification_app,
             whatsapp::whatsapp_open,
             whatsapp::whatsapp_close,

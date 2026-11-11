@@ -70,6 +70,38 @@ fn folder(path: &str) -> Result<&Path, String> {
     if p.is_dir() { Ok(p) } else { Err(format!("not a folder: {path}")) }
 }
 
+/// El "+" de Proyectos: el selector de carpetas del sistema; None si se cancela.
+#[cfg(windows)]
+#[tauri::command]
+pub fn pick_folder() -> Option<String> {
+    use windows::Win32::System::Com::{
+        CoCreateInstance, CoInitializeEx, CoTaskMemFree, CLSCTX_INPROC_SERVER, COINIT_APARTMENTTHREADED, COINIT_DISABLE_OLE1DDE,
+    };
+    use windows::Win32::UI::Shell::{FileOpenDialog, IFileOpenDialog, FOS_FORCEFILESYSTEM, FOS_PICKFOLDERS, SIGDN_FILESYSPATH};
+    // SAFETY: el diálogo y la cadena que devuelve se usan y liberan como pide la API.
+    unsafe {
+        // Un hilo de Tauri puede estar ya en otro apartamento: se usa el que haya.
+        let _ = CoInitializeEx(None, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+        let dialog: IFileOpenDialog = CoCreateInstance(&FileOpenDialog, None, CLSCTX_INPROC_SERVER).ok()?;
+        let options = dialog.GetOptions().ok()?;
+        dialog.SetOptions(options | FOS_PICKFOLDERS | FOS_FORCEFILESYSTEM).ok()?;
+        dialog.Show(None).ok()?;
+        let name = dialog.GetResult().ok()?.GetDisplayName(SIGDN_FILESYSPATH).ok()?;
+        let path = name.to_string().ok();
+        CoTaskMemFree(Some(name.0 as *const _));
+        path
+    }
+}
+
+/// En Linux, zenity si está; si no, nada.
+#[cfg(not(windows))]
+#[tauri::command]
+pub fn pick_folder() -> Option<String> {
+    let out = std::process::Command::new("zenity").args(["--file-selection", "--directory"]).output().ok()?;
+    let path = String::from_utf8(out.stdout).ok()?.trim().to_string();
+    (out.status.success() && !path.is_empty()).then_some(path)
+}
+
 #[tauri::command]
 pub fn open_project(path: String) -> Result<(), String> {
     crate::platform::reveal_folder(&folder(&path)?.to_string_lossy());
